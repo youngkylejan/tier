@@ -21,6 +21,7 @@ import markdown
 import os.path
 import re
 import subprocess
+import logging
 import torndb
 import tornado.escape
 from tornado import gen
@@ -52,7 +53,7 @@ class Application(tornado.web.Application):
             (r"/auth/logout", AuthLogoutHandler),
         ]
         settings = dict(
-            blog_title=u"Tornado Blog",
+            app_title=u"Tier",
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             xsrf_cookies=True,
@@ -61,7 +62,8 @@ class Application(tornado.web.Application):
             debug=True,
         )
         super(Application, self).__init__(handlers, **settings)
-        # Have one global connection to the blog DB across all handlers
+        
+        # Have one global connection to the DB across all handlers
         self.db = torndb.Connection(
             host=options.mysql_host, database=options.mysql_database,
             user=options.mysql_user, password=options.mysql_password)
@@ -69,15 +71,26 @@ class Application(tornado.web.Application):
         self.maybe_create_tables()
 
     def maybe_create_tables(self):
-        try:
-            self.db.get("SELECT COUNT(*) from entries;")
-        except MySQLdb.ProgrammingError:
-            subprocess.check_call(['mysql',
-                                   '--host=' + options.mysql_host,
-                                   '--database=' + options.mysql_database,
-                                   '--user=' + options.mysql_user,
-                                   '--password=' + options.mysql_password],
-                                  stdin=open('schema.sql'))
+        
+        self.db.execute("SET SESSION default_storage_engine = 'InnoDB'")
+        self.db.execute("SET SESSION time_zone = '+0:00'")
+        self.db.execute("ALTER DATABASE CHARACTER SET 'utf8'")
+
+        create_user_sql = "CREATE TABLE IF NOT EXISTS user ( \
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+            email VARCHAR(100) NOT NULL UNIQUE, \
+            name VARCHAR(100) NOT NULL, \
+            hashed_password VARCHAR(100) NOT NULL \
+            )"
+
+        create_group_sql = "CREATE TABLE IF NOT EXISTS team ( \
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+            name VARCHAR(100) NOT NULL UNIQUE, \
+            leader_id INT NOT NULL REFERENCES user(id) \
+            )"
+
+        self.db.execute(create_user_sql)
+        self.db.execute(create_group_sql)
 
 
 class BaseHandler(tornado.web.RequestHandler):
