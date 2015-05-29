@@ -21,7 +21,6 @@ import markdown
 import os.path
 import re
 import subprocess
-import logging
 import torndb
 import tornado.escape
 from tornado import gen
@@ -99,7 +98,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.application.db
 
     def get_current_user(self):
-        user_id = self.get_secure_cookie("blogdemo_user")
+        user_id = self.get_secure_cookie("tier_user")
         if not user_id: return None
         return self.db.get("SELECT * FROM user WHERE id = %s", int(user_id))
 
@@ -147,26 +146,26 @@ class AuthLoginHandler(BaseHandler):
 
     @gen.coroutine
     def post(self):
-        author = self.db.get("SELECT * FROM user WHERE email = %s",
+        user = self.db.get("SELECT * FROM user WHERE email = %s",
                              self.get_argument("email"))
-        if not author:
-            self.render("login.html", error="email not found")
+        if not user:
+            self.render("login.html", error="Email Not Found")
             return
 
         hashed_password = yield executor.submit(
             bcrypt.hashpw, tornado.escape.utf8(self.get_argument("password")),
-            tornado.escape.utf8(author.hashed_password))
+            tornado.escape.utf8(user.hashed_password))
 
-        if hashed_password == author.hashed_password:
-            self.set_secure_cookie("blogdemo_user", str(author.id))
+        if hashed_password == user.hashed_password:
+            self.set_secure_cookie("tier_user", str(user.id))
             self.redirect("/")
         else:
-            self.render("login.html", error="incorrect password")
+            self.render("login.html", error="Incorrect Password")
 
 
 class AuthLogoutHandler(BaseHandler):
     def get(self):
-        self.clear_cookie("blogdemo_user")
+        self.clear_cookie("tier_user")
         return
 
 
