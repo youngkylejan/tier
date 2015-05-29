@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tier.me</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ static_url("bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ static_url("css/jumbotron.css") }}" rel="stylesheet">
+
+    <script src="{{ static_url("bootstrap/js/ie-emulation-modes-warning.js") }}"></script>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Tier.me</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" placeholder="Search Team" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+          </form>
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <a class="btn btn-success" type="button" href="/login">Sign in</a>
+              <a class="btn btn-success" type="button" href="/register">Sign Up</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="page-header">
+          <h1>24 Point Game Project</h1>
+          <p class="lead">An traditional game that achieve 24 point with random 4 poke cards.</p>
+          <p><a class="btn btn-default" href="\dashboard" role="button">Join It &raquo;</a></p>
+        </div>
+
+      <footer>
+        <p>&copy; HKU Ethan & Xiaoma 2015</p>
+        <p>Contact: {{.Email}}</p>
+      </footer>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ static_url("js/jquery-2.1.3.min.js") }}"></script>
+    <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{{ static_url("bootstrap/js/ie10-viewport-bug-workaround.js") }}"></script>
+  </body>
+</html>

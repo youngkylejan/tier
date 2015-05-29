@@ -33,10 +33,10 @@ import unicodedata
 from tornado.options import define, options
 
 define("port", default=8888, help="run on the given port", type=int)
-define("mysql_host", default="127.0.0.1:3306", help="blog database host")
-define("mysql_database", default="TIER", help="blog database name")
-define("mysql_user", default="tier", help="blog database user")
-define("mysql_password", default="jian", help="blog database password")
+define("mysql_host", default="127.0.0.1:3306", help="database host")
+define("mysql_database", default="TIER", help="database name")
+define("mysql_user", default="tier", help="database user")
+define("mysql_password", default="jian", help="database password")
 
 
 # A thread pool to be used for password hashing with bcrypt.
@@ -46,13 +46,8 @@ executor = concurrent.futures.ThreadPoolExecutor(2)
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/", HomeHandler),
-            (r"/index", IndexHandler),
-            (r"/archive", ArchiveHandler),
-            (r"/feed", FeedHandler),
-            (r"/entry/([^/]+)", EntryHandler),
-            (r"/compose", ComposeHandler),
-            (r"/auth/create", AuthCreateHandler),
+            (r"/", IndexHandler),
+            (r"/auth/register", AuthRegisterHandler),
             (r"/auth/login", AuthLoginHandler),
             (r"/auth/logout", AuthLogoutHandler),
         ]
@@ -60,7 +55,6 @@ class Application(tornado.web.Application):
             blog_title=u"Tornado Blog",
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
-            ui_modules={"Entry": EntryModule},
             xsrf_cookies=True,
             cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
             login_url="/auth/login",
@@ -100,83 +94,14 @@ class BaseHandler(tornado.web.RequestHandler):
         return bool(self.db.get("SELECT * FROM authors LIMIT 1"))
 
 
-class HomeHandler(BaseHandler):
-    def get(self):
-        entries = self.db.query("SELECT * FROM entries ORDER BY published "
-                                "DESC LIMIT 5")
-        if not entries:
-            self.redirect("/compose")
-            return
-        self.render("home.html", entries=entries)
-
 class IndexHandler(BaseHandler):
     def get(self):
         self.render("index.html", email="kylejan.jan@gmail.com")
 
-class EntryHandler(BaseHandler):
-    def get(self, slug):
-        entry = self.db.get("SELECT * FROM entries WHERE slug = %s", slug)
-        if not entry: raise tornado.web.HTTPError(404)
-        self.render("entry.html", entry=entry)
 
-
-class ArchiveHandler(BaseHandler):
+class AuthRegisterHandler(BaseHandler):
     def get(self):
-        entries = self.db.query("SELECT * FROM entries ORDER BY published "
-                                "DESC")
-        self.render("archive.html", entries=entries)
-
-
-class FeedHandler(BaseHandler):
-    def get(self):
-        entries = self.db.query("SELECT * FROM entries ORDER BY published "
-                                "DESC LIMIT 10")
-        self.set_header("Content-Type", "application/atom+xml")
-        self.render("feed.xml", entries=entries)
-
-
-class ComposeHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self):
-        id = self.get_argument("id", None)
-        entry = None
-        if id:
-            entry = self.db.get("SELECT * FROM entries WHERE id = %s", int(id))
-        self.render("compose.html", entry=entry)
-
-    @tornado.web.authenticated
-    def post(self):
-        id = self.get_argument("id", None)
-        title = self.get_argument("title")
-        text = self.get_argument("markdown")
-        html = markdown.markdown(text)
-        if id:
-            entry = self.db.get("SELECT * FROM entries WHERE id = %s", int(id))
-            if not entry: raise tornado.web.HTTPError(404)
-            slug = entry.slug
-            self.db.execute(
-                "UPDATE entries SET title = %s, markdown = %s, html = %s "
-                "WHERE id = %s", title, text, html, int(id))
-        else:
-            slug = unicodedata.normalize("NFKD", title).encode(
-                "ascii", "ignore")
-            slug = re.sub(r"[^\w]+", " ", slug)
-            slug = "-".join(slug.lower().strip().split())
-            if not slug: slug = "entry"
-            while True:
-                e = self.db.get("SELECT * FROM entries WHERE slug = %s", slug)
-                if not e: break
-                slug += "-2"
-            self.db.execute(
-                "INSERT INTO entries (author_id,title,slug,markdown,html,"
-                "published) VALUES (%s,%s,%s,%s,%s,UTC_TIMESTAMP())",
-                self.current_user.id, title, slug, text, html)
-        self.redirect("/entry/" + slug)
-
-
-class AuthCreateHandler(BaseHandler):
-    def get(self):
-        self.render("create_author.html")
+        self.render("register.html")
 
     @gen.coroutine
     def post(self):
@@ -191,7 +116,7 @@ class AuthCreateHandler(BaseHandler):
             self.get_argument("email"), self.get_argument("name"),
             hashed_password)
         self.set_secure_cookie("blogdemo_user", str(author_id))
-        self.redirect(self.get_argument("next", "/"))
+        # self.redirect(self.get_argument("next", "/"))
 
 
 class AuthLoginHandler(BaseHandler):
@@ -218,13 +143,7 @@ class AuthLoginHandler(BaseHandler):
 class AuthLogoutHandler(BaseHandler):
     def get(self):
         self.clear_cookie("blogdemo_user")
-        self.redirect(self.get_argument("next", "/"))
-
-
-class EntryModule(tornado.web.UIModule):
-    def render(self, entry):
-        return self.render_string("modules/entry.html", entry=entry)
-
+        return
 
 def main():
     tornado.options.parse_command_line()
