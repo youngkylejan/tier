@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tier.me</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../static/css/jumbotron.css" rel="stylesheet">
+
+    <script src="../static/bootstrap/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Tier.me</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-left" action="/teamLobby">
+            <div class="form-group">
+              <input type="text" placeholder="Search Team" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+          </form>
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <a class="btn btn-success" type="button" href="/login">Sign in</a>
+              <a class="btn btn-success" type="button" href="/register">Sign Up</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+    <div class="container">
+        <h1>Hello, tier</h1>
+        <p>This is a cross-platform for project team management. The application is aimed to achieve a common platform on which users can management project team. Then users can join in interested group, share ideas and take part in the meeting and schedule.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">  
+          <h2>Management</h2>
+          <p>Tier supplys flexible platform and technical functions to users for purpose of improving the efficiency of team management. Registered users can create fantastic topics to attract like-minded persons. In the meantime, registered tourist can join in any interested projects and take part in the construction. </p>
+          <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
+        </div>
+        <div class="col-md-4">
+          <h2>Sharing</h2>
+          <p>Brainstorming is the most important part in every project. Traditionally teamers should communicate with each other face-to-face or with the help of external social tools. Team construction is the soul of Tier. Tire focuses on supplying a dedicated platform to team for sharing profiles, ideas, schedules or news. </p>
+       </div>
+        <div class="col-md-4">
+          <h2>Scheduling</h2>
+          <p>Scheduling always keep huge influence on the production of ideas. In this case, Tier supplys automatical mechanism to fluency the scheduling process. Divided tasks could be assigned to specific person through Tier and Tier can help team leader to monitor the progress of every task.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; HKU Ethan & Xiaoma 2015</p>
+        <p>Contact: {{.Email}}</p>
+      </footer>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../static/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
