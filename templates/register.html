@@ -18,56 +18,34 @@
     <!-- Jquery -->
     <script src="{{ static_url("js/jquery.min.js") }}"></script>
 
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $('#register-user').click(function() {
-          regInfo = JSON.stringify({
-            msgType: 'register',
-            inputName: $('input#inputName').val(),
-            inputEmail: $('input#inputEmail').val(),
-            inputPassword: $('input#inputPassword').val()
-          });
-          $.post('/dispacther', {msgContent: regInfo}, function(data, textStatus, xhr) {
-            if (data.status == 1) {
-              location.href = "/";
-            } else {
-              
-            }
-          }, "json");
-        });
-      });
-    </script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
     <div class="container">
-      <dl>
-        <dt><label for="inputName">Username</label></dt>
-        <dd>
-          <input id="inputName" type="text" name="name" class="form-control" placeholder="Username" required autofocus />
-        </dd>
-      </dl>
+      <form action="\auth\register" method="POST">
+        <dl>
+          <dt><label for="inputName">Username</label></dt>
+          <dd>
+            <input type="text" name="name" class="form-control" placeholder="Username" required autofocus />
+          </dd>
+        </dl>
 
-      <dl>
-        <dt><label for="inputEmail">Email address</label></dt>
-        <dd>
-          <input id="inputEmail" type="email" name="email" class="form-control" placeholder="Email address" required />
-        </dd>
-      </dl>
+        <dl>
+          <dt><label for="inputEmail">Email address</label></dt>
+          <dd>
+            <input type="email" name="email" class="form-control" placeholder="Email address" required />
+          </dd>
+        </dl>
 
-      <dl>
-        <dt><label for="inputPassword">Password</label></dt>
-        <dd>
-          <input id="inputPassword" type="password" name="password" class="form-control" placeholder="Password" required />     
-        </dd>
-      </dl>
-      <input id="register-user" class="btn btn-lg btn-primary btn-block" type="submit" value="Sign up"/>
+        <dl>
+          <dt><label for="inputPassword">Password</label></dt>
+          <dd>
+            <input type="password" name="password" class="form-control" placeholder="Password" required />     
+          </dd>
+        </dl>
+        {% module xsrf_form_html() %}
+        <input id="register_user" class="btn btn-lg btn-primary btn-block" type="submit" value="Sign up"/>
+      </form>
     </div>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
