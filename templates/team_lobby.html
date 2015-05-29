@@ -16,7 +16,7 @@
     <!-- Custom styles for this template -->
     <link href="{{ static_url("css/jumbotron.css") }}" rel="stylesheet">
     <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
-    
+
     <script src="{{ static_url("bootstrap/js/ie-emulation-modes-warning.js") }}"></script>
     
   </head>
@@ -27,25 +27,38 @@
 
     <div class="container">
       <br/>
-      <div class="row">
-        <div class="col-md-4">  
-          <h2>Team 1</h2>
-          <p>Tier supplys flexible platform and technical functions to users for purpose of improving the efficiency of team management. Registered users can create fantastic topics to attract like-minded persons. In the meantime, registered tourist can join in any interested projects and take part in the construction. </p>
-          <p><a class="btn btn-default" href="\team" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>Team 2</h2>
-          <p>Brainstorming is the most important part in every project. Traditionally teamers should communicate with each other face-to-face or with the help of external social tools. Team construction is the soul of Tier. Tire focuses on supplying a dedicated platform to team for sharing profiles, ideas, schedules or news. </p>
-          <p><a class="btn btn-default" href="\team" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Team 3</h2>
-          <p>Scheduling always keep huge influence on the production of ideas. In this case, Tier supplys automatical mechanism to fluency the scheduling process. Divided tasks could be assigned to specific person through Tier and Tier can help team leader to monitor the progress of every task.</p>
-          <p><a class="btn btn-default" href="\team" role="button">View details &raquo;</a></p>
-        </div>
-      </div>
 
-      <hr>
+      {% if teams != None %}
+        
+        {% set num = 0 %}
+        {% for team in teams %}
+          
+          {% if num == 0 %}
+            <div class="row">
+          {% end %}
+
+          <div class="col-md-4">
+            <h2>{{ team.name }}</h2>
+            <p>{{ team.introduction }}</p>
+            <p><a class="btn btn-default" href="\team" role="button">View details &raquo;</a></p>
+          </div>
+          {% set num = num + 1 %}
+          
+          {% if not num % 3 %}
+            </div>
+            <hr>
+            {% set num = 0 %}
+          {% end %}
+
+        {% end %}
+
+        {% if num != 0 %}
+          </div>
+          <hr>
+        {% end %}
+
+      {% end %}
+
 
       <footer>
         <p>&copy; HKU Ethan & Xiaoma 2015</p>
@@ -57,7 +70,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ static_url("js/jquery-2.1.3.min.js") }}"></script>
+    <script src="{{ static_url("js/jquery.min.js") }}"></script>
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ static_url("bootstrap/js/ie10-viewport-bug-workaround.js") }}"></script>

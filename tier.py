@@ -50,7 +50,8 @@ class Application(tornado.web.Application):
             (r"/auth/register", AuthRegisterHandler),
             (r"/auth/login", AuthLoginHandler),
             (r"/auth/logout", AuthLogoutHandler),
-            (r"/team", TeamLobbyHandler),
+            (r"/team/lobby", TeamLobbyHandler),
+            (r"/team/", TeamHandler),
             (r"/dashboard", DashboardHandler),
         ]
         settings = dict(
@@ -182,7 +183,7 @@ class TeamLobbyHandler(BaseHandler):
             self.render("fault.html", error="Please Login Firstly!")
             return
 
-        teams = self.db.get("SELECT * FROM team")
+        teams = self.db.query("SELECT * FROM team")
 
         self.render("team_lobby.html", username=self.current_user.name, teams=teams)
 
@@ -194,6 +195,13 @@ class DashboardHandler(BaseHandler):
             return
 
         self.render("dashboard.html", username=self.current_user.name)
+
+
+class TeamHandler(BaseHandler):
+    def get(self):
+        if not self.current_user:
+            self.render("fault.html", error="Please Login Firstly")
+            return
 
 
 def main():
