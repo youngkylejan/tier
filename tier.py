@@ -196,11 +196,7 @@ class AuthCreateHandler(BaseHandler):
 
 class AuthLoginHandler(BaseHandler):
     def get(self):
-        # If there are no authors, redirect to the account creation page.
-        if not self.any_author_exists():
-            self.redirect("/auth/create")
-        else:
-            self.render("login.html", error=None)
+        self.render("login.html", error=None)
 
     @gen.coroutine
     def post(self):
