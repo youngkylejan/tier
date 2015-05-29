@@ -15,39 +15,15 @@
     <!-- Custom styles for this template -->
     <link href="{{ static_url("css/jumbotron.css") }}" rel="stylesheet">
 
+    <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
+
     <script src="{{ static_url("bootstrap/js/ie-emulation-modes-warning.js") }} "></script>
 
   </head>
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Tier.me</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-left" action="/team_lobby">
-            <div class="form-group">
-              <input type="text" placeholder="Search Team" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Search</button>
-          </form>
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <a class="btn btn-success" type="button" href="/auth/login">Sign in</a>
-              <a class="btn btn-success" type="button" href="/auth/register">Sign Up</a>
-            </div>
-          </form>
-        </div>
-      </div>
-    </nav>
+    {% module Template("nav.html", username=username) %}
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
@@ -78,7 +54,7 @@
 
       <footer>
         <p>&copy; HKU Ethan & Xiaoma 2015</p>
-        <p>Contact: {{ email }}</p>
+        <p>Contact: kylejan.jan@gmail.com</p>
       </footer>
     </div>
 

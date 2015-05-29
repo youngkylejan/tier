@@ -50,13 +50,15 @@ class Application(tornado.web.Application):
             (r"/auth/register", AuthRegisterHandler),
             (r"/auth/login", AuthLoginHandler),
             (r"/auth/logout", AuthLogoutHandler),
+            (r"/team", TeamLobbyHandler),
+            (r"/dashboard", DashboardHandler),
         ]
         settings = dict(
             app_title=u"Tier",
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             xsrf_cookies=True,
-            cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
+            cookie_secret="62oETzKXQAGaYdkL5gEmGeJJFuYq7EQnp2XdTP1o/Vo=",
             login_url="/auth/login",
             debug=True,
         )
@@ -85,7 +87,8 @@ class Application(tornado.web.Application):
         create_group_sql = "CREATE TABLE IF NOT EXISTS team ( \
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
             name VARCHAR(100) NOT NULL UNIQUE, \
-            leader_id INT NOT NULL REFERENCES user(id) \
+            leader_id INT NOT NULL REFERENCES user(id), \
+            introduction TEXT NOT NULL \
             )"
 
         self.db.execute(create_user_sql)
@@ -109,12 +112,15 @@ class BaseHandler(tornado.web.RequestHandler):
 
 class IndexHandler(BaseHandler):
     def get(self):
-        self.render("index.html", email="kylejan.jan@gmail.com")
+        if not self.current_user:
+            self.render("index.html", username=None)
+        else:
+            self.render("index.html", username=self.current_user.name)
 
 
 class AuthRegisterHandler(BaseHandler):
     def get(self):
-        self.render("register.html")
+        self.render("register.html", error=None)
 
     @gen.coroutine
     def post(self):
@@ -124,7 +130,7 @@ class AuthRegisterHandler(BaseHandler):
         pwd = self.get_argument("password")
 
         if self.whether_author_exists(name):
-            raise tornado.web.HTTPError(400, "user already created")
+            self.render("register.html", error="User Exists")
         
         hashed_password = yield executor.submit(
             bcrypt.hashpw, tornado.escape.utf8(pwd),
@@ -136,7 +142,7 @@ class AuthRegisterHandler(BaseHandler):
             email, name,
             hashed_password)
         
-        self.set_secure_cookie("blogdemo_user", str(user_id))
+        self.set_secure_cookie("tier_user", str(user_id))
         self.redirect("/")
 
 
@@ -166,7 +172,28 @@ class AuthLoginHandler(BaseHandler):
 class AuthLogoutHandler(BaseHandler):
     def get(self):
         self.clear_cookie("tier_user")
+        self.redirect("/")
         return
+
+
+class TeamLobbyHandler(BaseHandler):
+    def get(self):
+        if not self.current_user:
+            self.render("fault.html", error="Please Login Firstly!")
+            return
+
+        teams = self.db.get("SELECT * FROM team")
+
+        self.render("team_lobby.html", username=self.current_user.name, teams=teams)
+
+
+class DashboardHandler(BaseHandler):
+    def get(self):
+        if not self.current_user:
+            self.render("fault.html", error="Please Login Firstly")
+            return
+
+        self.render("dashboard.html", username=self.current_user.name)
 
 
 def main():

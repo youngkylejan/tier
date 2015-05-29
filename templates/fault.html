@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Fault Page</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{{ static_url("bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="http://v3.bootcss.com/examples/cover/cover.css" rel="stylesheet">
+
+  <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+    .en-markup-crop-options {
+      top: 18px !important;
+      left: 50% !important;
+      margin-left: -100px !important;
+      width: 200px !important;
+      border: 2px rgba(255,255,255,.38) solid !important;
+      border-radius: 4px !important;
+    }
+
+    .en-markup-crop-options div div:first-of-type {
+      margin-left: 0px !important;
+    }
+  </style>
+</head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="inner cover">
+            <h1 class="cover-heading">{{ error }}</h1>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="{{ static_url("js/jquery.min.js") }}" ></script>
+  <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="{{ static_url("bootstrap/js/ie10-viewport-bug-workaround.js") }}"></script>
+
+  </body>
+</html>
