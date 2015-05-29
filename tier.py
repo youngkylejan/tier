@@ -47,6 +47,7 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", HomeHandler),
+            (r"/index", IndexHandler),
             (r"/archive", ArchiveHandler),
             (r"/feed", FeedHandler),
             (r"/entry/([^/]+)", EntryHandler),
@@ -108,6 +109,9 @@ class HomeHandler(BaseHandler):
             return
         self.render("home.html", entries=entries)
 
+class IndexHandler(BaseHandler):
+    def get(self):
+        self.render("index.html", email="kylejan.jan@gmail.com")
 
 class EntryHandler(BaseHandler):
     def get(self, slug):
