@@ -23,13 +23,14 @@ import re
 import subprocess
 import torndb
 import tornado.escape
-from tornado import gen
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
 import unicodedata
 
+from tornado import gen
+from tornado.escape import json_decode
 from tornado.options import define, options
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -47,11 +48,16 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", IndexHandler),
+
             (r"/auth/register", AuthRegisterHandler),
             (r"/auth/login", AuthLoginHandler),
             (r"/auth/logout", AuthLogoutHandler),
+
             (r"/team/lobby", TeamLobbyHandler),
             (r"/team/home", TeamHomeHandler),
+            (r"/team/join", TeamJoinHandler),
+            (r"/team/create", TeamCreateHandler),
+
             (r"/dashboard", DashboardHandler),
         ]
         settings = dict(
@@ -213,11 +219,22 @@ class TeamHomeHandler(BaseHandler):
             self.redirect_fault_page("Team Not Exists")
             return
 
-        print team.leader_id
         leader = self.db.get("SELECT * FROM user WHERE id = %s", team.leader_id)
 
         self.render("team_home.html", username=self.current_user.name, \
             team_name=team.name, leader_name=leader.name, intro=team.introduction)
+
+
+class TeamJoinHandler(BaseHandler):
+    def post(self):
+        
+        json_obj = json_decode(self.request.body)
+        print json_obj
+
+
+class TeamCreateHandler(BaseHandler):
+    def post(self):
+        return
 
 
 def main():
