@@ -51,7 +51,7 @@ class Application(tornado.web.Application):
             (r"/auth/login", AuthLoginHandler),
             (r"/auth/logout", AuthLogoutHandler),
             (r"/team/lobby", TeamLobbyHandler),
-            (r"/team/", TeamHandler),
+            (r"/team/home", TeamHomeHandler),
             (r"/dashboard", DashboardHandler),
         ]
         settings = dict(
@@ -109,6 +109,9 @@ class BaseHandler(tornado.web.RequestHandler):
     def whether_author_exists(self, name):
         sql = "SELECT * FROM user WHERE name = '{}'".format(name)
         return bool(self.db.get(sql))
+
+    def redirect_fault_page(self, error_msg):
+        self.render("fault.html", error=error_msg)
 
 
 class IndexHandler(BaseHandler):
@@ -197,11 +200,24 @@ class DashboardHandler(BaseHandler):
         self.render("dashboard.html", username=self.current_user.name)
 
 
-class TeamHandler(BaseHandler):
+class TeamHomeHandler(BaseHandler):
     def get(self):
         if not self.current_user:
-            self.render("fault.html", error="Please Login Firstly")
+            self.redirect_fault_page("Please Login Firstly!")
             return
+
+        team_name = self.get_argument("name")
+        team = self.db.get("SELECT * FROM team WHERE name = %s", team_name)
+
+        if not team:
+            self.redirect_fault_page("Team Not Exists")
+            return
+
+        print team.leader_id
+        leader = self.db.get("SELECT * FROM user WHERE id = %s", team.leader_id)
+
+        self.render("team_home.html", username=self.current_user.name, \
+            team_name=team.name, leader_name=leader.name, intro=team.introduction)
 
 
 def main():

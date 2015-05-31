@@ -15,6 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ static_url("css/jumbotron.css") }}" rel="stylesheet">
+    <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
 
     <script src="{{ static_url("bootstrap/js/ie-emulation-modes-warning.js") }}"></script>
 
@@ -27,8 +28,9 @@
     <div class="container">
 
         <div class="page-header">
-          <h1>24 Point Game Project</h1>
-          <p class="lead">An traditional game that achieve 24 point with random 4 poke cards.</p>
+          <h1>{{ team_name }}</h1>
+          <h5>Leader: {{ leader_name }}</h5>
+          <p class="lead">{{ intro }}</p>
           <p><a class="btn btn-default" href="\dashboard" role="button">Join It &raquo;</a></p>
         </div>
 
