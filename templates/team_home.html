@@ -18,15 +18,25 @@
 
     <script src="{{ static_url("bootstrap/js/ie-emulation-modes-warning.js") }}"></script>
 
+    <!-- Jquery Script -->
+    <script src="{{ static_url("js/jquery.min.js") }}"></script>
+
     <script type="text/javascript">
+
+      function getCookie(name) {
+        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+        return r ? r[1] : undefined;
+      }
+
       $(document).ready(function() {
         $("#join_button").click(function() {
-          /* Act on the event */
+          xsrf = getCookie("_xsrf")
+
           $.ajax({
             url: '/team/join',
             type: 'POST',
             dataType: 'json',
-            data: {action: 'join'},
+            data: {_xsrf: xsrf},
           })
           .done(function() {
             console.log("success");
@@ -40,6 +50,7 @@
           
         });
       });
+
     </script>
 
   </head>
@@ -66,7 +77,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ static_url("js/jquery.min.js") }}"></script>
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ static_url("bootstrap/js/ie10-viewport-bug-workaround.js") }}"></script>

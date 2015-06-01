@@ -16,7 +16,7 @@
 
 import bcrypt
 import concurrent.futures
-import MySQLdb
+import motor
 import markdown
 import os.path
 import re
@@ -34,10 +34,11 @@ from tornado.escape import json_decode
 from tornado.options import define, options
 
 define("port", default=8888, help="run on the given port", type=int)
-define("mysql_host", default="127.0.0.1:3306", help="database host")
-define("mysql_database", default="TIER", help="database name")
-define("mysql_user", default="tier", help="database user")
-define("mysql_password", default="jian", help="database password")
+
+# define("mysql_host", default="127.0.0.1:3306", help="database host")
+# define("mysql_database", default="TIER", help="database name")
+# define("mysql_user", default="tier", help="database user")
+# define("mysql_password", default="jian", help="database password")
 
 
 # A thread pool to be used for password hashing with bcrypt.
@@ -68,38 +69,40 @@ class Application(tornado.web.Application):
             cookie_secret="62oETzKXQAGaYdkL5gEmGeJJFuYq7EQnp2XdTP1o/Vo=",
             login_url="/auth/login",
             debug=True,
+            db=motor.MotorClient("mongodb://localhost:27017").TIER,
         )
         super(Application, self).__init__(handlers, **settings)
         
         # Have one global connection to the DB across all handlers
-        self.db = torndb.Connection(
-            host=options.mysql_host, database=options.mysql_database,
-            user=options.mysql_user, password=options.mysql_password)
+        # self.db = torndb.Connection(
+        #     host=options.mysql_host, database=options.mysql_database,
+        #     user=options.mysql_user, password=options.mysql_password)
 
-        self.maybe_create_tables()
+        self.db = motor.MotorClient().tier
 
-    def maybe_create_tables(self):
+
+    # def maybe_create_tables(self):
         
-        self.db.execute("SET SESSION default_storage_engine = 'InnoDB'")
-        self.db.execute("SET SESSION time_zone = '+0:00'")
-        self.db.execute("ALTER DATABASE CHARACTER SET 'utf8'")
+    #     self.db.execute("SET SESSION default_storage_engine = 'InnoDB'")
+    #     self.db.execute("SET SESSION time_zone = '+0:00'")
+    #     self.db.execute("ALTER DATABASE CHARACTER SET 'utf8'")
 
-        create_user_sql = "CREATE TABLE IF NOT EXISTS user ( \
-            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
-            email VARCHAR(100) NOT NULL UNIQUE, \
-            name VARCHAR(100) NOT NULL, \
-            hashed_password VARCHAR(100) NOT NULL \
-            )"
+    #     create_user_sql = "CREATE TABLE IF NOT EXISTS user ( \
+    #         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+    #         email VARCHAR(100) NOT NULL UNIQUE, \
+    #         name VARCHAR(100) NOT NULL, \
+    #         hashed_password VARCHAR(100) NOT NULL \
+    #         )"
 
-        create_group_sql = "CREATE TABLE IF NOT EXISTS team ( \
-            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
-            name VARCHAR(100) NOT NULL UNIQUE, \
-            leader_id INT NOT NULL REFERENCES user(id), \
-            introduction TEXT NOT NULL \
-            )"
+    #     create_group_sql = "CREATE TABLE IF NOT EXISTS team ( \
+    #         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+    #         name VARCHAR(100) NOT NULL UNIQUE, \
+    #         leader_id INT NOT NULL REFERENCES user(id), \
+    #         introduction TEXT NOT NULL \
+    #         )"
 
-        self.db.execute(create_user_sql)
-        self.db.execute(create_group_sql)
+    #     self.db.execute(create_user_sql)
+    #     self.db.execute(create_group_sql)
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -227,9 +230,8 @@ class TeamHomeHandler(BaseHandler):
 
 class TeamJoinHandler(BaseHandler):
     def post(self):
-        
-        json_obj = json_decode(self.request.body)
-        print json_obj
+        user = self.current_user
+
 
 
 class TeamCreateHandler(BaseHandler):
