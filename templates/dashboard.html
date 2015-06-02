@@ -18,6 +18,12 @@
 
     <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
 
+    <script src="{{ static_url("js/jquery.min.js") }}"></script>
+
+    <script type="text/javascript">
+
+    </script>
+
   </head>
 
   <body>
@@ -36,17 +42,15 @@
             <li><a href='#'>Personal Wiki</a></li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Team News</h1>
 
-        </div>
+        <div id="team_new_container">{% module Template("modules/team_news.html") %}</div>
+
       </div>
     </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ static_url("js/jquery.min.js") }}"></script>
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ static_url("bootstrap/js/ie10-viewport-bug-workaround.js") }}"></script>

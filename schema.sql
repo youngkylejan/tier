@@ -19,9 +19,9 @@
 -- To reload the tables:
 --   mysql --user=blog --password=blog --database=blog < schema.sql
 
-SET SESSION default_storage_engine = "InnoDB";
-SET SESSION time_zone = "+0:00";
-ALTER DATABASE CHARACTER SET "utf8";
+SET SESSION default_storage_engine = 'InnoDB';
+SET SESSION time_zone = '+0:00';
+ALTER DATABASE CHARACTER SET 'utf8';
 
 CREATE TABLE IF NOT EXISTS user (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -30,8 +30,15 @@ CREATE TABLE IF NOT EXISTS user (
     hashed_password VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS group (
+CREATE TABLE IF NOT EXISTS team (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(512) NOT NULL UNIQUE,
-    leader_id INT NOT NULL
+    name VARCHAR(100) NOT NULL UNIQUE,
+    leader_id INT NOT NULL REFERENCES user(id),
+    introduction TEXT NOT NULL
+)
+
+CREATE TABLE IF NOT EXISTS user_team(
+    user_id INT NOT NULL,
+    team_id INT NOT NULL,
+    PRIMARY KEY(user_id, team_id)
 );
