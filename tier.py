@@ -17,7 +17,6 @@
 import bcrypt
 import concurrent.futures
 import MySQLdb
-import markdown
 import os.path
 import re
 import subprocess
@@ -30,6 +29,7 @@ import tornado.web
 import unicodedata
 
 from tornado import gen
+from tornado.escape import json_encode
 from tornado.escape import json_decode
 from tornado.options import define, options
 
@@ -92,15 +92,22 @@ class Application(tornado.web.Application):
             hashed_password VARCHAR(100) NOT NULL \
             )"
 
-        create_group_sql = "CREATE TABLE IF NOT EXISTS team ( \
+        create_team_sql = "CREATE TABLE IF NOT EXISTS team ( \
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
             name VARCHAR(100) NOT NULL UNIQUE, \
             leader_id INT NOT NULL REFERENCES user(id), \
             introduction TEXT NOT NULL \
             )"
 
+        create_userTeam_sql = "CREATE TABLE IF NOT EXISTS user_team( \
+            user_id INT NOT NULL, \
+            team_id INT NOT NULL, \
+            PRIMARY KEY(user_id, team_id) \
+            );"
+
         self.db.execute(create_user_sql)
-        self.db.execute(create_group_sql)
+        self.db.execute(create_team_sql)
+        self.db.execute(create_userTeam_sql)
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -233,8 +240,28 @@ class TeamHomeHandler(BaseHandler):
 class TeamJoinHandler(BaseHandler):
     def post(self):
         user = self.current_user
+        team = self.db.get("SELECT * FROM team WHERE name = %s", self.request.arguments['_name'])
+        action = self.request.arguments['_action']
 
+        record = self.db.get("SELECT * FROM user_team WHERE user_id = {} and team_id = {}".format(user.id, team.id))
 
+        if not record:
+            if action == 'check':
+                resp = {
+                    'status': 'none'
+                }
+            else:
+                self.db.insert("INSERT INTO user_team(user_id, team_id) VALUES({}, {})".format(user.id, team.id))
+                resp = {
+                    'status': 'inserts'
+                }
+        else:
+            resp = {
+                'status': 'exists'
+            }
+
+        self.write(json_encode(resp))
+ 
 
 class TeamCreateHandler(BaseHandler):
     def post(self):

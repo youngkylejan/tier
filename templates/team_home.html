@@ -16,53 +16,22 @@
     <link href="{{ static_url("css/jumbotron.css") }}" rel="stylesheet">
     <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
 
-    <script src="{{ static_url("bootstrap/js/ie-emulation-modes-warning.js") }}"></script>
-
     <!-- Jquery Script -->
     <script src="{{ static_url("js/jquery.min.js") }}"></script>
 
-    <script type="text/javascript">
+    <script src="{{ static_url("bootstrap/js/ie-emulation-modes-warning.js") }}"></script>
 
-      function getCookie(name) {
-        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
-        return r ? r[1] : undefined;
-      }
-
-      $(document).ready(function() {
-        $("#join_button").click(function() {
-          xsrf = getCookie("_xsrf")
-
-          $.ajax({
-            url: '/team/join',
-            type: 'POST',
-            dataType: 'json',
-            data: {_xsrf: xsrf},
-          })
-          .done(function() {
-            console.log("success");
-          })
-          .fail(function() {
-            console.log("error");
-          })
-          .always(function() {
-            console.log("complete");
-          });
-          
-        });
-      });
-
-    </script>
+    <script src="{{ static_url("js/join-team.js") }}" type="text/javascript"></script>
 
   </head>
 
   <body>
-
     {% module Template("nav.html", username=username) %}
 
     <div class="container">
 
         <div class="page-header">
-          <h1>{{ team_name }}</h1>
+          <h1 id="team_name">{{ team_name }}</h1>
           <h5>Leader: {{ leader_name }}</h5>
           <p class="lead">{{ intro }}</p>
           <p><a id="join_button" class="btn btn-default" role="button">Join It &raquo;</a></p>
