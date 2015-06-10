@@ -22,6 +22,15 @@
 
     <script type="text/javascript">
 
+      $(document).ready(function() {
+
+        $('.menu-item').click(function(event) {
+          $('.active').removeClass('active');
+          $(this).addClass('active');
+        });
+
+      });
+
     </script>
 
   </head>
@@ -34,16 +43,21 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Team News <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Team Management</a></li>
-            <li><a href="#">Meeting Schedule </a></li>
-            <li><a href="#">Deadline Schedule </a></li>
-            <li><a href="#">Team ChatRoom</a></li>
-            <li><a href='#'>Personal Wiki</a></li>
+            <li class="menu-item active"><a>Team News</a></li>
+            <li class="menu-item"><a>Team Management</a></li>
+            <li class="menu-item"><a>Meeting Schedule </a></li>
+            <li class="menu-item"><a>Deadline Schedule </a></li>
+            <li class="menu-item"><a>Team ChatRoom</a></li>
+            <li class="menu-item"><a>Personal Wiki</a></li>
           </ul>
         </div>
 
-        <div id="team_new_container">{% module Template("modules/team_news.html") %}</div>
+        <div id="team-new-container" class='page-content-container'>{% module Template("modules/team_news.html") %}</div>
+        <div id="team-manage-container" class='page-content-container' style="display: None">{% module Template("modules/team_manage.html") %}</div>
+        <div id="meeting-schedule-container" class='page-content-container' style="display: None">{% module Template("modules/meeting_schedule.html") %}</div>
+        <div id="deadline-schedule-container" class='page-content-container' style="display: None">{% module Template("modules/deadline_schedule.html") %}</div>
+        <div id="team-chatroom-container" class='page-content-container' style="display: None">{% module Template("modules/chat_room.html") %}</div>
+        <div id="personal-wiki-container" class='page-content-container' style="display: None">{% module Template("modules/personal_wiki.html") %}</div>
 
       </div>
     </div>
