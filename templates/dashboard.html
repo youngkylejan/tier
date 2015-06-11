@@ -11,7 +11,11 @@
     <title>Tier Dashboard</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ static_url("bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ static_url("bootstrap/css/bootstrap.css") }}" rel="stylesheet">
+    <link href="{{ static_url("bootstrap/css/bootstrap-theme.min.css") }}" rel="stylesheet">
+
+    <!-- DateTimePicker -->
+    <link href="{{ static_url("css/bootstrap-datetimepicker.min.css") }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{{ static_url("css/dashboard.css") }}" rel="stylesheet">
@@ -19,25 +23,6 @@
     <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
 
     <script src="{{ static_url("js/jquery.min.js") }}"></script>
-
-    <script type="text/javascript">
-
-      $(document).ready(function() {
-
-        $('.menu-item').click(function(event) {
-          var pre_content_id = $('.active').attr('id');
-          $('#' + pre_content_id + '-container').attr('style', 'display: None');
-          
-          $('.active').removeClass('active');
-          $(this).addClass('active');
-
-          var new_content_id = $(this).attr('id');
-          $('#' + new_content_id + '-container').attr('style', 'display: Auto');
-        });
-
-      });
-
-    </script>
 
   </head>
 
@@ -85,11 +70,32 @@
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{{ static_url("bootstrap/js/ie10-viewport-bug-workaround.js") }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="{{ static_url("js/bootstrap-datetimepicker.min.js") }}"></script>
+
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+
+        $('.menu-item').click(function(event) {
+          var pre_content_id = $('.active').attr('id');
+          $('#' + pre_content_id + '-container').attr('style', 'display: None');
+          
+          $('.active').removeClass('active');
+          $(this).addClass('active');
+
+          var new_content_id = $(this).attr('id');
+          $('#' + new_content_id + '-container').attr('style', 'display: Auto');
+        });
+
+        $('#datetimepicker1').datetimepicker({
+          format: 'YYYY-MM-DD'
+        });
+
+      });
+
+    </script>
   </body>
 </html>
