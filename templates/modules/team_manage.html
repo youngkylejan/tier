@@ -1,64 +1,134 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1 class="page-header">Team Management</h1>
 
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Team Name</span>
-        <input type="text" class="form-control" placeholder="team name" aria-describedby="basic-addon1">
-    </div>
-
-    <br/>
-
-    <span class="input-group-addon" id="basic-addon1">Team Introduction</span>
-    <textarea type="text" rows="5" class="form-control" placeholder="introduction" aria-describedby="basic-addon1"></textarea>
-
-    <br/>
-
-    <button type="submit" class="btn btn-primary">clear</button>
-    <button type="submit" class="btn btn-primary">create</button>
-
-    <hr/>
-
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Assignee</span>
-        <input type="text" class="form-control" placeholder="target team" aria-describedby="basic-addon1">
-        <div class="input-group-btn">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                member1
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">member1</a></li>
-              <li><a href="#">member2</a></li>
-              <li><a href="#">member3</a></li>
-          </ul>
+    <div id="team-create">
+        <h3 class="sub-header" style="color: grey">Create Team</h3>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Team Name</span>
+            <input type="text" class="form-control" placeholder="team name" aria-describedby="basic-addon1">
         </div>
+
+        <br/>
+
+        <span class="input-group-addon" id="basic-addon1">Team Introduction</span>
+        <textarea type="text" rows="5" class="form-control" placeholder="introduction" aria-describedby="basic-addon1"></textarea>
+
+        <br/>
+
+        <button type="submit" class="btn btn-primary">clear</button>
+        <button type="submit" class="btn btn-primary">create</button>
+
+        <hr/>
     </div>
 
+    <br/>       
     <br/>
+    
+    <div id="task-assign">
+        <h3 class="sub-header" style="color: grey">Assign Task</h3>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Target Team</span>
+            <input type="text" class="form-control" placeholder="target team" aria-describedby="basic-addon1">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">team1 <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">team1</a></li>
+                    <li><a href="#">team2</a></li>
+                    <li><a href="#">team3</a></li>
+                </ul>
+            </div>
+        </div>
 
-    <span class="input-group-addon" id="basic-addon1">Assignment Content</span>
-    <textarea type="text" rows="5" class="form-control" placeholder="assignment content" aria-describedby="basic-addon1"></textarea>
+        <br/>
 
-    <br/>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Assignee</span>
+            <input type="text" class="form-control" placeholder="target team" aria-describedby="basic-addon1">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    member1
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">member1</a></li>
+                    <li><a href="#">member2</a></li>
+                    <li><a href="#">member3</a></li>
+                </ul>
+            </div>
+        </div>
 
-    <div class="row">
-        <div class='col-sm-6'>
-            <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Deadline</span>
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+        <br/>
+
+        <span class="input-group-addon" id="basic-addon1">Assignment Content</span>
+        <textarea type="text" rows="5" class="form-control" placeholder="assignment content" aria-describedby="basic-addon1"></textarea>
+
+        <br/>
+
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Deadline</span>
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <br/>
+
+        <button type="submit" class="btn btn-primary">clear</button>
+        <button type="submit" class="btn btn-primary">create</button>
+
+        <hr/>      
     </div>
 
     <br/>
+    <br/>
 
-    <button type="submit" class="btn btn-primary">clear</button>
-    <button type="submit" class="btn btn-primary">create</button>
+    <div id="meeting-create">
+        <h3 class="sub-header" style="color: grey">Create Meeting</h3>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Target Team</span>
+            <input type="text" class="form-control" placeholder="target team" aria-describedby="basic-addon1">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">team1 <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">team1</a></li>
+                    <li><a href="#">team2</a></li>
+                    <li><a href="#">team3</a></li>
+                </ul>
+            </div>
+        </div>
 
-    <hr/>
+        <br/>
+
+        <span class="input-group-addon" id="basic-addon1">Meeting Content</span>
+        <textarea type="text" rows="4" class="form-control" placeholder="meeting content" aria-describedby="basic-addon1"></textarea>
+
+        <br/>
+
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Meeting Time</span>
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+
+        <button type="submit" class="btn btn-primary">clear</button>
+        <button type="submit" class="btn btn-primary">create</button>      
+    </div>
+
 </div>
