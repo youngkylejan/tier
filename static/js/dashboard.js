@@ -123,6 +123,10 @@ function meeting_create() {
   });
 };
 
+function load_team_members() {
+
+};
+
 $(document).ready(function() {
 
   $('.menu-item').click(function(event) {
@@ -183,4 +187,17 @@ $(document).ready(function() {
   $('#meeting-create-confirm-btn').click(function(event) {
     meeting_create();
   });
+
+  // assignment create
+  $('.assign-team-choice').click(function(event) {
+    $('#assign-target-team').text($(this).text());  
+  });
+
+  $('#assign-create-clear-btn').click(function(event) {
+    $('#assign-target-team').text('NONE');
+    $('#assign-target-member').text('NONE');
+    $('#assign-content').val('');
+    $('#assign-deadline').val('');
+  });
+
 });

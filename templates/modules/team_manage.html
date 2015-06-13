@@ -15,8 +15,8 @@
 
         <br/>
 
-        <button id="team-create-clear-btn" type="submit" class="btn btn-primary">clear</button>
-        <button id="team-create-confirm-btn" type="submit" class="btn btn-primary">create</button>
+        <button id="team-create-clear-btn" type="submit" class="btn btn-primary">Clear</button>
+        <button id="team-create-confirm-btn" type="submit" class="btn btn-primary">Create</button>
 
         <hr/>
     </div>
@@ -28,13 +28,16 @@
         <h3 class="sub-header" style="color: grey">Assign Task</h3>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Target Team</span>
-            <input type="text" class="form-control" placeholder="target team" aria-describedby="basic-addon1">
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">team1 <span class="caret"></span></button>
+            <div class="btn-group">
+                <button id="assign-target-team" type="button" class="btn btn-info">NONE</button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">team1</a></li>
-                    <li><a href="#">team2</a></li>
-                    <li><a href="#">team3</a></li>
+                    {% for team in user_teams %}
+                        <li class='assign-team-choice'><a hrer="">{{ team['name'] }}</a></li>
+                    {% end %}
                 </ul>
             </div>
         </div>
@@ -43,16 +46,16 @@
 
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Assignee</span>
-            <input type="text" class="form-control" placeholder="target team" aria-describedby="basic-addon1">
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    member1
+            <div class="btn-group">
+                <button id="assign-target-member" type="button" class="btn btn-info">NONE</button>
+                <button id="assign-member-select-btn" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">member1</a></li>
-                    <li><a href="#">member2</a></li>
-                    <li><a href="#">member3</a></li>
+                <ul id="assign-member-dropdown" class="dropdown-menu" role="menu">
+                    {% for team in user_teams %}
+                        <li class='assign-member-choice'><a hrer="">{{ team['name'] }}</a></li>
+                    {% end %}
                 </ul>
             </div>
         </div>
@@ -60,7 +63,7 @@
         <br/>
 
         <span class="input-group-addon" id="basic-addon1">Assignment Content</span>
-        <textarea type="text" rows="5" class="form-control" placeholder="assignment content" aria-describedby="basic-addon1"></textarea>
+        <textarea id="assign-content" type="text" rows="5" class="form-control" placeholder="assignment content" aria-describedby="basic-addon1"></textarea>
 
         <br/>
 
@@ -69,7 +72,7 @@
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">Deadline</span>
                     <div class='input-group date datetimepicker'>
-                        <input type='text' class="form-control" />
+                        <input id="assign-deadline" type='text' class="form-control" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -80,8 +83,8 @@
 
         <br/>
 
-        <button type="submit" class="btn btn-primary">clear</button>
-        <button type="submit" class="btn btn-primary">create</button>
+        <button id="assign-create-clear-btn" type="submit" class="btn btn-primary">Clear</button>
+        <button id="assign-create-confirm-btn" type="submit" class="btn btn-primary">Create</button>
 
         <hr/>      
     </div>
@@ -93,7 +96,7 @@
         <h3 class="sub-header" style="color: grey">Create Meeting</h3>
 
         <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">TARGET TEAM</span>
+            <span class="input-group-addon" id="basic-addon1">Target Team</span>
             <div class="btn-group">
                 <button id="meeting-target-team" type="button" class="btn btn-info">NONE</button>
                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
