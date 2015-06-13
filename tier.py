@@ -88,14 +88,14 @@ class Application(tornado.web.Application):
 
         create_user_sql = "CREATE TABLE IF NOT EXISTS user ( \
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
-            email VARCHAR(100) NOT NULL UNIQUE, \
-            name VARCHAR(100) NOT NULL, \
+            email VARCHAR(30) NOT NULL UNIQUE, \
+            name VARCHAR(30) NOT NULL, \
             hashed_password VARCHAR(100) NOT NULL \
             )"
 
         create_team_sql = "CREATE TABLE IF NOT EXISTS team ( \
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
-            name VARCHAR(100) NOT NULL UNIQUE, \
+            name VARCHAR(30) NOT NULL UNIQUE, \
             leader_id INT NOT NULL REFERENCES user(id), \
             introduction TEXT NOT NULL \
             )"
@@ -106,9 +106,18 @@ class Application(tornado.web.Application):
             PRIMARY KEY(user_id, team_id) \
             );"
 
+        create_news_sql = "CREATE TABLE IF NOT EXISTS news( \
+            user_id INT NOT NULL, \
+            team_id INT NOT NULL, \
+            content TEXT NOT NULL, \
+            post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, \
+            PRIMARY KEY(user_id, team_id) \
+            );"
+
         self.db.execute(create_user_sql)
         self.db.execute(create_team_sql)
         self.db.execute(create_userTeam_sql)
+        self.db.execute(create_news_sql)
 
 
 class BaseHandler(tornado.web.RequestHandler):

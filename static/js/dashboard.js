@@ -30,6 +30,10 @@ function create_team() {
   });
 };
 
+function post_msg() {
+  
+};
+
 $(document).ready(function() {
 
   $('.menu-item').click(function(event) {
@@ -49,6 +53,11 @@ $(document).ready(function() {
 
   $('.team-choice').click(function(event) {
     $('#selected-team').text($(this).text());
+  });
+
+  $('#msg-post-clear-btn').click(function(event) {
+    $('#selected-team').text('NONE');
+    $('#msg-content').val('');
   });
 
   $('#team-create-clear-btn').click(function(event) {
