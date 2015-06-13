@@ -131,6 +131,7 @@ $(document).ready(function() {
   // news team load
   $('.load-team-choice').click(function(event) {
     $('#load-target-team').text($(this).text());
+    $('#news-board').empty();
     load_team_news($(this).text());
   });
 
