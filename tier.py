@@ -59,6 +59,7 @@ class Application(tornado.web.Application):
             (r"/team/home", TeamHomeHandler),
             (r"/team/join", TeamJoinHandler),
             (r"/team/create", TeamCreateHandler),
+            (r"/team/news", TeamNewsHandler),
 
             (r"/dashboard", DashboardHandler),
         ]
@@ -291,6 +292,26 @@ class TeamCreateHandler(BaseHandler):
             resp['status'] = 'success'
         else:
             resp['status'] = 'exists'
+
+        self.write(json_encode(resp))
+
+
+class TeamNewsHandler(BaseHandler):
+    def post(self):
+        json_msg = self.request.arguments['_new_info'][0]
+        msg_body = json.loads(json_msg)
+
+        user = self.current_user
+        team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
+        new_content = msg_body['content']
+
+        row = self.db.insert("INSERT INTO news(user_id, team_id, content) VALUES(%s, %s, %s)", user.id, team.id, new_content)
+        
+        resp = {}
+        if row is not None:
+            resp = { 'status' : 'success'}
+        else:
+            resp = { 'status' : 'failed'}
 
         self.write(json_encode(resp))
 

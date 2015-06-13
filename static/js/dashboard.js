@@ -31,6 +31,28 @@ function create_team() {
 };
 
 function post_msg() {
+  var new_info = new Object();
+  new_info.team = $('#selected-team').text();
+  new_info.content = $('#msg-content').val();
+
+  $.ajax({
+    url: '/team/news',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      _xsrf: getCookie("_xsrf"),
+      _new_info: JSON.stringify(new_info)
+    },
+  })
+  .done(function(resp) {
+    console.log("success");
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
   
 };
 
@@ -58,6 +80,10 @@ $(document).ready(function() {
   $('#msg-post-clear-btn').click(function(event) {
     $('#selected-team').text('NONE');
     $('#msg-content').val('');
+  });
+
+  $('#msg-post-confirm-btn').click(function(event) {
+    post_msg();
   });
 
   $('#team-create-clear-btn').click(function(event) {
