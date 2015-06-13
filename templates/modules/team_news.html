@@ -6,14 +6,14 @@
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">MESSAGE TARGET TEAM</span>
             <div class="btn-group">
-                <button id="selected-team" type="button" class="btn btn-info">NONE</button>
+                <button id="post-target-team" type="button" class="btn btn-info">NONE</button>
                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     {% for team in user_teams %}
-                        <li class='team-choice'><a hrer="">{{ team['name'] }}</a></li>
+                        <li class='post-team-choice'><a hrer="">{{ team['name'] }}</a></li>
                     {% end %}
                 </ul>
             </div>
@@ -37,6 +37,25 @@
 
     <div id="news-board">
         <h3 class="sub-header" style="color: grey">News Board</h3>
+
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">TARGET TEAM</span>
+            <div class="btn-group">
+                <button id="load-target-team" type="button" class="btn btn-info">NONE</button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {% for team in user_teams %}
+                        <li class='load-team-choice'><a hrer="">{{ team['name'] }}</a></li>
+                    {% end %}
+                </ul>
+            </div>
+        </div>
+
+        <br/>
+
         <div class="well">
             <div class="row">
                 <div class="col-md-12">

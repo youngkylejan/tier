@@ -108,11 +108,11 @@ class Application(tornado.web.Application):
             );"
 
         create_news_sql = "CREATE TABLE IF NOT EXISTS news( \
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
             user_id INT NOT NULL, \
             team_id INT NOT NULL, \
             content TEXT NOT NULL, \
-            post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, \
-            PRIMARY KEY(user_id, team_id) \
+            post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
             );"
 
         self.db.execute(create_user_sql)
@@ -227,10 +227,7 @@ class DashboardHandler(BaseHandler):
             return
 
         qry_sql_user_team = "SELECT team_id FROM user_team WHERE user_id = {}".format(self.current_user.id)
-
         team_names = self.db.query("SELECT name FROM team WHERE id in (" + qry_sql_user_team + ")")
-        
-        print team_names
 
         self.render("dashboard.html", username = self.current_user.name, user_teams = team_names)
 

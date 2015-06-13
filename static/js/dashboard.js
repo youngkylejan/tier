@@ -32,7 +32,7 @@ function create_team() {
 
 function post_msg() {
   var new_info = new Object();
-  new_info.team = $('#selected-team').text();
+  new_info.team = $('#post-target-team').text();
   new_info.content = $('#msg-content').val();
 
   $.ajax({
@@ -56,6 +56,10 @@ function post_msg() {
   
 };
 
+function load_msg() {
+  var load_news_info = new Object();
+}
+
 $(document).ready(function() {
 
   $('.menu-item').click(function(event) {
@@ -73,12 +77,13 @@ $(document).ready(function() {
     format: 'YYYY-MM-DD'
   });
 
-  $('.team-choice').click(function(event) {
-    $('#selected-team').text($(this).text());
+  // msg post
+  $('.post-team-choice').click(function(event) {
+    $('#post-target-team').text($(this).text());
   });
 
   $('#msg-post-clear-btn').click(function(event) {
-    $('#selected-team').text('NONE');
+    $('#post-target-team').text('NONE');
     $('#msg-content').val('');
   });
 
@@ -86,6 +91,12 @@ $(document).ready(function() {
     post_msg();
   });
 
+  // news team load
+  $('.load-team-choice').click(function(event) {
+    $('#load-target-team').text($(this).text());
+  });
+
+  // team create
   $('#team-create-clear-btn').click(function(event) {
     $('#team-name-create').val('');
     $('#team-intro-create').val('');
