@@ -14,6 +14,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+import json
 import bcrypt
 import concurrent.futures
 import MySQLdb
@@ -247,25 +248,36 @@ class TeamJoinHandler(BaseHandler):
 
         if not record:
             if action == 'check':
-                resp = {
-                    'status': 'none'
-                }
+                resp = { 'status': 'none' }
             else:
                 self.db.insert("INSERT INTO user_team(user_id, team_id) VALUES({}, {})".format(user.id, team.id))
-                resp = {
-                    'status': 'inserts'
-                }
+                resp = { 'status': 'inserts' }
         else:
-            resp = {
-                'status': 'exists'
-            }
+            resp = { 'status': 'exists' }
 
         self.write(json_encode(resp))
  
 
 class TeamCreateHandler(BaseHandler):
     def post(self):
-        return
+        json_msg = self.request.arguments['_create_info'][0]
+        msg_body = json.loads(json_msg)
+        
+        user = self.current_user
+        name = msg_body['name']
+        intro = msg_body['intro']
+
+        print name
+        print intro
+        team_record = self.db.get("SELECT * FROM team WHERE name = %s", name)
+
+        if not team_record:
+            self.db.insert("INSERT INTO team(name, leader_id, introduction) VALUES(%s, %s, %s)", name, user.id, intro)
+            resp = { 'status' : 'success' }
+        else:
+            resp = { 'status' : 'exists' }
+
+        self.write(json_encode(resp))
 
 
 def main():
