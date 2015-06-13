@@ -28,7 +28,6 @@ function create_team() {
   .always(function() {
     console.log("complete");
   });
-  
 };
 
 $(document).ready(function() {
@@ -46,6 +45,10 @@ $(document).ready(function() {
 
   $('#datetimepicker1').datetimepicker({
     format: 'YYYY-MM-DD'
+  });
+
+  $('.team-choice').click(function(event) {
+    $('#selected-team').text($(this).text());
   });
 
   $('#team-create-clear-btn').click(function(event) {

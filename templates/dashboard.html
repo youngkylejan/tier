@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -45,7 +44,7 @@
         </div>
 
         <div id="team-new-container" class='page-content-container'>
-          {% module Template("modules/team_news.html") %}
+          {% module Template("modules/team_news.html", user_teams=user_teams) %}
         </div>
         
         <div id="team-manage-container" class='page-content-container' style="display: None">
