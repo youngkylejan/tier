@@ -31,9 +31,10 @@ function create_team() {
 };
 
 function post_msg() {
-  var new_info = new Object();
-  new_info.team = $('#post-target-team').text();
-  new_info.content = $('#msg-content').val();
+  var info = new Object();
+  info.type = "post_msg";
+  info.team = $('#post-target-team').text();
+  info.content = $('#msg-content').val();
 
   $.ajax({
     url: '/team/news',
@@ -41,7 +42,7 @@ function post_msg() {
     dataType: 'json',
     data: {
       _xsrf: getCookie("_xsrf"),
-      _new_info: JSON.stringify(new_info)
+      _body: JSON.stringify(info)
     },
   })
   .done(function(resp) {
@@ -56,8 +57,30 @@ function post_msg() {
   
 };
 
-function load_msg() {
-  var load_news_info = new Object();
+function load_team_news(team_name) {
+  var info = new Object();
+  info.type = "load_news";
+  info.team = team_name;
+
+  $.ajax({
+    url: '/team/news',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      _xsrf: getCookie("_xsrf"),
+      _body: JSON.stringify(info)
+    },
+  })
+  .done(function() {
+    console.log("success");
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+  
 }
 
 $(document).ready(function() {
@@ -94,6 +117,7 @@ $(document).ready(function() {
   // news team load
   $('.load-team-choice').click(function(event) {
     $('#load-target-team').text($(this).text());
+    load_team_news($(this).text());
   });
 
   // team create

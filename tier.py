@@ -295,22 +295,31 @@ class TeamCreateHandler(BaseHandler):
 
 class TeamNewsHandler(BaseHandler):
     def post(self):
-        json_msg = self.request.arguments['_new_info'][0]
+        json_msg = self.request.arguments['_body'][0]
         msg_body = json.loads(json_msg)
 
-        user = self.current_user
-        team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
-        new_content = msg_body['content']
-
-        row = self.db.insert("INSERT INTO news(user_id, team_id, content) VALUES(%s, %s, %s)", user.id, team.id, new_content)
-        
         resp = {}
-        if row is not None:
-            resp = { 'status' : 'success'}
-        else:
-            resp = { 'status' : 'failed'}
 
-        self.write(json_encode(resp))
+        if msg_body['type'] == "post_msg":
+            user = self.current_user
+            team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
+            new_content = msg_body['content']
+
+            row = self.db.insert("INSERT INTO news(user_id, team_id, content) VALUES(%s, %s, %s)", user.id, team.id, new_content)
+
+            if row is not None:
+                resp = { 'status' : 'success'}
+            else:
+                resp = { 'status' : 'failed'}
+
+            self.write(json_encode(resp))
+
+        else:
+            team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
+            msgs = self.db.query("SELECT * FROM news WHERE team_id = %s", team.id)
+            
+            resp['msgs'] = msgs
+            self.write(json_encode(resp))
 
 
 def main():
