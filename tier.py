@@ -15,6 +15,8 @@
 # under the License.
 
 import json
+import datetime
+import unicodedata
 import bcrypt
 import concurrent.futures
 import MySQLdb
@@ -22,12 +24,12 @@ import os.path
 import re
 import subprocess
 import torndb
+
 import tornado.escape
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
-import unicodedata
 
 from tornado import gen
 from tornado.escape import json_encode
@@ -317,8 +319,17 @@ class TeamNewsHandler(BaseHandler):
         else:
             team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
             msgs = self.db.query("SELECT * FROM news WHERE team_id = %s", team.id)
-            
-            resp['msgs'] = msgs
+
+            resp['msgs'] = []
+            for msg in msgs:
+                user_id = msg['user_id']
+                user = self.db.get("SELECT * FROM user WHERE id = %s", user_id)
+                resp['msgs'].append({
+                    'user' : user.name,
+                    'time' : msg['post_time'].strftime('%Y-%m-%d %H:%M:%S'),
+                    'content' : msg['content']
+                })
+
             self.write(json_encode(resp))
 
 

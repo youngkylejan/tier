@@ -71,8 +71,22 @@ function load_team_news(team_name) {
       _body: JSON.stringify(info)
     },
   })
-  .done(function() {
+  .done(function(resp) {
     console.log("success");
+    msgs = resp['msgs'];
+
+    $.each(msgs, function(index, msg) {
+
+      var msg_row = $('<div></div>', {class: 'row'});
+      var inter_div = $('<div></div>', {class: 'col-md-12'});
+      var author_div = $('<small></small>', {class: 'text-muted', text: msg['user'] + " | " + msg['time']});
+      var content_text = $('<p></p>', {text: msg['content']});
+
+      inter_div.append(author_div, content_text, "<br/>");
+      msg_row.append(inter_div);
+      $('#news-board').append(msg_row);
+
+    });
   })
   .fail(function() {
     console.log("error");
