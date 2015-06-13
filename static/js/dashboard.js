@@ -94,8 +94,32 @@ function load_team_news(team_name) {
   .always(function() {
     console.log("complete");
   });
-  
 }
+
+function meeting_create() {
+  var info = new Object();
+  info.team = $('#meeting-target-team').text();
+  info.content = $('#meeting-content').val();
+  info.time = $('#meeting-time').val();
+
+  $.ajax({
+    url: '/team/meetings',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      param1: 'value1'
+    },
+  })
+  .done(function() {
+    console.log("success");
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+};
 
 $(document).ready(function() {
 
@@ -110,9 +134,7 @@ $(document).ready(function() {
     $('#' + new_content_id + '-container').attr('style', 'display: Auto');
   });
 
-  $('#datetimepicker1').datetimepicker({
-    format: 'YYYY-MM-DD'
-  });
+  $('.datetimepicker').datetimepicker({ format: 'YYYY-MM-DD HH:mm:ss' });
 
   // msg post
   $('.post-team-choice').click(function(event) {
@@ -144,4 +166,16 @@ $(document).ready(function() {
   $('#team-create-confirm-btn').click(function(event) {
     create_team();
   });
+
+  // meeting create
+  $('.meeting-team-choice').click(function(event) {
+    $('#meeting-target-team').text($(this).text());
+  });
+
+  $('#meeting-create-clear-btn').click(function(event) {
+    $('#meeting-target-team').text('NONE');
+    $('#meeting-content').val('');
+    $('#meeting-time').val('');
+  });
+
 });

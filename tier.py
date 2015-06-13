@@ -43,10 +43,8 @@ define("mysql_database", default="TIER", help="database name")
 define("mysql_user", default="tier", help="database user")
 define("mysql_password", default="jian", help="database password")
 
-
 # A thread pool to be used for password hashing with bcrypt.
 executor = concurrent.futures.ThreadPoolExecutor(2)
-
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -62,6 +60,7 @@ class Application(tornado.web.Application):
             (r"/team/join", TeamJoinHandler),
             (r"/team/create", TeamCreateHandler),
             (r"/team/news", TeamNewsHandler),
+            (r"/team/meetings", TeamMeetingHandler),
 
             (r"/dashboard", DashboardHandler),
         ]
@@ -331,6 +330,11 @@ class TeamNewsHandler(BaseHandler):
                 })
 
             self.write(json_encode(resp))
+
+
+class TeamMeetingHandler(BaseHandler):
+    def post(self):
+        return
 
 
 def main():
