@@ -89,37 +89,46 @@ class Application(tornado.web.Application):
         self.db.execute("ALTER DATABASE CHARACTER SET 'utf8'")
 
         create_user_sql = "CREATE TABLE IF NOT EXISTS user ( \
-            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
-            email VARCHAR(30) NOT NULL UNIQUE, \
-            name VARCHAR(30) NOT NULL, \
-            hashed_password VARCHAR(100) NOT NULL \
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+                email VARCHAR(30) NOT NULL UNIQUE, \
+                name VARCHAR(30) NOT NULL, \
+                hashed_password VARCHAR(100) NOT NULL \
             )"
 
         create_team_sql = "CREATE TABLE IF NOT EXISTS team ( \
-            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
-            name VARCHAR(30) NOT NULL UNIQUE, \
-            leader_id INT NOT NULL REFERENCES user(id), \
-            introduction TEXT NOT NULL \
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+                name VARCHAR(30) NOT NULL UNIQUE, \
+                leader_id INT NOT NULL REFERENCES user(id), \
+                introduction TEXT NOT NULL \
             )"
 
         create_userTeam_sql = "CREATE TABLE IF NOT EXISTS user_team( \
-            user_id INT NOT NULL, \
-            team_id INT NOT NULL, \
-            PRIMARY KEY(user_id, team_id) \
+                user_id INT NOT NULL, \
+                team_id INT NOT NULL, \
+                PRIMARY KEY(user_id, team_id) \
             );"
 
         create_news_sql = "CREATE TABLE IF NOT EXISTS news( \
-            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
-            user_id INT NOT NULL, \
-            team_id INT NOT NULL, \
-            content TEXT NOT NULL, \
-            post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+                user_id INT NOT NULL, \
+                team_id INT NOT NULL, \
+                content TEXT NOT NULL, \
+                post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
+            );"
+
+        create_meetings_sql = "CREATE TABLE IF NOT EXISTS meetings( \
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+                team_id INT NOT NULL, \
+                content TEXT NOT NULL, \
+                meeting_time DATETIME NOT NULL, \
+                post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
             );"
 
         self.db.execute(create_user_sql)
         self.db.execute(create_team_sql)
         self.db.execute(create_userTeam_sql)
         self.db.execute(create_news_sql)
+        self.db.execute(create_meetings_sql)
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -334,8 +343,27 @@ class TeamNewsHandler(BaseHandler):
 
 class TeamMeetingHandler(BaseHandler):
     def post(self):
-        return
+        json_msg = self.request.arguments['_body'][0]
+        msg_body = json.loads(json_msg)
 
+        resp = {}
+
+        if msg_body['type'] == "create":
+            team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
+            content = msg_body['content']
+            meeting_time = msg_body['time']
+
+            print meeting_time
+
+            row = self.db.insert("INSERT INTO meetings(team_id, content, meeting_time) VALUES(%s, %s, %s)", \
+                team.id, content, meeting_time)
+
+            resp = { 'status' : 'success' } if row is not None else { 'status' : 'failed' }
+
+            self.write(json_encode(resp))
+
+        else:
+            return
 
 def main():
     tornado.options.parse_command_line()

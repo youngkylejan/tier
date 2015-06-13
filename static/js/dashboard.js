@@ -98,6 +98,7 @@ function load_team_news(team_name) {
 
 function meeting_create() {
   var info = new Object();
+  info.type = "create";
   info.team = $('#meeting-target-team').text();
   info.content = $('#meeting-content').val();
   info.time = $('#meeting-time').val();
@@ -107,7 +108,8 @@ function meeting_create() {
     type: 'POST',
     dataType: 'json',
     data: {
-      param1: 'value1'
+      _xsrf: getCookie("_xsrf"),
+      _body: JSON.stringify(info)
     },
   })
   .done(function() {
@@ -178,4 +180,7 @@ $(document).ready(function() {
     $('#meeting-time').val('');
   });
 
+  $('#meeting-create-confirm-btn').click(function(event) {
+    meeting_create();
+  });
 });
