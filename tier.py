@@ -245,15 +245,16 @@ class TeamJoinHandler(BaseHandler):
         action = self.request.arguments['_action']
 
         record = self.db.get("SELECT * FROM user_team WHERE user_id = {} and team_id = {}".format(user.id, team.id))
-
+        
+        resp = {}
         if not record:
             if action == 'check':
-                resp = { 'status': 'none' }
+                resp['status'] = 'none'
             else:
                 self.db.insert("INSERT INTO user_team(user_id, team_id) VALUES({}, {})".format(user.id, team.id))
-                resp = { 'status': 'inserts' }
+                resp['status'] = 'inserts'
         else:
-            resp = { 'status': 'exists' }
+            resp['status'] = 'exists'
 
         self.write(json_encode(resp))
  
@@ -267,15 +268,14 @@ class TeamCreateHandler(BaseHandler):
         name = msg_body['name']
         intro = msg_body['intro']
 
-        print name
-        print intro
         team_record = self.db.get("SELECT * FROM team WHERE name = %s", name)
 
+        resp = {}
         if not team_record:
             self.db.insert("INSERT INTO team(name, leader_id, introduction) VALUES(%s, %s, %s)", name, user.id, intro)
-            resp = { 'status' : 'success' }
+            resp['status'] = 'success'
         else:
-            resp = { 'status' : 'exists' }
+            resp['status'] = 'exists'
 
         self.write(json_encode(resp))
 

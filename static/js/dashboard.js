@@ -17,8 +17,10 @@ function create_team() {
       _create_info : JSON.stringify(create_info)
     },
   })
-  .done(function() {
+  .done(function(response) {
     console.log("success");
+    if (response['status'] == 'exists')
+      alert('team name exists');
   })
   .fail(function() {
     console.log("error");
