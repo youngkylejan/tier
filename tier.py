@@ -36,7 +36,7 @@ from tornado.escape import json_encode
 from tornado.escape import json_decode
 from tornado.options import define, options
 
-define("port", default=8888, help="run on the given port", type=int)
+define("port", default=8080, help="run on the given port", type=int)
 
 define("mysql_host", default="127.0.0.1:3306", help="database host")
 define("mysql_database", default="TIER", help="database name")
