@@ -126,11 +126,21 @@ class Application(tornado.web.Application):
                 post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
             );"
 
+        create_assignments_sql = "CREATE TABLE IF NOT EXISTS assignments( \
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+                team_id INT NOT NULL, \
+                target_uid INT NOT NULL, \
+                content TEXT NOT NULL, \
+                deadline DATETIME NOT NULL, \
+                post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
+            );"
+
         self.db.execute(create_user_sql)
         self.db.execute(create_team_sql)
         self.db.execute(create_userTeam_sql)
         self.db.execute(create_news_sql)
         self.db.execute(create_meetings_sql)
+        self.db.execute(create_assignments_sql)
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -389,10 +399,14 @@ class TeamAssignmentHandler(BaseHandler):
         json_msg = self.request.arguments['_body'][0]
         msg_body = json.loads(json_msg)
 
-        print msg_body
+        team_id = self.db.get("SELECT id FROM team WHERE name = %s", msg_body['team'])['id']
+        target_uid = self.db.get("SELECT id FROM user WHERE name = %s", msg_body['assignee'])['id']
+        self.db.insert("INSERT INTO assignments(team_id, target_uid, content, deadline) VALUES(%s, %s, %s, %s)", \
+            team_id, target_uid, msg_body['content'], msg_body['deadline'])
 
-        return
-
+        resp = { 'status' : 'success' }
+        self.write(json_encode(resp))
+        
 
 def main():
     tornado.options.parse_command_line()
