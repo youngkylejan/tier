@@ -236,7 +236,72 @@ function load_meeting_timeline() {
       li_timeline.append(timeline_badge);
       li_timeline.append(timeline_panel);
 
-      $('#timeline-board').append(li_timeline);
+      $('#meeting-timeline-board').append(li_timeline);
+    });
+
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+};
+
+function load_deadline_timeline() {
+  var info = new Object();
+  info.user = $('#nav_user').text();
+
+  $.ajax({
+    url: '/user/deadlines',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      _xsrf: getCookie("_xsrf"),
+      _body: JSON.stringify(info)
+    },
+  })
+  .done(function(resp) {
+    console.log("success");
+
+    $.each(resp['deadlines'], function(index, deadline) {
+      
+      var time_icon = $('<i/>', {class: "glyphicon glyphicon-time"});
+      var time_small_wrap = $('<small></small>', {class: "text-muted"});
+      var time_p_wrap = $('<p/>');
+      
+      time_small_wrap.append(time_icon);
+      time_small_wrap.append(deadline['deadline']);
+      time_p_wrap.append(time_small_wrap);
+
+      var timeline_team_text = $('<h4/>', {class: 'timeline-title', text: deadline['team']});
+      var timeline_heading = $('<div/>', {class: 'timeline-heading'});
+
+      timeline_heading.append(timeline_team_text);
+      timeline_heading.append(time_p_wrap);
+
+      var timeline_body_text = $('<p></p>', {text: deadline['content']});
+      var timeline_body = $('<div/>', {class: 'timeline-body'});
+      timeline_body.append(timeline_body_text);
+
+      var timeline_panel = $('<div/>', {class: 'timeline-panel'});
+      timeline_panel.append(timeline_heading);
+      timeline_panel.append(timeline_body);
+
+      var timeline_badge = $('<div/>', {class: 'timeline-badge warning'});
+      var timeline_badge_icon = $('<i/>', {class: 'glyphicon glyphicon-credit-card'});
+      timeline_badge.append(timeline_badge_icon);
+
+      var li_timeline;
+      if (index % 2 == 0)
+        li_timeline = $('<li/>');
+      else
+        li_timeline = $('<li/>', {class: "timeline-inverted"});
+
+      li_timeline.append(timeline_badge);
+      li_timeline.append(timeline_panel);
+
+      $('#deadline-timeline-board').append(li_timeline);
     });
 
   })
@@ -261,8 +326,12 @@ $(document).ready(function() {
     $('#' + new_content_id + '-container').attr('style', 'display: Auto');
 
     if (new_content_id == "meeting-schedule") {
-      $('#timeline-board').empty();
+      $('#meeting-timeline-board').empty();
       load_meeting_timeline();
+    }
+    else if (new_content_id == "deadline-schedule") {
+      $('#deadline-timeline-board').empty();
+      load_deadline_timeline();
     }
   });
 
@@ -337,6 +406,5 @@ $(document).ready(function() {
   $('#assign-create-confirm-btn').click(function(event) {
     create_assignment();
   });
-
 
 });

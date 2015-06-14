@@ -64,6 +64,8 @@ class Application(tornado.web.Application):
             (r"/team/members", TeamMemberHandler),
             (r"/team/assignments", TeamAssignmentHandler),
 
+            (r"/user/deadlines", UserDeadlineHandler),
+
             (r"/dashboard", DashboardHandler),
         ]
         settings = dict(
@@ -420,6 +422,33 @@ class TeamAssignmentHandler(BaseHandler):
             team_id, target_uid, msg_body['content'], msg_body['deadline'])
 
         resp = { 'status' : 'success' }
+        self.write(json_encode(resp))
+
+
+class UserDeadlineHandler(BaseHandler):
+    def post(self):
+        json_msg = self.request.arguments['_body'][0]
+        msg_body = json.loads(json_msg)
+
+        resp = {}
+
+        uid = self.db.get("SELECT id FROM user WHERE name = %s", msg_body['user'])['id']
+        teams = self.db.query("SELECT team_id FROM user_team WHERE user_id = %s", uid)
+
+        deadlines = []
+        for team in teams:
+            team_name = self.db.get("SELECT name FROM team WHERE id = %s", team['team_id'])['name']
+            assignment = self.db.get("SELECT * FROM assignments WHERE team_id = %s and target_uid = %s", team['team_id'], uid)
+            if assignment:
+                deadlines.append(
+                    {
+                        'team': team_name,
+                        'deadline': assignment['deadline'].strftime('%Y-%m-%d %H:%M:%S'),
+                        'content': assignment['content']
+                    }
+                )
+
+        resp = { 'deadlines' : deadlines }
         self.write(json_encode(resp))
 
 
