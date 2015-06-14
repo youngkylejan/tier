@@ -61,6 +61,7 @@ class Application(tornado.web.Application):
             (r"/team/create", TeamCreateHandler),
             (r"/team/news", TeamNewsHandler),
             (r"/team/meetings", TeamMeetingHandler),
+            (r"/team/members", TeamMemberHandler),
 
             (r"/dashboard", DashboardHandler),
         ]
@@ -364,6 +365,23 @@ class TeamMeetingHandler(BaseHandler):
 
         else:
             return
+
+
+class TeamMemberHandler(BaseHandler):
+    def post(self):
+        json_msg = self.request.arguments['_body'][0]
+        msg_body = json.loads(json_msg)
+
+        team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
+        users = self.db.query("SELECT user_id FROM user_team WHERE team_id = %s", team.id)
+
+        user_names = []
+        for user in users:
+            user_names.append(self.db.get("SELECT name FROM user WHERE id = %s", user['user_id'])['name'])
+
+        resp = { 'members' : user_names }
+        self.write(json_encode(resp))
+
 
 def main():
     tornado.options.parse_command_line()
