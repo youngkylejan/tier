@@ -9,3 +9,11 @@
     background-color: transparent;
     border-color: transparent;
 }
+
+.sitelogo {
+    color: #111;
+    text-transform: uppercase;
+    font-size: 32px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+}

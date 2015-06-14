@@ -112,32 +112,45 @@
         <nav class="navbar navbar-custom" role="navigation">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-2">
-                        <div class="site-logo">
-                            <a href="" class="brand">Tier.me</a>
-                        </div>
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <a class="navbar-brand site-logo" href="">Tier.me</a>
                     </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="menu">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li class="active"><a href="#intro">Home</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#service">Services</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li>
+                                <form class="navbar-form" action="/team/lobby" method="GET">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Search Team" class="form-control">
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Search</button>
+                                </form>
+                            </li>
 
-
-                    <div class="col-md-10">
-
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                        </div>
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="menu">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="active"><a href="#intro">Home</a></li>
-                                <li><a href="#about">About Us</a></li>
-                                <li><a href="#service">Services</a></li>
-                                <li><a href="#contact">Contact</a></li>
-                            </ul>
-                        </div>
-                        <!-- /.Navbar-collapse -->
+                        </ul>
+                        <form class="navbar-form navbar-right">
+                            {% if not username %}
+                            <div class="form-group">
+                                <a class="btn btn-success" type="button" href="/auth/login">Sign In</a>
+                                <a class="btn btn-success" type="button" href="/auth/register">Sign Up</a>
+                            </div>
+                            {% else %}
+                            <div class="form-group">
+                                <a id="nav_user" class="btn btn-transparent" href="/dashboard" style="color: white">{{ username }}</a>
+                                <a class="btn btn-success" type="button" href="/auth/logout">Log Out</a>
+                            </div>
+                            {% end %}
+                        </form>
                     </div>
+                    <!-- /.Navbar-collapse -->
                 </div>
             </div>
             <!-- /.container -->
