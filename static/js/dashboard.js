@@ -206,7 +206,7 @@ function load_meeting_timeline() {
       var time_p_wrap = $('<p/>');
       
       time_small_wrap.append(time_icon);
-      time_small_wrap.append(meeting['deadline']);
+      time_small_wrap.append(meeting['meeting_time']);
       time_p_wrap.append(time_small_wrap);
 
       var timeline_team_text = $('<h4/>', {class: 'timeline-title', text: meeting['team']});

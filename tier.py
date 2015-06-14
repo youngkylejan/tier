@@ -365,8 +365,6 @@ class TeamMeetingHandler(BaseHandler):
             content = msg_body['content']
             meeting_time = msg_body['time']
 
-            print meeting_time
-
             row = self.db.insert("INSERT INTO meetings(team_id, content, meeting_time) VALUES(%s, %s, %s)", \
                 team.id, content, meeting_time)
 
@@ -375,7 +373,24 @@ class TeamMeetingHandler(BaseHandler):
             self.write(json_encode(resp))
 
         else:
-            return
+            uid = self.db.get("SELECT id FROM user WHERE name = %s", msg_body['user'])['id']
+            teams = self.db.query("SELECT team_id FROM user_team WHERE user_id = %s", uid)
+
+            meetings = []
+            for team in teams:
+                team_name = self.db.get("SELECT name FROM team WHERE id = %s", team['team_id'])['name']
+                meeting = self.db.get("SELECT * FROM meetings WHERE team_id = %s", team['team_id'])
+                if meeting:
+                    meetings.append(
+                        {
+                            'team': team_name,
+                            'meeting_time': meeting['meeting_time'].strftime('%Y-%m-%d %H:%M:%S'),
+                            'content': meeting['content']
+                        }
+                    )
+
+            resp = { 'meetings' : meetings }
+            self.write(json_encode(resp))
 
 
 class TeamMemberHandler(BaseHandler):
