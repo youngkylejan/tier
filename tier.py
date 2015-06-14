@@ -455,7 +455,7 @@ class UserDeadlineHandler(BaseHandler):
 def main():
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application())
-    http_server.listen(options.port)
+    http_server.listen(options.port, "0.0.0.0")
     tornado.ioloop.IOLoop.current().start()
 
 
