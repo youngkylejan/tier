@@ -62,7 +62,7 @@ class Application(tornado.web.Application):
             (r"/team/news", TeamNewsHandler),
             (r"/team/meetings", TeamMeetingHandler),
             (r"/team/members", TeamMemberHandler),
-            (r"/team/assignment", TeamAssignmentHandler),
+            (r"/team/assignments", TeamAssignmentHandler),
 
             (r"/dashboard", DashboardHandler),
         ]
@@ -406,7 +406,7 @@ class TeamAssignmentHandler(BaseHandler):
 
         resp = { 'status' : 'success' }
         self.write(json_encode(resp))
-        
+
 
 def main():
     tornado.options.parse_command_line()
