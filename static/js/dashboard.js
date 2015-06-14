@@ -217,6 +217,7 @@ function load_meeting_timeline() {
 
       var timeline_body_text = $('<p></p>', {text: meeting['content']});
       var timeline_body = $('<div/>', {class: 'timeline-body'});
+      timeline_body.append(timeline_body_text);
 
       var timeline_panel = $('<div/>', {class: 'timeline-panel'});
       timeline_panel.append(timeline_heading);
@@ -228,9 +229,9 @@ function load_meeting_timeline() {
 
       var li_timeline;
       if (index % 2 == 0)
-        li_timeline = $('<div/>');
+        li_timeline = $('<li/>');
       else
-        li_timeline = $('<div/>', {class: "timeline-inverted"});
+        li_timeline = $('<li/>', {class: "timeline-inverted"});
 
       li_timeline.append(timeline_badge);
       li_timeline.append(timeline_panel);
@@ -245,7 +246,6 @@ function load_meeting_timeline() {
   .always(function() {
     console.log("complete");
   });
-  
 };
 
 $(document).ready(function() {
@@ -259,6 +259,11 @@ $(document).ready(function() {
 
     var new_content_id = $(this).attr('id');
     $('#' + new_content_id + '-container').attr('style', 'display: Auto');
+
+    if (new_content_id == "meeting-schedule") {
+      $('#timeline-board').empty();
+      load_meeting_timeline();
+    }
   });
 
   $('.datetimepicker').datetimepicker({ format: 'YYYY-MM-DD HH:mm:ss' });
@@ -333,9 +338,5 @@ $(document).ready(function() {
     create_assignment();
   });
 
-  // meeting timeline load
-  $('#meeting-schedule-container').click(function(event) {
-    
-  });
 
 });
