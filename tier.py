@@ -62,6 +62,7 @@ class Application(tornado.web.Application):
             (r"/team/news", TeamNewsHandler),
             (r"/team/meetings", TeamMeetingHandler),
             (r"/team/members", TeamMemberHandler),
+            (r"/team/assignment", TeamAssignmentHandler),
 
             (r"/dashboard", DashboardHandler),
         ]
@@ -381,6 +382,16 @@ class TeamMemberHandler(BaseHandler):
 
         resp = { 'members' : user_names }
         self.write(json_encode(resp))
+
+
+class TeamAssignmentHandler(BaseHandler):
+    def post(self):
+        json_msg = self.request.arguments['_body'][0]
+        msg_body = json.loads(json_msg)
+
+        print msg_body
+
+        return
 
 
 def main():

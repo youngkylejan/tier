@@ -154,8 +154,33 @@ function load_team_members(team_name) {
   
 };
 
+function create_assignment() {
+  var info = new Object();
+  info.team = $('#assign-target-team').text();
+  info.assignee = $('#assign-target-member').text();
+  info.content = $('#assign-content').val();
+  info.deadline = $('#assign-deadline').val();
 
-
+  $.ajax({
+    url: '/team/assignment',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      _xsrf: getCookie("_xsrf"),
+      _body: JSON.stringify(info)
+    },
+  })
+  .done(function() {
+    console.log("success");
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+  
+};
 
 $(document).ready(function() {
 
@@ -236,6 +261,10 @@ $(document).ready(function() {
     $('#assign-target-member').text('NONE');
     $('#assign-content').val('');
     $('#assign-deadline').val('');
+  });
+
+  $('#assign-create-confirm-btn').click(function(event) {
+    create_assignment();
   });
 
 });
