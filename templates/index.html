@@ -1,69 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <title>Tier.me</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{ static_url("bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
+    <!-- css -->
+    <link href="{{ static_url("bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css">
+    <link href="{{ static_url("font-awesome/css/font-awesome.min.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ static_url("css/nivo-lightbox.css") }}" rel="stylesheet" />
+    <link href="{{ static_url("css/nivo-lightbox-theme/default/default.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ static_url("css/owl.carousel.css") }}" rel="stylesheet" media="screen" />
+    <link href="{{ static_url("css/owl.theme.css") }}" rel="stylesheet" media="screen" />
+    <link href="{{ static_url("css/flexslider.css") }}" rel="stylesheet" />
+    <link href="{{ static_url("css/animate.css") }}" rel="stylesheet" />
+    <link href="{{ static_url("css/style.css") }}" rel="stylesheet">
+    <link href="{{ static_url("color/default.css") }}" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="{{ static_url("css/jumbotron.css") }}" rel="stylesheet">
+</head>
 
-    <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
 
-    <script src="{{ static_url("bootstrap/js/ie-emulation-modes-warning.js") }} "></script>
+    <section id="intro" class="home-slide text-light">
 
-  </head>
+        <!-- Carousel -->
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="{{ static_url("img/1.jpg") }}" alt="First slide" style="opacity: 0.3">
+                    <!-- Static Header -->
+                    <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                                <span>Welcome to Tier</span>
+                            </h2>
+                            <br>
+                            <h3>
+                                <span>A Cross-Platform for Project Team Management!</span>
+                            </h3>
+                            <br>
+                            <div class="">
+                                <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a>
+                            </div>
+                        </div>
+                    </div><!-- /header-text -->
+                </div>
+                <div class="item">
+                    <img src="{{ static_url("img/2.jpg") }}" alt="Second slide" style="opacity: 0.3">
+                    <!-- Static Header -->
+                    <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                                <span>Welcome to Tier</span>
+                            </h2>
+                            <br>
+                            <h3>
+                                <span>A Cross-Platform for Project Team Management.</span>
+                            </h3>
+                            <br>
+                            <div class="">
+                                <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a>
+                            </div>
+                        </div>
+                    </div><!-- /header-text -->
+                </div>
+                <div class="item">
+                    <img src="{{ static_url("img/3.jpg") }}" alt="Third slide" style="opacity: 0.3">
+                    <!-- Static Header -->
+                    <div class="header-text hidden-xs">
+                        <div class="col-md-12 text-center">
+                            <h2>
+                                <span>Welcome to Tier</span>
+                            </h2>
+                            <br>
+                            <h3>
+                                <span>A Cross-Platform for Project Team Management.</span>
+                            </h3>
+                            <br>
+                            <div class="">
+                                <a class="btn btn-theme btn-sm btn-min-block" href="#about">About us</a><a class="btn btn-theme btn-sm btn-min-block" href="#works">Our works</a>
+                            </div>
+                        </div>
+                    </div><!-- /header-text -->
+                </div>
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div><!-- /carousel -->
 
-  <body>
+    </section>
+    <!-- /Section: intro -->
 
-    {% module Template("nav.html", username=username) %}
+    <!-- Navigation -->
+    <div id="navigation">
+        <nav class="navbar navbar-custom" role="navigation">
+            <div class="container">
+                <div class="row">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <a class="navbar-brand site-logo" href="">Tier.me</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="menu">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li class="active"><a href="#intro">Home</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#service">Services</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li>
+                                <form class="navbar-form" action="/team/lobby" method="GET">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Search Team" class="form-control">
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Search</button>
+                                </form>
+                            </li>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-    <div class="container">
-        <h1>Hello, Tier</h1>
-        <p>This is a cross-platform for project team management. The application is aimed to achieve a common platform on which users can management project team. Then users can join in interested group, share ideas and take part in the meeting and schedule.</p>
-      </div>
-    </div>
+                        </ul>
+                        <form class="navbar-form navbar-right">
+                            {% if not username %}
+                            <div class="form-group">
+                                <a class="btn btn-success" type="button" href="/auth/login">Sign In</a>
+                                <a class="btn btn-success" type="button" href="/auth/register">Sign Up</a>
+                            </div>
+                            {% else %}
+                            <div class="form-group">
+                                <a id="nav_user" class="btn btn-transparent" href="/dashboard" style="color: black">{{ username }}</a>
+                                <a class="btn btn-success" type="button" href="/auth/logout">Log Out</a>
+                            </div>
+                            {% end %}
+                        </form>
+                    </div>
+                    <!-- /.Navbar-collapse -->
+                </div>
+            </div>
+            <!-- /.container -->
+        </nav>
+    </div> 
+    <!-- /Navigation -->
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">  
-          <h2>Management</h2>
-          <p>Tier supplys flexible platform and technical functions to users for purpose of improving the efficiency of team management. Registered users can create fantastic topics to attract like-minded persons. In the meantime, registered tourist can join in any interested projects and take part in the construction. </p>
-          <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
+    <!-- Section: about -->
+    <section id="about" class="home-section color-dark bg-white">
+        <div class="container marginbot-50">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                        <div class="section-heading text-center">
+                            <h2 class="h-bold">About</h2>
+                            <div class="divider-header"></div>
+                            <p>A Cross-Platform for Project Team Management.</p>
+                            <p>The application is aimed to achieve a common platform on which users can management project team. Then users can join in interested group, share ideas and take part in the meeting and schedule.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="col-md-4">
-          <h2>Sharing</h2>
-          <p>Brainstorming is the most important part in every project. Traditionally teamers should communicate with each other face-to-face or with the help of external social tools. Team construction is the soul of Tier. Tire focuses on supplying a dedicated platform to team for sharing profiles, ideas, schedules or news. </p>
-       </div>
-        <div class="col-md-4">
-          <h2>Scheduling</h2>
-          <p>Scheduling always keep huge influence on the production of ideas. In this case, Tier supplys automatical mechanism to fluency the scheduling process. Divided tasks could be assigned to specific person through Tier and Tier can help team leader to monitor the progress of every task.</p>
+
+        <div class="container">
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <img src="{{ static_url("img/dummy1.jpg") }} alt="" class="img-responsive" />
+
+                </div>
+
+                <div class="col-md-6">
+                    <p>Techniques involved in tier to help build creative functions.</p>
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                            50% - Tornado in Python
+                        </div>
+                    </div>
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+                            10% - HTML5
+                        </div>
+                    </div>
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+                            30% - Jquery
+                        </div>
+                    </div>
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                            20% - Objective C
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
         </div>
-      </div>
 
-      <hr>
+    </section>
+    <!-- /Section: about -->
 
-      <footer>
-        <p>&copy; HKU Ethan & Xiaoma 2015</p>
-        <p>Contact: kylejan.jan@gmail.com</p>
-      </footer>
-    </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ static_url("js/jquery.min.js") }}" ></script>
+    <!-- Section: services -->
+    <section id="service" class="home-section color-dark bg-gray">
+        <div class="container marginbot-50">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                        <div class="section-heading text-center">
+                            <h2 class="h-bold">Services</h2>
+                            <div class="divider-header"></div>
+                            <p>A Cross-Platform for Project Team Management.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-4 col-md-4">
+                        <div class="wow fadeInLeft" data-wow-delay="0.2s">
+                            <div class="service-box">
+                                <div class="service-icon">
+                                    <span class="fa fa-cogs fa-5x"></span> 
+                                </div>
+                                <div class="service-desc">
+                                    <h5>Management</h5>
+                                    <p>
+                                       Tier supplys flexible platform and technical functions to users for purpose of improving the efficiency of team management. Registered users can create fantastic topics to attract like-minded persons. In the meantime, registered tourist can join in any interested projects and take part in the construction.
+                                   </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-md-4">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="service-box">
+                                <div class="service-icon">
+                                    <span class="fa fa-camera fa-5x"></span> 
+                                </div>
+                                <div class="service-desc">
+                                    <h5>Sharing</h5>
+                                    <p>
+                                        Brainstorming is the most important part in every project. Traditionally teamers should communicate with each other face-to-face or with the help of external social tools. Team construction is the soul of Tier. Tire focuses on supplying a dedicated platform to team for sharing profiles, ideas, schedules or news.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-md-4">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="service-box">
+                                <div class="service-icon">
+                                    <span class="fa fa-laptop fa-5x"></span> 
+                                </div>
+                                <div class="service-desc">
+                                    <h5>Scheduling</h5>
+                                    <p>
+                                        Scheduling always keep huge influence on the production of ideas. In this case, Tier supplys automatical mechanism to fluency the scheduling process. Divided tasks could be assigned to specific person through Tier and Tier can help team leader to monitor the progress of every task.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Section: services -->
+
+    <!-- Section: contact -->
+    <section id="contact" class="home-section nopadd-bot color-dark bg-gray text-center">
+        <div class="container marginbot-50">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                        <div class="section-heading text-center">
+                            <h2 class="h-bold">Contact us</h2>
+                            <div class="divider-header"></div>
+                            <p>A Cross-Platform for Project Team Management.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div class="row marginbot-80">
+                <div class="col-md-8 col-md-offset-2">
+                    <form id="contact-form" class="wow bounceInUp" data-wow-offset="10" data-wow-delay="0.2s">
+                        <div class="row marginbot-20">
+                            <div class="col-md-6 xs-marginbot-20">
+                                <input type="text" class="form-control input-lg" id="name" placeholder="Enter name" required="required" />
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control input-lg" id="email" placeholder="Enter email" required="required" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" id="subject" placeholder="Subject" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="message" id="message" class="form-control" rows="4" cols="25" required="required"
+                                    placeholder="Message"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-skin btn-lg btn-block" id="btnContactUs">
+                                    Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- /Section: contact -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+
+                    <div class="text-center">
+                        <a href="#intro" class="totop"><i class="fa fa-angle-up fa-3x"></i></a>
+
+                        <p>The University of Hong Kong Project by Kylejan & Vincent<br />
+                            &copy;Copyright 2014 - Shuffle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core JavaScript Files -->
+    <script src="{{ static_url("js/jquery.min.js") }}"></script>
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{{ static_url("bootstrap/js/ie10-viewport-bug-workaround.js") }}"></script>
-  </body>
+    <script src="{{ static_url("js/jquery.sticky.js") }}"></script>
+    <script src="{{ static_url("js/jquery.flexslider-min.js") }}"></script>
+    <script src="{{ static_url("js/jquery.easing.min.js") }}"></script>
+    <script src="{{ static_url("js/jquery.scrollTo.min.js") }}"></script>
+    <script src="{{ static_url("js/jquery.appear.js") }}"></script>
+    <script src="{{ static_url("js/jquery.stellar.min.js") }}"></script>
+    <script src="{{ static_url("js/wow.min.js") }}"></script>
+    <script src="{{ static_url("js/owl.carousel.min.js") }}"></script>
+    <script src="{{ static_url("js/nivo-lightbox.min.js") }}"></script>
+
+    <script src="{{ static_url("js/custom.js") }}"></script>
+
+</body>
 </html>
