@@ -15,6 +15,7 @@
     <!-- Custom styles for this template -->
     <link href="{{ static_url("css/jumbotron.css") }}" rel="stylesheet">
     <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
+    <link href="{{ static_url("css/style.css") }}" rel="stylesheet">
 
     <!-- Jquery Script -->
     <script src="{{ static_url("js/jquery.min.js") }}"></script>
@@ -28,20 +29,18 @@
   <body>
     {% module Template("nav.html", username=username) %}
 
-    <div class="container">
+    <section class="home-section color-dark bg-white" style="padding-top: 50px">
+      <div class="container">
 
-        <div class="page-header">
-          <h1 id="team_name">{{ team_name }}</h1>
-          <h5>Leader: {{ leader_name }}</h5>
-          <p class="lead">{{ intro }}</p>
-          <p><a id="join_button" class="btn btn-default" role="button">Join It &raquo;</a></p>
-        </div>
+          <div class="page-header">
+            <h1 id="team_name">{{ team_name }}</h1>
+            <h5>Leader: {{ leader_name }}</h5>
+            <p class="lead">{{ intro }}</p>
+            <p><a id="join_button" class="btn btn-default" role="button" style="color: #666">Join It &raquo;</a></p>
+          </div>
 
-      <footer>
-        <p>&copy; HKU Ethan & Xiaoma 2015</p>
-        <p>Contact: kylejan.jan@gmail.com</p>
-      </footer>
-    </div>
+      </div>
+    </section>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

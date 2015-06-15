@@ -16,6 +16,7 @@
     <!-- Custom styles for this template -->
     <link href="{{ static_url("css/jumbotron.css") }}" rel="stylesheet">
     <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
+    <link href="{{ static_url("css/style.css") }}" rel="stylesheet">
 
     <script src="{{ static_url("bootstrap/js/ie-emulation-modes-warning.js") }}"></script>
     
@@ -25,46 +26,43 @@
 
     {% module Template("nav.html", username=username) %}
 
-    <div class="container">
-      <br/>
+    <section class="home-section color-dark bg-white" style="padding-top: 80px">
+      <div class="container">
+        <br/>
 
-      {% if teams != None %}
-        
-        {% set num = 0 %}
-        {% for team in teams %}
+        {% if teams != None %}
           
-          {% if num == 0 %}
-            <div class="row">
+          {% set num = 0 %}
+          {% for team in teams %}
+            
+            {% if num == 0 %}
+              <div class="row">
+            {% end %}
+
+            <div class="col-md-4">
+              <h2>{{ team.name }}</h2>
+              <p>{{ team.introduction }}</p>
+              <p><a class="btn btn-default" href="\team\home?name={{ team.name }}" role="button" style="color: #666">View details &raquo;</a></p>
+            </div>
+            {% set num = num + 1 %}
+            
+            {% if not num % 3 %}
+              </div>
+              <hr>
+              {% set num = 0 %}
+            {% end %}
+
           {% end %}
 
-          <div class="col-md-4">
-            <h2>{{ team.name }}</h2>
-            <p>{{ team.introduction }}</p>
-            <p><a class="btn btn-default" href="\team\home?name={{ team.name }}" role="button">View details &raquo;</a></p>
-          </div>
-          {% set num = num + 1 %}
-          
-          {% if not num % 3 %}
+          {% if num != 0 %}
             </div>
             <hr>
-            {% set num = 0 %}
           {% end %}
 
         {% end %}
-
-        {% if num != 0 %}
-          </div>
-          <hr>
-        {% end %}
-
-      {% end %}
-
-
-      <footer>
-        <p>&copy; HKU Ethan & Xiaoma 2015</p>
-        <p>Contact: kylejan.jan@gmail.com</p>
-      </footer>
-    </div>
+        
+      </div>
+    </section>
 
 
     <!-- Bootstrap core JavaScript
@@ -72,6 +70,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{ static_url("js/jquery.min.js") }}"></script>
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
+ 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ static_url("bootstrap/js/ie10-viewport-bug-workaround.js") }}"></script>
   </body>
