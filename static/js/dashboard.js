@@ -323,7 +323,7 @@ $(document).ready(function() {
     $(this).addClass('active');
 
     var new_content_id = $(this).attr('id');
-    $('#' + new_content_id + '-container').attr('style', 'display: Auto');
+    $('#' + new_content_id + '-container').attr('style', 'display: auto');
 
     if (new_content_id == "meeting-schedule") {
       $('#meeting-timeline-board').empty();
