@@ -382,15 +382,17 @@ class TeamMeetingHandler(BaseHandler):
             meetings = []
             for team in teams:
                 team_name = self.db.get("SELECT name FROM team WHERE id = %s", team['team_id'])['name']
-                meeting = self.db.get("SELECT * FROM meetings WHERE team_id = %s", team['team_id'])
-                if meeting:
-                    meetings.append(
-                        {
-                            'team': team_name,
-                            'meeting_time': meeting['meeting_time'].strftime('%Y-%m-%d %H:%M:%S'),
-                            'content': meeting['content']
-                        }
-                    )
+                queryed_meetings = self.db.query("SELECT * FROM meetings WHERE team_id = %s", team['team_id'])
+                
+                for meeting in queryed_meetings:
+                    if meeting:
+                        meetings.append(
+                            {
+                                'team': team_name,
+                                'meeting_time': meeting['meeting_time'].strftime('%Y-%m-%d %H:%M:%S'),
+                                'content': meeting['content']
+                            }
+                        )
 
             resp = { 'meetings' : meetings }
             self.write(json_encode(resp))
@@ -439,15 +441,16 @@ class UserDeadlineHandler(BaseHandler):
         deadlines = []
         for team in teams:
             team_name = self.db.get("SELECT name FROM team WHERE id = %s", team['team_id'])['name']
-            assignment = self.db.get("SELECT * FROM assignments WHERE team_id = %s and target_uid = %s", team['team_id'], uid)
-            if assignment:
-                deadlines.append(
-                    {
-                        'team': team_name,
-                        'deadline': assignment['deadline'].strftime('%Y-%m-%d %H:%M:%S'),
-                        'content': assignment['content']
-                    }
-                )
+            queryed_assignments = self.db.query("SELECT * FROM assignments WHERE team_id = %s and target_uid = %s", team['team_id'], uid)
+            for assignment in queryed_assignments:
+                if assignment:
+                    deadlines.append(
+                        {
+                            'team': team_name,
+                            'deadline': assignment['deadline'].strftime('%Y-%m-%d %H:%M:%S'),
+                            'content': assignment['content']
+                        }
+                    )
 
         resp = { 'deadlines' : deadlines }
         self.write(json_encode(resp))
