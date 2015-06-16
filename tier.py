@@ -195,6 +195,7 @@ class AuthRegisterHandler(BaseHandler):
             email, name,
             hashed_password)
 
+        self.reg_user_callback(name)
 
     def reg_user_callback(self, name):
         doc = yield self.db.user.find({'name': name})
