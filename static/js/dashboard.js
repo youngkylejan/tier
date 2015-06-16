@@ -316,10 +316,12 @@ function load_deadline_timeline() {
 $(document).ready(function() {
 
   $('.menu-item').click(function(event) {
-    var pre_content_id = $('.active').attr('id');
-    $('#' + pre_content_id + '-container').attr('style', 'display: None');
+    var pre_content_id = $('.active-container').attr('id');
+    $('#' + pre_content_id + '-container').attr('style', 'display: none');
 
+    $('.active-container').removeClass('active-container');
     $('.active').removeClass('active');
+    $(this).addClass('active-container');
     $(this).addClass('active');
 
     var new_content_id = $(this).attr('id');
