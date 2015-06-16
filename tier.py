@@ -156,8 +156,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.db.get("SELECT * FROM user WHERE id = %s", str(user_id))
 
     def whether_author_exists(self, name):
-        sql = "SELECT * FROM user WHERE name = '{}'".format(name)
-        return bool(self.db.get(sql))
+        return bool(self.db.get("SELECT * FROM user WHERE name = %s", name))
 
     def redirect_fault_page(self, error_msg):
         self.render("fault.html", error=error_msg)
