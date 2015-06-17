@@ -3,7 +3,6 @@ function getCookie(name) {
     return r ? r[1] : undefined;
 }
 
-
 function create_team() {
     var create_info = new Object();
     create_info.name = $('#team-name-create').val();
