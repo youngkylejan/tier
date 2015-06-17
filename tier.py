@@ -176,7 +176,7 @@ class AuthRegisterHandler(BaseHandler):
 
     @gen.coroutine
     def post(self):
-
+        print self.request.body
         name = self.get_argument("name")
         email = self.get_argument("email")
         pwd = self.get_argument("password")
