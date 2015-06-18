@@ -64,7 +64,6 @@ class Application(tornado.web.Application):
             (r"/auth/signin", AuthSignInHandler),
             (r"/auth/signout", AuthSignOutHandler),
 
-            (r"/team/lobby", TeamLobbyHandler),
             (r"/team/home", TeamHomeHandler),
             (r"/team/join", TeamJoinHandler),
             (r"/team/create", TeamCreateHandler),
@@ -312,17 +311,6 @@ class TeamCreateHandler(BaseHandler):
             resp['status'] = 'exists'
 
         self.write(json_encode(resp))
-
-
-class TeamLobbyHandler(BaseHandler):
-    def get(self):
-        if not self.current_user:
-            self.render("fault.html", error="Please Login Firstly!")
-            return
-
-        teams = self.get_teams()
-
-        self.render("team_lobby.html", username=self.current_user.name, teams=teams)
 
 
 class DashboardHandler(BaseHandler):
