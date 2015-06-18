@@ -31,6 +31,12 @@ function create_team() {
 };
 
 $(document).ready(function() {
+    wow = new WOW({
+        animateClass: 'animated',
+        offset: 0
+    });
+    wow.init();
+    
     // team create
     $('#team-create-clear-btn').click(function(event) {
         $('#team-name-create').val('');
