@@ -24,6 +24,7 @@ import os.path
 import re
 import subprocess
 import torndb
+import logging
 
 import tornado.escape
 import tornado.httpserver

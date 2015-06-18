@@ -5,16 +5,13 @@
                 RECENT CHAT HISTORY
             </div>
             <div class="panel-body">
-                <ul class="media-list">
+                <ul class="media-list" id="inbox" style="height: 400px">
 
                     <li class="media">
 
                         <div class="media-body">
 
                             <div class="media">
-                                <a class="pull-left" href="#">
-                                    <img class="media-object img-circle " src="assets/img/user.png" />
-                                </a>
                                 <div class="media-body" >
                                     Donec sit amet ligula enim. Duis vel condimentum massa.
 
@@ -23,72 +20,6 @@
                                     Donec sit amet ligula enim. Duis vel condimentum massa.
                                     <br />
                                     <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
-                                    <hr />
-                                </div>
-                            </div>
-
-                        </div>
-                    </li>
-                    <li class="media">
-
-                        <div class="media-body">
-
-                            <div class="media">
-                                <a class="pull-left" href="#">
-                                    <img class="media-object img-circle " src="assets/img/user.gif" />
-                                </a>
-                                <div class="media-body" >
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.
-
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit amet ligula enim. 
-                                    Duis vel condimentum massa.
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.
-                                    <br />
-                                    <small class="text-muted">Jhon Rexa | 23rd June at 5:00pm</small>
-                                    <hr />
-                                </div>
-                            </div>
-
-                        </div>
-                    </li>
-                    <li class="media">
-
-                        <div class="media-body">
-
-                            <div class="media">
-                                <a class="pull-left" href="#">
-                                    <img class="media-object img-circle " src="assets/img/user.png" />
-                                </a>
-                                <div class="media-body" >
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.
-
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit amet ligula enim. 
-                                    Duis vel condimentum massa.
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.
-                                    <br />
-                                    <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
-                                    <hr />
-                                </div>
-                            </div>
-
-                        </div>
-                    </li>
-                    <li class="media">
-
-                        <div class="media-body">
-
-                            <div class="media">
-                                <a class="pull-left" href="#">
-                                    <img class="media-object img-circle " src="assets/img/user.gif" />
-                                </a>
-                                <div class="media-body" >
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.
-
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit amet ligula enim. 
-                                    Duis vel condimentum massa.
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.
-                                    <br />
-                                    <small class="text-muted">Jhon Rexa | 23rd June at 5:00pm</small>
                                     <hr />
                                 </div>
                             </div>
@@ -97,13 +28,17 @@
                     </li>
                 </ul>
             </div>
-            <div class="panel-footer">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter Message" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info" type="button">SEND</button>
-                    </span>
-                </div>
+            <div id="input" class="panel-footer">
+                <form action="/a/message/new" method="post" id="messageform">
+                    <div class="input-group">
+                        <input id="message" name="body" type="text" class="form-control" placeholder="Enter Message" />
+                        {% module xsrf_form_html() %}
+                        <input type="hidden" name="next" value="{{ request.path }}"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="button">SEND</button>
+                        </span>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
