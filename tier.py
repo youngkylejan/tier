@@ -60,8 +60,8 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", IndexHandler),
 
-            (r"/auth/signup", AuthRegisterHandler),
-            (r"/auth/signin", AuthLoginHandler),
+            (r"/auth/signup", AuthSignUpHandler),
+            (r"/auth/signin", AuthSignInHandler),
             (r"/auth/logout", AuthLogoutHandler),
 
             (r"/team/lobby", TeamLobbyHandler),
@@ -164,13 +164,48 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         user_id = self.get_secure_cookie("tier_user")
         if not user_id: return None
-        return self.db.get("SELECT * FROM user WHERE id = %s", str(user_id))
+        return self.get_user_by_id(str(user_id))
 
     def whether_author_exists(self, name):
         return bool(self.db.get("SELECT * FROM user WHERE name = %s", name))
 
     def redirect_fault_page(self, error_msg):
         self.render("fault.html", error=error_msg)
+
+    def get_user_by_name(self, name):
+        user = self.db.get("SELECT * FROM user WHERE name = %s", name)
+        return None if not user else user
+
+    def get_team_by_name(self, team):
+        team = self.db.get("SELECT * FROM team WHERE name = %s", name)
+        return None if not team else team
+
+    def get_user_by_id(self, id):
+        user = self.db.get("SELECT * FROM user WHERE id = %s", id)
+        return None if not user else user
+
+    def get_team_by_id(self, id):
+        team = self.db.get("SELECT * FROM team WHERE id = %s", id)
+        return None if not team else team
+
+    def get_teams(self):
+        teams = self.db.query("SELECT * FROM team")
+        return None if not teams else teams
+
+    def get_teams_by_username(self, name):
+        user = self.get_user_by_name(name)
+        if not user: return None
+
+        teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT team_id FROM user_team WHERE user_id = %s)", user.id)
+        return None if not teams else teams
+
+    def get_teams_by_userid(self, id):
+        user = self.get_user_by_id(id)
+        if not user: return None
+
+        teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT team_id FROM user_team WHERE user_id = %s)", user.id)
+        return None if not teams else teams
+
 
 
 class IndexHandler(BaseHandler):
@@ -181,7 +216,7 @@ class IndexHandler(BaseHandler):
             self.render("index.html", username=self.current_user.name)
 
 
-class AuthRegisterHandler(BaseHandler):
+class AuthSignUpHandler(BaseHandler):
     def get(self):
         self.render("signup.html", error=None)
 
@@ -213,7 +248,7 @@ class AuthRegisterHandler(BaseHandler):
         self.redirect("/")
 
 
-class AuthLoginHandler(BaseHandler):
+class AuthSignInHandler(BaseHandler):
     def get(self):
         self.render("signin.html", error=None)
 
@@ -249,7 +284,7 @@ class TeamLobbyHandler(BaseHandler):
             self.render("fault.html", error="Please Login Firstly!")
             return
 
-        teams = self.db.query("SELECT * FROM team")
+        teams = self.get_teams()
 
         self.render("team_lobby.html", username=self.current_user.name, teams=teams)
 
@@ -260,8 +295,10 @@ class DashboardHandler(BaseHandler):
             self.render("fault.html", error="Please Login Firstly")
             return
 
-        qry_sql_user_team = "SELECT team_id FROM user_team WHERE user_id = {}".format(self.current_user.id)
-        team_names = self.db.query("SELECT name FROM team WHERE id in (" + qry_sql_user_team + ")")
+        teams = self.get_teams_by_userid(self.current_user.id)
+        team_names = []
+        for team in teams:
+            team_names.append(team['name'])
 
         self.render("dashboard.html", username = self.current_user.name, user_teams = team_names)
 
