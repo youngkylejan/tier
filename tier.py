@@ -60,7 +60,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", IndexHandler),
 
-            (r"/auth/register", AuthRegisterHandler),
+            (r"/auth/signup", AuthRegisterHandler),
             (r"/auth/signin", AuthLoginHandler),
             (r"/auth/logout", AuthLogoutHandler),
 
@@ -183,7 +183,7 @@ class IndexHandler(BaseHandler):
 
 class AuthRegisterHandler(BaseHandler):
     def get(self):
-        self.render("register.html", error=None)
+        self.render("signup.html", error=None)
 
     @gen.coroutine
     def post(self):
@@ -192,7 +192,7 @@ class AuthRegisterHandler(BaseHandler):
         pwd = self.get_argument("password")
 
         if self.whether_author_exists(name):
-            self.render("register.html", error="User Exists")
+            self.render("signup.html", error="User Exists")
         
         hashed_password = yield executor.submit(
             bcrypt.hashpw, tornado.escape.utf8(pwd),

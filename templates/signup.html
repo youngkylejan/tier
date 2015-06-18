@@ -14,8 +14,8 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ static_url("css/signin.css") }}" rel="stylesheet">
-
     <link href="{{ static_url("css/tier.css") }}" rel="stylesheet">
+    <link href="{{ static_url("css/style.css") }}" rel="stylesheet">
 
     <!-- Jquery -->
     <script src="{{ static_url("js/jquery.min.js") }}"></script>
@@ -23,8 +23,10 @@
   </head>
 
   <body>
-    <div class="container">
-      <form action="\auth\register" method="POST">
+    {% module Template("nav.html", username="") %}
+
+    <div class="container tier-container">
+      <form action="\auth\register" method="POST" class="col-md-offset-3 col-md-6">
         <dl>
           <dt><label for="inputName">Username</label></dt>
           <dd>
@@ -46,6 +48,7 @@
           </dd>
         </dl>
         {% module xsrf_form_html() %}
+        <br/>
         <input id="register_user" class="btn btn-lg btn-primary btn-block" type="submit" value="Sign up"/>
       </form>
     </div>
