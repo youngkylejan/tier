@@ -14,12 +14,12 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ static_url("css/signin.css") }}" rel="stylesheet">
-
-    <link href="{{ static_url("css/my.css") }}" rel="stylesheet">
+    <link href="{{ static_url("css/tier.css") }}" rel="stylesheet">
 
   </head>
 
   <body>
+    {% module Template("nav.html", username=username) %}
 
     <div class="container">
       <form class="form-signin" action="/auth/login" method="POST">
