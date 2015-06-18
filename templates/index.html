@@ -164,10 +164,20 @@
                 <div class="col-lo-8 col-lo-offset-2">
                     <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
                         <div class="section-heading text-center">
-                            <h2 class="h-bold">Hi, {{ username }}</h2>
+                            {% if username %}
+                            <h2 class="h-bold" style="text-transform: none;">Hi, {{ username }}</h2>
+                            {% else %}
+                            <h2 class="h-bold" style="text-transform: none;">Hi,</h2>
+                            {% end if %}
                             <div class="divider-header"></div>
-                            <p>Start to manage your interested team!</p>
-                            <button class="btn btn-success" type="submit"></button>
+                            <p>Welcome to login Tier again!</p>
+                            <p>Click the button below and then enter into the team lobby room.</p>
+                            <p>Choose your interested team and start the travel on Tier platform. Hope you enjoy Tier!</p>
+                            {% if username %}
+                            <button id="start-btn" class="btn btn-success" type="submit">Start</button>
+                            {% else %}
+                            <button class="btn btn-warning">Login Firstly</button>
+                            {% end if %}
                         </div>
                     </div>
                 </div>
