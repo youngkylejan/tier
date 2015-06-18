@@ -62,7 +62,7 @@ class Application(tornado.web.Application):
 
             (r"/auth/signup", AuthSignUpHandler),
             (r"/auth/signin", AuthSignInHandler),
-            (r"/auth/logout", AuthLogoutHandler),
+            (r"/auth/signout", AuthSignOutHandler),
 
             (r"/team/lobby", TeamLobbyHandler),
             (r"/team/home", TeamHomeHandler),
@@ -284,11 +284,10 @@ class AuthSignInHandler(BaseHandler):
             self.render("signin.html", error="Incorrect Password")
 
 
-class AuthLogoutHandler(BaseHandler):
+class AuthSignOutHandler(BaseHandler):
     def get(self):
         self.clear_cookie("tier_user")
         self.redirect("/")
-        return
 
 
 class TeamLobbyHandler(BaseHandler):
