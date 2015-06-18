@@ -25,25 +25,56 @@
     {% module Template("nav.html", username=username) %}
 
     <section class="home-section color-dark bg-white" style="padding-top: 80px">
-        <div class="container tier-container">
-            <h3 class="header">Teams Unjoined</h3>
-            <div class="list-group">
-                {% if excepted_teams != None %}
-                    {% for excepted_team in excepted_teams %}
-                        <a href="" class="list-group-item list-group-item-default">{{ excepted_team['name'] }}</a>
-                    {% end %}
-                {% end if %}
-            </div>
-        </div>
 
         <div class="container tier-container">
             <h3 class="header">Teams Joined</h3>
             <div class="list-group">
+                {% set i = 0 %}
                 {% if joined_teams != None %}
                     {% for joined_team in joined_teams %}
-                        <a href="" class="list-group-item list-group-item-default">{{ joined_team['name'] }}</a>
+                        <a href="" class="list-group-item list-group-item-default">[{{ i + 1 }}] {{ joined_team['name'] }}</a>
+                        {% set i = i + 1 %}
                     {% end %}
                 {% end if %}
+                {% if i % 8 != 0 or i == 0 %}
+                    {% set j = (i / 6 + 1) * 6 - i %}
+                    {% for x in xrange(j) %}
+                        <a href="" class="list-group-item list-group-item-default">{{ i + 1 }}</a>
+                        {% set i = i + 1 %}
+                    {% end%}
+                {% end if %}
+            </div>
+            <div>
+                <ul class="pager">
+                    <li><a href="#">Previous</a></li>
+                    <li><a href="#">Next</a></li>
+                </ul>
+            </div>
+        </div>
+                
+        <div class="container tier-container">
+            <h3 class="header">Teams Unjoined</h3>
+            <div class="list-group">
+                {% set i = 0 %}
+                {% if excepted_teams != None %}
+                    {% for excepted_team in excepted_teams %}
+                        <a href="" class="list-group-item list-group-item-default">[{{ i + 1 }}] {{ excepted_team['name'] }}</a>
+                    {% set i = i + 1 %}
+                    {% end %}
+                {% end if %}
+                {% if i % 8 != 0 or i == 0 %}
+                    {% set j = (i / 6 + 1) * 6 - i %}
+                    {% for x in xrange(j) %}
+                        <a href="" class="list-group-item list-group-item-default">{{ i + 1 }}</a>
+                        {% set i = i + 1 %}
+                    {% end%}
+                {% end if %}
+            </div>
+            <div>
+                <ul class="pager">
+                    <li><a href="#">Previous</a></li>
+                    <li><a href="#">Next</a></li>
+                </ul>
             </div>
         </div>
     </section>
