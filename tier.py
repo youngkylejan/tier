@@ -76,6 +76,7 @@ class Application(tornado.web.Application):
             (r"/team/chat/updates", MessageUpdatesHandler),
 
             (r"/user/deadlines", UserDeadlineHandler),
+            (r"/user/lobby", UserLobbyHandler),
 
             (r"/dashboard", DashboardHandler),
         ]
@@ -192,33 +193,32 @@ class BaseHandler(tornado.web.RequestHandler):
         teams = self.db.query("SELECT * FROM team")
         return None if not teams else teams
 
+    def get_teams_by_userid(self, id):
+        teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT team_id FROM user_team WHERE user_id = %s)", id)
+        return None if not teams else teams
+
     def get_teams_by_username(self, name):
         user = self.get_user_by_name(name)
         if not user: return None
+        return self.get_teams_by_userid(user.id)
 
-        teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT team_id FROM user_team WHERE user_id = %s)", user.id)
-        return None if not teams else teams
-
-    def get_teams_by_userid(self, id):
-        user = self.get_user_by_id(id)
-        if not user: return None
-
-        teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT team_id FROM user_team WHERE user_id = %s)", user.id)
-        return None if not teams else teams
+    def get_members_by_teamid(self, id):
+        members = self.db.query("SELECT * FROM user WHERE id IN (SELECT user_id FROM user_team WHERE team_id = %s)", team.id)
+        return None if not members else members
 
     def get_members_by_teamname(self, name):
         team = self.get_team_by_name(name)
         if not team: return None
+        return self.get_members_by_teamid(team.id)
 
-        members = self.db.query("SELECT * FROM user WHERE id IN (SELECT user_id FROM user_team WHERE team_id = %s)", team.id)
-        return None if not members else members
+    def get_teams_except_by_userid(self, id):
+        excepted_teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT user_id FROM user_team WHERE user_id = %s)", user.id)
+        return None if not excepted_teams else excepted_teams
 
-    def get_members_by_teamid(self, id):
-        team = self.get_team_by_id(id)
-        if not team: return None
-
-        members = self.db.query("SELECT * FROM user WHERE id IN (SELECT user_id FROM user_team WHERE team_id = %s)", team.id)
-        return None if not members else members
+    def get_teams_except_by_username(self, name):
+        user = self.get_user_by_name(name)
+        if not user: return None
+        return self.get_teams_except_by_userid(user.id)
 
 
 class IndexHandler(BaseHandler):
@@ -512,6 +512,12 @@ class UserDeadlineHandler(BaseHandler):
 
         resp = { 'deadlines' : deadlines }
         self.write(json_encode(resp))
+
+
+class UserLobbyHandler(BaseHandler):
+    def get(self):
+        teams = self.get_teams_except_by_userid(self.current_user.id)
+        self.render("user_lobby.html", )
 
 
 class MessageNewHandler(BaseHandler):

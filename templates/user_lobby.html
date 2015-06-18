@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,41 +26,10 @@
 
     <section class="home-section color-dark bg-white" style="padding-top: 80px">
         <div class="container tier-container">
-            <br/>
+            
 
-            {% if teams != None %}
-
-            {% set num = 0 %}
-            {% for team in teams %}
-
-            {% if num == 0 %}
-            <div class="row">
-                {% end %}
-
-                <div class="col-md-4">
-                    <h2>{{ team.name }}</h2>
-                    <p>{{ team.introduction }}</p>
-                    <p><a class="btn btn-default" href="\team\home?name={{ team.name }}" role="button" style="color: #666">View details &raquo;</a></p>
-                </div>
-                {% set num = num + 1 %}
-
-                {% if not num % 3 %}
-            </div>
-            <hr>
-            {% set num = 0 %}
-            {% end %}
-
-            {% end %}
-
-            {% if num != 0 %}
         </div>
-        <hr>
-        {% end %}
-
-        {% end %}
-
-    </div>
-</section>
+    </section>
 
 
 <!-- Bootstrap core JavaScript
