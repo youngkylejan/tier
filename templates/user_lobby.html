@@ -26,10 +26,24 @@
 
     <section class="home-section color-dark bg-white" style="padding-top: 80px">
         <div class="container tier-container">
+            <h3 class="header">Teams Unjoined</h3>
             <div class="list-group">
-                {% for excepted_team in excepted_teams %}
-                    <a href="#" class="list-group-item list-group-item-default">{{ excepted_team['name'] }}</a>
-                {% end %}
+                {% if excepted_teams != None %}
+                    {% for excepted_team in excepted_teams %}
+                        <a href="" class="list-group-item list-group-item-default">{{ excepted_team['name'] }}</a>
+                    {% end %}
+                {% end if %}
+            </div>
+        </div>
+
+        <div class="container tier-container">
+            <h3 class="header">Teams Joined</h3>
+            <div class="list-group">
+                {% if joined_teams != None %}
+                    {% for joined_team in joined_teams %}
+                        <a href="" class="list-group-item list-group-item-default">{{ joined_team['name'] }}</a>
+                    {% end %}
+                {% end if %}
             </div>
         </div>
     </section>
