@@ -19,8 +19,16 @@ function create_team() {
         })
         .done(function(response) {
             console.log("success");
-            if (response['status'] == 'exists')
-                alert('team name exists');
+            if (response['status'] == 'exists') {
+                $('#failed-create-btn').fadeIn('400', function() {
+                    $('#failed-create-btn').delay(1000).fadeOut('400');
+                });
+            } else {
+                $('#success-create-btn').fadeIn('400', function() {
+                    $('#success-create-btn').delay(1000).fadeOut('400');
+                });
+            }
+
         })
         .fail(function() {
             console.log("error");
@@ -36,7 +44,7 @@ $(document).ready(function() {
         offset: 0
     });
     wow.init();
-    
+
     // team create
     $('#team-create-clear-btn').click(function(event) {
         $('#team-name-create').val('');

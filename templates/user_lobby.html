@@ -33,22 +33,23 @@
                         <p>Does not have any interested team?</p>
                         <p>Create it by yourself with filling information of team below!</p>
                         <div id="team-create">
-
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1">Team Name</span>
                                 <input id="team-name-create" type="text" class="form-control" placeholder="team name" aria-describedby="basic-addon1">
                             </div>
-
                             <br/>
 
                             <span class="input-group-addon" id="basic-addon1">Team Introduction</span>
                             <textarea id="team-intro-create" type="text" rows="5" class="form-control" placeholder="introduction" aria-describedby="basic-addon1"></textarea>
-
                             <br/>
 
                             <button id="team-create-clear-btn" type="submit" class="btn btn-primary">Clear</button>
                             <button id="team-create-confirm-btn" type="submit" class="btn btn-primary">Create</button>
+                            <br/>
+                            <br/>
 
+                            <p id="success-create-btn" style="display: none;">success</p>
+                            <p id="failed-create-btn"  style="display: none;">name exists</p>
                             <hr/>
                         </div>
                     </div>
@@ -58,7 +59,6 @@
     </section>
 
     <section class="color-dark bg-white">
-
         <div class="container tier-container col-md-offset-2 col-md-8 wow fadeInLeft" data-wow-delay="0.4s">
             <h3 class="header text-center site-logo">Teams Joined</h3>
             <div class="list-group">
