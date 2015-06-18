@@ -26,20 +26,26 @@
 
     <section class="home-section color-dark bg-white" style="padding-top: 80px">
 
-        <div class="container tier-container">
+        <div class="container tier-container col-md-offset-2 col-md-8">
             <h3 class="header">Teams Joined</h3>
             <div class="list-group">
                 {% set i = 0 %}
                 {% if joined_teams != None %}
                     {% for joined_team in joined_teams %}
-                        <a href="" class="list-group-item list-group-item-default">[{{ i + 1 }}] {{ joined_team['name'] }}</a>
+                        <a href="" class="list-group-item list-group-item-default row">
+                            <span class="col-md-1">{{ i + 1 }}</span>
+                            <span class="col-md-2">{{ joined_team['name'] }}</span>
+                        </a>                   
                         {% set i = i + 1 %}
                     {% end %}
                 {% end if %}
                 {% if i % 8 != 0 or i == 0 %}
                     {% set j = (i / 6 + 1) * 6 - i %}
                     {% for x in xrange(j) %}
-                        <a href="" class="list-group-item list-group-item-default">{{ i + 1 }}</a>
+                        <a href="" class="list-group-item list-group-item-default row">
+                            <span class="col-md-1">{{ i + 1 }}</span>
+                            <span class="col-md-2"></span>
+                        </a>
                         {% set i = i + 1 %}
                     {% end%}
                 {% end if %}
@@ -51,21 +57,27 @@
                 </ul>
             </div>
         </div>
-                
-        <div class="container tier-container">
+
+        <div class="container tier-container col-md-offset-2 col-md-8">
             <h3 class="header">Teams Unjoined</h3>
             <div class="list-group">
                 {% set i = 0 %}
                 {% if excepted_teams != None %}
                     {% for excepted_team in excepted_teams %}
-                        <a href="" class="list-group-item list-group-item-default">[{{ i + 1 }}] {{ excepted_team['name'] }}</a>
+                        <a href="" class="list-group-item list-group-item-default row">
+                            <span class="col-md-1">{{ i + 1 }}</span>
+                            <span class="col-md-2">{{ excepted_team['name'] }}</span>
+                        </a> 
                     {% set i = i + 1 %}
                     {% end %}
                 {% end if %}
                 {% if i % 8 != 0 or i == 0 %}
                     {% set j = (i / 6 + 1) * 6 - i %}
                     {% for x in xrange(j) %}
-                        <a href="" class="list-group-item list-group-item-default">{{ i + 1 }}</a>
+                        <a href="" class="list-group-item list-group-item-default row">
+                            <span class="col-md-1">{{ i + 1 }}</span>
+                            <span class="col-md-2"></span>
+                        </a>
                         {% set i = i + 1 %}
                     {% end%}
                 {% end if %}
