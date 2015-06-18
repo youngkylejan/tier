@@ -73,13 +73,13 @@
                         {% set i = i + 1 %}
                     {% end %}
                 {% end if %}
-                {% if i % 8 != 0 or i == 0 %}
+                {% if i % 6 != 0 or i == 0 %}
                     {% set j = (i / 6 + 1) * 6 - i %}
                     {% for x in xrange(j) %}
-                        <a href="" class="list-group-item list-group-item-default row">
-                            <span class="col-md-1">{{ i + 1 }}</span>
-                            <span class="col-md-2"></span>
-                        </a>
+                        <li href="" class="list-group-item list-group-item-default row joined-team">
+                            <span class="col-md-2">{{ i + 1 }}</span>
+                            <span class="col-md-3"></span>
+                        </li>
                         {% set i = i + 1 %}
                     {% end%}
                 {% end if %}
@@ -98,21 +98,21 @@
                 {% set i = 0 %}
                 {% if excepted_teams != None %}
                     {% for excepted_team in excepted_teams %}
-                        <a href="" class="list-group-item list-group-item-default row">
+                        <li href="" class="list-group-item list-group-item-default row">
                             <span class="col-md-2">{{ i + 1 }}</span>
                             <span class="col-md-3">{{ excepted_team['name'] }}</span>
                             <span class="col-md-7">{{ excepted_team['introduction'] }}</span>
-                        </a>
+                        </li>
                     {% set i = i + 1 %}
                     {% end %}
                 {% end if %}
-                {% if i % 8 != 0 or i == 0 %}
+                {% if i % 6 != 0 or i == 0 %}
                     {% set j = (i / 6 + 1) * 6 - i %}
                     {% for x in xrange(j) %}
-                        <a href="" class="list-group-item list-group-item-default row">
+                        <li href="" class="list-group-item list-group-item-default row">
                             <span class="col-md-1">{{ i + 1 }}</span>
                             <span class="col-md-3"></span>
-                        </a>
+                        </li>
                         {% set i = i + 1 %}
                     {% end%}
                 {% end if %}
