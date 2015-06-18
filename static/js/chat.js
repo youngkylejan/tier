@@ -34,7 +34,7 @@ function newMessage(form) {
     var message = form.formToDict();
     var disabled = form.find("input[type=submit]");
     disabled.disable();
-    $.postJSON("/a/message/new", message, function(response) {
+    $.postJSON("/team/message/new", message, function(response) {
         updater.showMessage(response);
         if (message.id) {
             form.parent().remove();
@@ -91,7 +91,7 @@ var updater = {
     poll: function() {
         var args = {"_xsrf": getCookie("_xsrf")};
         if (updater.cursor) args.cursor = updater.cursor;
-        $.ajax({url: "/a/message/updates", type: "POST", dataType: "text",
+        $.ajax({url: "/team/message/updates", type: "POST", dataType: "text",
                 data: $.param(args), success: updater.onSuccess,
                 error: updater.onError});
     },
