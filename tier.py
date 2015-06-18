@@ -206,6 +206,19 @@ class BaseHandler(tornado.web.RequestHandler):
         teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT team_id FROM user_team WHERE user_id = %s)", user.id)
         return None if not teams else teams
 
+    def get_members_by_teamname(self, name):
+        team = self.get_team_by_name(name)
+        if not team: return None
+
+        members = self.db.query("SELECT * FROM user WHERE id IN (SELECT user_id FROM user_team WHERE team_id = %s)", team.id)
+        return None if not members else members
+
+    def get_members_by_teamid(self, id):
+        team = self.get_team_by_id(id)
+        if not team: return None
+
+        members = self.db.query("SELECT * FROM user WHERE id IN (SELECT user_id FROM user_team WHERE team_id = %s)", team.id)
+        return None if not members else members
 
 
 class IndexHandler(BaseHandler):
