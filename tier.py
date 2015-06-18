@@ -212,7 +212,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.get_members_by_teamid(team.id)
 
     def get_teams_except_by_userid(self, id):
-        excepted_teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT user_id FROM user_team WHERE user_id = %s)", id)
+        excepted_teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT user_id FROM user_team WHERE user_id != %s)", id)
         return None if not excepted_teams else excepted_teams
 
     def get_teams_except_by_username(self, name):
