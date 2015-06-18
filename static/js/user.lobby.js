@@ -41,20 +41,14 @@ function create_team() {
 var perPage = 6;
 
 var joinedTeams = $('#joined-team-list').children('li');
-var num_JoinedTeams = joinedTeams.children().size();
+var num_JoinedTeams = joinedTeams.size();
 var num_JoinedPages = Math.ceil(num_JoinedTeams / perPage);
 var joined_CurPage = 0;
 
 var remainedTeams = $('#remained-team-list').children('li');
-var num_RemainedTeams = remainedTeams.children().size();
+var num_RemainedTeams = remainedTeams.size();
 var num_RemainedPages = Math.ceil(num_RemainedTeams / perPage);
 var remained_CurPage = 0;
-
-joinedTeams.children('li').css('display', 'none');
-joinedTeams.children('li').slice(0, perPage).css('display', 'block');
-
-remainedTeams.children('li').css('display', 'none');
-remainedTeams.children('li').slice(0, perPage).css('display', 'block');
 
 function previous(type) {
     var goToPage;
@@ -73,8 +67,9 @@ function next(type) {
     var goToPage;
     if (type == 'joined') {
         goToPage = parseInt(joined_CurPage) + 1;
-        if (goToPage < num_JoinedPages)
+        if (goToPage < num_JoinedPages) {
             goTo(goToPage);
+        }
     } else {
         goToPage = parseInt(remained_CurPage) + 1;
         if (goToPage < num_RemainedPages)
@@ -87,10 +82,10 @@ function goTo(page, type){
         endOn = startAt + perPage;
 
     if (type == 'joined') {
-        joinedTeams.children().css('display', 'none').slice(startAt, endOn).css('display', 'block');
+        joinedTeams.css('display', 'none').slice(startAt, endOn).css('display', 'block');
         joined_CurPage = page;
     } else {
-        remainedTeams.children().css('display', 'none').slice(startAt, endOn).css('display', 'block');
+        remainedTeams.css('display', 'none').slice(startAt, endOn).css('display', 'block');
         remained_CurPage = page;    
     }
 }
@@ -111,6 +106,12 @@ $(document).ready(function() {
     $('#team-create-confirm-btn').click(function(event) {
         create_team();
     });
+
+    joinedTeams.css('display', 'none');
+    joinedTeams.slice(0, perPage).css('display', 'block');
+
+    remainedTeams.css('display', 'none');
+    remainedTeams.slice(0, perPage).css('display', 'block');
 
     // paging
     $('#joined-previous').click(function(event) {
