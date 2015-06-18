@@ -61,7 +61,7 @@ class Application(tornado.web.Application):
             (r"/", IndexHandler),
 
             (r"/auth/register", AuthRegisterHandler),
-            (r"/auth/login", AuthLoginHandler),
+            (r"/auth/signin", AuthLoginHandler),
             (r"/auth/logout", AuthLogoutHandler),
 
             (r"/team/lobby", TeamLobbyHandler),
@@ -187,7 +187,6 @@ class AuthRegisterHandler(BaseHandler):
 
     @gen.coroutine
     def post(self):
-        print self.request.body
         name = self.get_argument("name")
         email = self.get_argument("email")
         pwd = self.get_argument("password")
@@ -216,14 +215,14 @@ class AuthRegisterHandler(BaseHandler):
 
 class AuthLoginHandler(BaseHandler):
     def get(self):
-        self.render("login.html", error=None)
+        self.render("signin.html", error=None)
 
     @gen.coroutine
     def post(self):
         user = self.db.get("SELECT * FROM user WHERE email = %s",
                              self.get_argument("email"))
         if not user:
-            self.render("login.html", error="Email Not Found")
+            self.render("signin.html", error="Email Not Found")
             return
 
         hashed_password = yield executor.submit(
@@ -234,7 +233,7 @@ class AuthLoginHandler(BaseHandler):
             self.set_secure_cookie("tier_user", str(user.id))
             self.redirect("/")
         else:
-            self.render("login.html", error="Incorrect Password")
+            self.render("signin.html", error="Incorrect Password")
 
 
 class AuthLogoutHandler(BaseHandler):
