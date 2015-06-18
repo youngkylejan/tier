@@ -65,11 +65,11 @@
                 {% set i = 0 %}
                 {% if joined_teams != None %}
                     {% for joined_team in joined_teams %}
-                        <a href="" class="list-group-item list-group-item-default row">
+                        <li href="" class="list-group-item list-group-item-default row joined-team">
                             <span class="col-md-2">{{ i + 1 }}</span>
-                            <span class="col-md-3">{{ joined_team['name'] }}</span>
+                            <a href="/team/dashboard?name={{ joined_team['name'] }}"><span class="col-md-3">{{ joined_team['name'] }}</span>
                             <span class="col-md-7">{{ joined_team['introduction'] }}</span>
-                        </a>                
+                        </li>
                         {% set i = i + 1 %}
                     {% end %}
                 {% end if %}

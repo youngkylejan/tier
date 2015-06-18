@@ -54,4 +54,10 @@ $(document).ready(function() {
     $('#team-create-confirm-btn').click(function(event) {
         create_team();
     });
+
+    // $('.joined-team').click(function(event) {
+    //     $.get('/team/dashboard', function(data) {
+    //         alert(data);
+    //     });
+    // });
 });

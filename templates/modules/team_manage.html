@@ -10,9 +10,7 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    {% for team in user_teams %}
-                        <li class='assign-team-choice'><a hrer="">{{ team }}</a></li>
-                    {% end %}
+                    <li class='assign-team-choice'><a hrer="">{{ team['name'] }}</a></li>
                 </ul>
             </div>
         </div>
@@ -76,9 +74,7 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    {% for team in user_teams %}
-                        <li class='meeting-team-choice'><a hrer="">{{ team }}</a></li>
-                    {% end %}
+                    <li class='meeting-team-choice'><a hrer="">{{ team['name'] }}</a></li>
                 </ul>
             </div>
         </div>

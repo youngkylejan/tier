@@ -318,12 +318,8 @@ class DashboardHandler(BaseHandler):
             self.render("fault.html", error="Please Login Firstly")
             return
 
-        teams = self.get_teams_by_userid(self.current_user.id)
-        team_names = []
-        for team in teams:
-            team_names.append(team['name'])
-
-        self.render("dashboard.html", username = self.current_user.name, user_teams = team_names)
+        team = self.get_team_by_name(self.get_argument('name'))
+        self.render("dashboard.html", username=self.current_user.name, team=team)
 
 
 class TeamHomeHandler(BaseHandler):

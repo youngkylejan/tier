@@ -14,15 +14,15 @@
     <link href="{{ static_url("bootstrap/css/bootstrap-theme.min.css") }}" rel="stylesheet">
 
     <!-- Third Party -->
-    <link href="{{ static_url("css/bootstrap-datetimepicker.min.css") }}" rel="stylesheet">
-    <link href="{{ static_url("css/timeline.css") }}" rel="stylesheet">
+    <link href="{{ static_url("third-party/css/bootstrap-datetimepicker.min.css") }}" rel="stylesheet">
+    <link href="{{ static_url("third-party/css/timeline.css") }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{{ static_url("css/dashboard.css") }}" rel="stylesheet">
     <link href="{{ static_url("css/tier.css") }}" rel="stylesheet">
     <link href="{{ static_url("css/style.css") }}" rel="stylesheet">
 
-    <script src="{{ static_url("js/jquery.min.js") }}"></script>
+    <script src="{{ static_url("third-party/js/jquery.min.js") }}"></script>
     <script src="{{ static_url("js/dashboard.js") }}" type="text/javascript"></script>
     <script src="{{ static_url("js/chat.js") }}" type="text/javascript"></script>
 
@@ -47,11 +47,11 @@
             </div>
 
             <div id="team-new-container" class='page-content-container'>
-              {% module Template("modules/team_news.html", user_teams=user_teams) %}
+              {% module Template("modules/team_news.html", team=team) %}
             </div>
             
             <div id="team-manage-container" class='page-content-container' style="display: None">
-              {% module Template("modules/team_manage.html", user_teams=user_teams) %}
+              {% module Template("modules/team_manage.html", team=team) %}
             </div>
             
             <div id="meeting-schedule-container" class='page-content-container' style="display: None">
@@ -77,7 +77,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-    <script src="{{ static_url("js/bootstrap-datetimepicker.min.js") }}"></script>
+    <script src="{{ static_url("third-party/js/bootstrap-datetimepicker.min.js") }}"></script>
 
   </body>
 </html>
