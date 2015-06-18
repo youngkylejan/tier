@@ -56,6 +56,20 @@ joinedTeams.children('li').slice(0, perPage).css('display', 'block');
 remainedTeams.children('li').css('display', 'none');
 remainedTeams.children('li').slice(0, perPage).css('display', 'block');
 
+function previous() {
+    var goToPage = parseInt(joined_CurPage) - 1;
+    if (goToPage >= 0) {
+        goTo(goToPage);
+    }
+}
+
+function next() {
+    goToPage = parseInt(joined_CurPage) + 1;
+    if (goToPage < num_JoinedPages) {
+        goTo(goToPage);
+    }
+}
+
 $(document).ready(function() {
     wow = new WOW({
         animateClass: 'animated',
