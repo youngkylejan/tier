@@ -174,7 +174,9 @@
                             <p>Click the button below and then enter into the team lobby room.</p>
                             <p>Choose your interested team and start the travel on Tier platform. Hope you enjoy Tier!</p>
                             {% if username %}
-                            <button id="start-btn" class="btn btn-success" type="submit">Start</button>
+                            <form action="/user/lobby" method="GET">
+                                <button id="start-btn" class="wow fadeInUp btn btn-success" data-wow-delay="0.8s" type="submit">Start</button>
+                            </form>
                             {% else %}
                             <button class="btn btn-warning">Login Firstly</button>
                             {% end if %}
@@ -390,8 +392,6 @@
     <script src="{{ static_url("js/wow.min.js") }}"></script>
     <script src="{{ static_url("js/owl.carousel.min.js") }}"></script>
     <script src="{{ static_url("js/nivo-lightbox.min.js") }}"></script>
-
     <script src="{{ static_url("js/custom.js") }}"></script>
-
 </body>
 </html>
