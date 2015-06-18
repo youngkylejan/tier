@@ -59,7 +59,7 @@ function previous(type) {
     }
 
     if (goToPage >= 0) {
-        goTo(goToPage);
+        goTo(goToPage, type);
     }
 }
 
@@ -68,12 +68,12 @@ function next(type) {
     if (type == 'joined') {
         goToPage = parseInt(joined_CurPage) + 1;
         if (goToPage < num_JoinedPages) {
-            goTo(goToPage);
+            goTo(goToPage, type);
         }
     } else {
         goToPage = parseInt(remained_CurPage) + 1;
         if (goToPage < num_RemainedPages)
-            goTo(goToPage);
+            goTo(goToPage, type);
     }
 }
 
@@ -82,9 +82,11 @@ function goTo(page, type){
         endOn = startAt + perPage;
 
     if (type == 'joined') {
-        joinedTeams.css('display', 'none').slice(startAt, endOn).css('display', 'block');
+        joinedTeams.slice(joined_CurPage * perPage, joined_CurPage * perPage + perPage).css('display', 'none');
+        joinedTeams.slice(startAt, endOn).css('display', 'block');
         joined_CurPage = page;
     } else {
+        remainedTeams.slice(remained_CurPage * perPage, remained_CurPage * perPage + perPage).css('display', 'none');
         remainedTeams.css('display', 'none').slice(startAt, endOn).css('display', 'block');
         remained_CurPage = page;    
     }
@@ -108,10 +110,10 @@ $(document).ready(function() {
     });
 
     joinedTeams.css('display', 'none');
-    joinedTeams.slice(0, perPage).css('display', 'block');
+    joinedTeams.slice(joined_CurPage, perPage).css('display', 'block');
 
     remainedTeams.css('display', 'none');
-    remainedTeams.slice(0, perPage).css('display', 'block');
+    remainedTeams.slice(remained_CurPage, perPage).css('display', 'block');
 
     // paging
     $('#joined-previous').click(function(event) {
