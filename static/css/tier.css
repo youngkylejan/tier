@@ -22,7 +22,7 @@
     margin-top: 70px;
 }
 
-div.list-group a.list-group-item span {
+div.list-group li.list-group-item span {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

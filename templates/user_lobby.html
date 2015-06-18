@@ -67,7 +67,7 @@
                     {% for joined_team in joined_teams %}
                         <li href="" class="list-group-item list-group-item-default row joined-team">
                             <span class="col-md-2">{{ i + 1 }}</span>
-                            <a href="/team/dashboard?name={{ joined_team['name'] }}"><span class="col-md-3">{{ joined_team['name'] }}</span>
+                            <a href="/team/dashboard?name={{ joined_team['name'] }}"><span class="col-md-3">{{ joined_team['name'] }}</span></a>
                             <span class="col-md-7">{{ joined_team['introduction'] }}</span>
                         </li>
                         {% set i = i + 1 %}
@@ -94,7 +94,7 @@
 
         <div class="container tier-container col-md-offset-2 col-md-8 wow fadeInRight" data-wow-delay="0.4s">
             <h3 class="header text-center site-logo">Teams Unjoined</h3>
-            <div id="excepted-team-list" class="list-group">
+            <div id="remained-team-list" class="list-group">
                 {% set i = 0 %}
                 {% if excepted_teams != None %}
                     {% for excepted_team in excepted_teams %}

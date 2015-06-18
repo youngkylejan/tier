@@ -38,6 +38,21 @@ function create_team() {
         });
 };
 
+var perPage = 6;
+
+var joinedTeams = $('#joined-team-list').children();
+var num_JoinedTeams = joinedTeams.children().size();
+var num_JoinedPages = Math.ceil(num_JoinedTeams / perPage);
+var joined_CurPage = 0;
+
+var remainedTeams = $('#remained-team-list').children();
+var num_RemainedTeams = remainedTeams.children().size();
+var num_RemainedPages = Math.ceil(num_RemainedTeams / perPage);
+var remained_CurPage = 0;
+
+// joinedTeams.children().css('display', 'none');
+// joinedTeams.children().slice(0, perPage).css('display', 'block');
+
 $(document).ready(function() {
     wow = new WOW({
         animateClass: 'animated',
