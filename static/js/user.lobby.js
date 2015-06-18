@@ -4,9 +4,9 @@ function getCookie(name) {
 }
 
 function create_team() {
-    var create_info = new Object();
-    create_info.name = $('#team-name-create').val();
-    create_info.intro = $('#team-intro-create').val();
+    var info = new Object();
+    info.name = $('#team-name-create').val();
+    info.intro = $('#team-intro-create').val();
 
     $.ajax({
             url: '/team/create',
@@ -14,7 +14,7 @@ function create_team() {
             dataType: 'json',
             data: {
                 _xsrf: getCookie("_xsrf"),
-                _create_info: JSON.stringify(create_info)
+                _body: JSON.stringify(info)
             },
         })
         .done(function(response) {

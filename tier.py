@@ -177,7 +177,7 @@ class BaseHandler(tornado.web.RequestHandler):
         user = self.db.get("SELECT * FROM user WHERE name = %s", name)
         return None if not user else user
 
-    def get_team_by_name(self, team):
+    def get_team_by_name(self, name):
         team = self.db.get("SELECT * FROM team WHERE name = %s", name)
         return None if not team else team
 
@@ -219,6 +219,14 @@ class BaseHandler(tornado.web.RequestHandler):
         user = self.get_user_by_name(name)
         if not user: return None
         return self.get_teams_except_by_userid(user.id)
+
+    def bind_user_team(self, uid, tid):
+        self.db.insert("INSERT INTO user_team(user_id, team_id) VALUES(%s, %s)", uid, tid)
+
+    def insert_team_with_info(self, name, leaderid, intro):
+        self.db.insert("INSERT INTO team(name, leader_id, introduction) VALUES(%s, %s, %s)", name, leaderid, intro)
+        team = self.get_team_by_name(name)
+        self.bind_user_team(leaderid, team.id)
 
 
 class IndexHandler(BaseHandler):
@@ -290,6 +298,22 @@ class AuthSignOutHandler(BaseHandler):
         self.redirect("/")
 
 
+class TeamCreateHandler(BaseHandler):
+    def post(self):
+        req = json.loads(self.request.arguments['_body'][0])
+
+        resp = {}
+        team = self.get_team_by_name(req['name'])
+
+        if not team:
+            self.insert_team_with_info(req['name'], self.current_user.id, req['intro'])
+            resp['status'] = 'success'
+        else:
+            resp['status'] = 'exists'
+
+        self.write(json_encode(resp))
+
+
 class TeamLobbyHandler(BaseHandler):
     def get(self):
         if not self.current_user:
@@ -354,27 +378,6 @@ class TeamJoinHandler(BaseHandler):
 
         self.write(json_encode(resp))
  
-
-class TeamCreateHandler(BaseHandler):
-    def post(self):
-        json_msg = self.request.arguments['_create_info'][0]
-        msg_body = json.loads(json_msg)
-        
-        user = self.current_user
-        name = msg_body['name']
-        intro = msg_body['intro']
-
-        team_record = self.db.get("SELECT * FROM team WHERE name = %s", name)
-
-        resp = {}
-        if not team_record:
-            self.db.insert("INSERT INTO team(name, leader_id, introduction) VALUES(%s, %s, %s)", name, user.id, intro)
-            resp['status'] = 'success'
-        else:
-            resp['status'] = 'exists'
-
-        self.write(json_encode(resp))
-
 
 class TeamNewsHandler(BaseHandler):
     def post(self):

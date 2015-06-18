@@ -69,7 +69,7 @@
                     {% for joined_team in joined_teams %}
                         <a href="" class="list-group-item list-group-item-default row">
                             <span class="col-md-1">{{ i + 1 }}</span>
-                            <span class="col-md-2">{{ joined_team['name'] }}</span>
+                            <span class="col-md-3">{{ joined_team['name'] }}</span>
                         </a>                   
                         {% set i = i + 1 %}
                     {% end %}
@@ -111,7 +111,7 @@
                     {% for x in xrange(j) %}
                         <a href="" class="list-group-item list-group-item-default row">
                             <span class="col-md-1">{{ i + 1 }}</span>
-                            <span class="col-md-2"></span>
+                            <span class="col-md-3"></span>
                         </a>
                         {% set i = i + 1 %}
                     {% end%}
