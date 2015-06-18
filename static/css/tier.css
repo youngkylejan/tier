@@ -21,3 +21,10 @@
 .tier-container {
     margin-top: 70px;
 }
+
+div.list-group a.list-group-item span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+}

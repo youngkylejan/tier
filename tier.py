@@ -71,13 +71,12 @@ class Application(tornado.web.Application):
             (r"/team/meetings", TeamMeetingHandler),
             (r"/team/members", TeamMemberHandler),
             (r"/team/assignments", TeamAssignmentHandler),
+            (r"/team/dashboard", DashboardHandler),
             (r"/team/chat/new", MessageNewHandler),
             (r"/team/chat/updates", MessageUpdatesHandler),
 
             (r"/user/deadlines", UserDeadlineHandler),
             (r"/user/lobby", UserLobbyHandler),
-
-            (r"/dashboard", DashboardHandler),
         ]
         settings = dict(
             app_title=u"Tier",
