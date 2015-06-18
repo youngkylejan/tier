@@ -32,6 +32,7 @@
 </head>
 
   <body>
+    {% module Template("nav.html", username="") %}
 
     <div class="site-wrapper">
 
@@ -40,7 +41,7 @@
         <div class="cover-container">
 
           <div class="inner cover">
-            <h1 class="cover-heading">{{ error }}</h1>
+            <h2 class="cover-heading">{{ error }}</h2>
           </div>
 
         </div>

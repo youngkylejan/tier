@@ -516,8 +516,14 @@ class UserDeadlineHandler(BaseHandler):
 
 class UserLobbyHandler(BaseHandler):
     def get(self):
-        teams = self.get_teams_except_by_userid(self.current_user.id)
-        self.render("user_lobby.html", )
+        if not self.current_user:
+            self.redirect_fault_page("login firstly!")
+            return
+
+        args['excepted_teams'] = self.get_teams_except_by_userid(self.current_user.id)
+        args['joined_teams'] = self.get_teams_by_userid(self.current_user.id)
+
+        self.render("user_lobby.html", args)
 
 
 class MessageNewHandler(BaseHandler):
