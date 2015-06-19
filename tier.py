@@ -210,7 +210,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return self.get_members_by_teamid(team.id)
 
     def get_teams_except_by_userid(self, id):
-        excepted_teams = self.db.query("SELECT * FROM team WHERE id IN (SELECT user_id FROM user_team WHERE user_id != %s)", id)
+        excepted_teams = self.db.query("SELECT * FROM team WHERE id NOT IN (SELECT team_id FROM user_team WHERE user_id = %s)", id)
         return None if not excepted_teams else excepted_teams
 
     def get_teams_except_by_username(self, name):
@@ -225,6 +225,13 @@ class BaseHandler(tornado.web.RequestHandler):
         self.db.insert("INSERT INTO team(name, leader_id, introduction) VALUES(%s, %s, %s)", name, leaderid, intro)
         team = self.get_team_by_name(name)
         self.bind_user_team(leaderid, team.id)
+
+    def get_userTeam_record_by_ids(self, uid, tid):
+        record = self.db.get("SELECT * FROM user_team WHERE user_id = %s and team_id = %s", uid, tid)
+        return None if not record else record
+
+    def insert_userTeam_record_with_ids(self, uid, tid):
+        self.db.insert("INSERT INTO user_team(user_id, team_id) VALUES(%s, %s)", uid, tid)  
 
 
 class IndexHandler(BaseHandler):
@@ -344,17 +351,16 @@ class TeamHomeHandler(BaseHandler):
 class TeamJoinHandler(BaseHandler):
     def post(self):
         user = self.current_user
-        team = self.db.get("SELECT * FROM team WHERE name = %s", self.request.arguments['_name'])
-        action = self.request.arguments['_action']
+        action = self.request.arguments['_action'][0]
+        team = self.get_team_by_name(self.request.arguments['_name'])
+        record = self.get_userTeam_record_by_ids(user.id, team.id)
 
-        record = self.db.get("SELECT * FROM user_team WHERE user_id = {} and team_id = {}".format(user.id, team.id))
-        
         resp = {}
         if not record:
             if action == 'check':
                 resp['status'] = 'none'
             else:
-                self.db.insert("INSERT INTO user_team(user_id, team_id) VALUES({}, {})".format(user.id, team.id))
+                self.insert_userTeam_record_with_ids(user.id, team.id)
                 resp['status'] = 'inserts'
         else:
             resp['status'] = 'exists'

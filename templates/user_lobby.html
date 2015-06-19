@@ -100,7 +100,7 @@
                     {% for excepted_team in excepted_teams %}
                         <li href="" class="list-group-item list-group-item-default row">
                             <span class="col-md-2">{{ i + 1 }}</span>
-                            <span class="col-md-3">{{ excepted_team['name'] }}</span>
+                            <a href="/team/home?name={{ excepted_team['name'] }}"><span class="col-md-3">{{ excepted_team['name'] }}</span></a>
                             <span class="col-md-7">{{ excepted_team['introduction'] }}</span>
                         </li>
                     {% set i = i + 1 %}
