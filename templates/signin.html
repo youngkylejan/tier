@@ -20,7 +20,11 @@
 </head>
 
 <body>
-  {% module Template("nav.html", username="") %}
+  {% if userAgent == "iPhone" %}
+    {% module Template("navIOS.html", username="") %}
+  {% else %}
+    {% module Template("nav.html", username="") %}
+  {% end if %}
 
   <div class="container tier-container">
       <form class="form-signin tier-form-signin" action="/auth/signin" method="POST">

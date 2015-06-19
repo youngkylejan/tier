@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+
+  <title>TIER.ME</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{{ static_url("bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css">
+
+  <link href="{{ static_url("third-party/font-awesome/css/font-awesome.min.css") }}" rel="stylesheet" type="text/css" />
+  <link href="{{ static_url("third-party/css/nivo-lightbox.css") }}" rel="stylesheet" />
+  <link href="{{ static_url("third-party/css/nivo-lightbox-theme/default/default.css") }}" rel="stylesheet" type="text/css" />
+  <link href="{{ static_url("third-party/css/owl.carousel.css") }}" rel="stylesheet" media="screen" />
+  <link href="{{ static_url("third-party/css/owl.theme.css") }}" rel="stylesheet" media="screen" />
+  <link href="{{ static_url("third-party/css/flexslider.css") }}" rel="stylesheet" />
+  <link href="{{ static_url("third-party/css/animate.css") }}" rel="stylesheet" />
+  <link href="{{ static_url("third-party/color/default.css") }}" rel="stylesheet">
+
+  <link href="{{ static_url("css/style.css") }}" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+    <body>
+
+      <div class="container" style="max-width:730px;padding-top:30px">
+        <div class="header clearfix">
+          <div style="float:left"><h3 class="text-muted">TIER.ME</h3></div>
+          <form style="float:right">
+            {% if not username %}
+            <div class="form-group">
+              <a class="btn btn-success" type="button" href="/auth/signin">Sign In</a>
+              <a class="btn btn-success" type="button" href="/auth/signup">Sign Up</a>
+            </div>
+            {% else %}
+            <div class="form-group">
+              <a id="nav_user" class="btn btn-transparent" href="/user/lobby" style="color: black; text-transform: none">{{ username }}</a>
+              <a class="btn btn-success" type="button" href="/auth/signout">Log Out</a>
+            </div>
+            {% end %}
+          </form>
+        </div>
+
+        <div class="jumbotron" style="text-align: center">
+
+          {% if username %}
+          <h1>Hi,{{ username }}</h1>
+          {% else %}
+          <h1>Hi,</h1>
+          {% end if %}
+
+          <p>Welcome to login Tier again!</p>
+          <p>Click the button below and then enter into the team lobby room.</p>
+          <p>Choose your interested team and start the travel on Tier platform. Hope you enjoy Tier!</p>
+
+          {% if username %}
+          <form action="/user/lobby" method="GET">
+            <button id="start-btn" class="btn btn-lg btn-success" data-wow-delay="0.8s" type="submit">Start</button>
+          </form>
+          {% else %}
+          <button class="btn btn-lg btn-warning">Login Firstly</button>
+          {% end if %}
+        </div>
+
+        <!-- Section: about -->
+        <section id="about" class="color-dark bg-white">
+          <div class="container marginbot-50">
+            <div class="row">
+              <div>
+                <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.3s">
+                  <div class="section-heading text-center">
+                    <h2 class="h-bold">About</h2>
+                    <div class="divider-header"></div>
+                    <p>A Cross-Platform for Project Team Management.</p>
+                    <p>The application is aimed to achieve a common platform on which users can management project team. Then users can join in interested group, share ideas and take part in the meeting and schedule.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <img src="{{ static_url("img/dummy1.jpg") }}" alt="" class="img-responsive" />
+              </div>
+
+              <div class="col-md-6">
+                <p>Techniques involved in tier to help build creative functions.</p>
+                <div class="progress progress-striped active">
+                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                    50% - Tornado in Python
+                  </div>
+                </div>
+                <div class="progress progress-striped active">
+                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                    20% - Html5
+                  </div>
+                </div>
+                <div class="progress progress-striped active">
+                  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+                    30% - Jquery
+                  </div>
+                </div>
+                <div class="progress progress-striped active">
+                  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                    20% - Objective C
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </section>
+        <!-- /Section: about -->
+
+        <section id="contact" class="nopadd-bot color-dark bg-gray text-center">
+          <div class="container marginbot-50">
+            <div class="row">
+              <div class="col-lg-8 col-lg-offset-2">
+                <div class="wow flipInY" data-wow-offset="0" data-wow-delay="0.4s">
+                  <div class="section-heading text-center">
+                    <h2 class="h-bold">Contact us</h2>
+                    <div class="divider-header"></div>
+                    <p>A Cross-Platform for Project Team Management.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container">
+
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                <form id="contact-form" class="wow bounceInUp" data-wow-offset="10" data-wow-delay="0.2s">
+                  <div class="row marginbot-20">
+                    <div class="col-md-6 xs-marginbot-20">
+                      <input type="text" class="form-control input-lg" id="name" placeholder="Enter name" required="required" />
+                    </div>
+                    <div class="col-md-6">
+                      <input type="email" class="form-control input-lg" id="email" placeholder="Enter email" required="required" />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control input-lg" id="subject" placeholder="Subject" required="required" />
+                      </div>
+                      <div class="form-group">
+                        <textarea name="message" id="message" class="form-control" rows="4" cols="25" required="required"
+                        placeholder="Message"></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-skin btn-lg btn-block" id="btnContactUs">
+                        Send Message</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+          </section>
+          <!-- /Section: contact -->
+
+          <footer>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+
+                  <div class="text-center">
+                    <a href="#intro" class="totop"><i class="fa fa-angle-up fa-3x"></i></a>
+
+                    <p>The University of Hong Kong Project by Kylejan & Vincent<br />
+                      &copy;Copyright 2014 - Shuffle.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </footer>
+
+          </div> <!-- /container -->
+
+
+          <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+          <!-- Core JavaScript Files -->
+          <script src="{{ static_url("third-party/js/jquery.min.js") }}"></script>
+          <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
+
+          <script src="{{ static_url("third-party/js/jquery.sticky.js") }}"></script>
+          <script src="{{ static_url("third-party/js/jquery.flexslider-min.js") }}"></script>
+          <script src="{{ static_url("third-party/js/jquery.easing.min.js") }}"></script>
+          <script src="{{ static_url("third-party/js/jquery.scrollTo.min.js") }}"></script>
+          <script src="{{ static_url("third-party/js/jquery.appear.js") }}"></script>
+          <script src="{{ static_url("third-party/js/jquery.stellar.min.js") }}"></script>
+          <script src="{{ static_url("third-party/js/wow.min.js") }}"></script>
+          <script src="{{ static_url("third-party/js/owl.carousel.min.js") }}"></script>
+          <script src="{{ static_url("third-party/js/nivo-lightbox.min.js") }}"></script>
+
+          <script src="{{ static_url("js/index.js") }}"></script>
+        </body>
+        </html>

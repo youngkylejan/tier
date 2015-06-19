@@ -1,0 +1,28 @@
+<!-- Navigation -->
+<div id="navigation" class="navbar-fixed-top" >
+<nav class="navbar navbar-custom" role="navigation" style="padding-top:20px;height:70px;margin-left:15px;margin-right:15px">
+    <div class="container">
+        <div class="row">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <a style="float:left" href="/"><h3 class="text-muted">TIER.ME</h3></a>
+            <form style="float:right">
+                {% if not username %}
+                <div class="form-group">
+                  <a class="btn btn-success" type="button" href="/auth/signin">Sign In</a>
+                  <a class="btn btn-success" type="button" href="/auth/signup">Sign Up</a>
+                </div>
+                {% else %}
+                <div class="form-group">
+                  <a id="nav_user" class="btn btn-transparent" href="/user/lobby" style="color: black; text-transform: none">{{ username }}</a>
+                  <a class="btn btn-success" type="button" href="/auth/signout">Log Out</a>
+                </div>
+                {% end %}
+          </form>
+      </div>
+      <!-- /.Navbar-collapse -->
+  </div>
+</div>
+<!-- /.container -->
+</nav>
+</div> 
+<!-- /Navigation -->
