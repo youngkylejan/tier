@@ -236,25 +236,24 @@ class BaseHandler(tornado.web.RequestHandler):
 
 class IndexHandler(BaseHandler):
     def get(self):
-        indexHTML = ""
         if self.request.headers['User-Agent'].find('iPhone') == -1:
-            indexHTML = "index.html"
+            index_html = "index.html"
         else:
-            indexHTML = "indexIOS.html"
+            index_html = "indexIOS.html"
 
         if not self.current_user:
-            self.render(indexHTML, username=None)
+            self.render(index_html, username=None)
         else:
-            self.render(indexHTML, username=self.current_user.name)
+            self.render(index_html, username=self.current_user.name)
 
 
 class AuthSignUpHandler(BaseHandler):
     def get(self):
         if self.request.headers['User-Agent'].find('iPhone') == -1:
-            userAgent = None
+            user_agent = None
         else:
-            userAgent = "iPhone"
-        self.render("signup.html",userAgent=userAgent, error=None)
+            user_agent = "iPhone"
+        self.render("signup.html", user_agent=user_agent, error=None)
 
     @gen.coroutine
     def post(self):
@@ -263,12 +262,12 @@ class AuthSignUpHandler(BaseHandler):
         pwd = self.get_argument("password")
 
         if self.request.headers['User-Agent'].find('iPhone') == -1:
-            userAgent = None
+            user_agent = None
         else:
-            userAgent = "iPhone"
+            user_agent = "iPhone"
 
         if self.whether_author_exists(name):
-            self.render("signup.html", userAgent=userAgent, error="User Exists")
+            self.render("signup.html", user_agent=user_agent, error="User Exists")
         
         hashed_password = yield executor.submit(
             bcrypt.hashpw, tornado.escape.utf8(pwd),
@@ -292,22 +291,22 @@ class AuthSignUpHandler(BaseHandler):
 class AuthSignInHandler(BaseHandler):
     def get(self):
         if self.request.headers['User-Agent'].find('iPhone') == -1:
-            userAgent = None
+            user_agent = None
         else:
-            userAgent = "iPhone"
-        self.render("signin.html", userAgent=userAgent, error=None)
+            user_agent = "iPhone"
+        self.render("signin.html", user_agent=user_agent, error=None)
 
     @gen.coroutine
     def post(self):
         if self.request.headers['User-Agent'].find('iPhone') == -1:
-            userAgent = None
+            user_agent = None
         else:
-            userAgent = "iPhone"
+            user_agent = "iPhone"
 
         user = self.db.get("SELECT * FROM user WHERE email = %s",
                              self.get_argument("email"))
         if not user:
-            self.render("signin.html", userAgent=userAgent, error="Email Not Found")
+            self.render("signin.html", user_agent=user_agent, error="Email Not Found")
             return
 
         hashed_password = yield executor.submit(
@@ -318,7 +317,7 @@ class AuthSignInHandler(BaseHandler):
             self.set_secure_cookie("tier_user", str(user.id))
             self.redirect("/")
         else:
-            self.render("signin.html", userAgent=userAgent, error="Incorrect Password")
+            self.render("signin.html", user_agent=user_agent, error="Incorrect Password")
 
 
 class AuthSignOutHandler(BaseHandler):
@@ -537,12 +536,12 @@ class UserLobbyHandler(BaseHandler):
             return
 
         if self.request.headers['User-Agent'].find('iPhone') == -1:
-            userAgent = None
+            user_agent = None
         else:
-            userAgent = "iPhone"
+            user_agent = "iPhone"
 
         args = {}
-        args['userAgent'] = userAgent
+        args['user_agent'] = user_agent
         args['username'] = self.current_user.name
         args['excepted_teams'] = self.get_teams_except_by_userid(self.current_user.id)
         args['joined_teams'] = self.get_teams_by_userid(self.current_user.id)
