@@ -32,47 +32,44 @@
 
     {% module Template("nav.html", username=username) %}
 
-    <section class="home-section color-dark bg-white" style="padding-top: 50px">
-        <div class="container">
-          <div class="row">
+    <div class="container-fluid" style="padding-top: 50px">
+        <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
-              <ul class="nav nav-sidebar" style="padding-top: 50px">
-                <li id="team-new" class="menu-item active-container active"><a>Team News</a></li>
-                <li id="team-manage" class="menu-item"><a>Team Management</a></li>
-                <li id="meeting-schedule" class="menu-item"><a>Meeting Schedule </a></li>
-                <li id="deadline-schedule" class="menu-item"><a>Deadline Schedule </a></li>
-                <li id="team-chatroom" class="menu-item"><a>Team ChatRoom</a></li>
-                <li id="personal-wiki" class="menu-item"><a>Personal Wiki</a></li>
-              </ul>
+                <ul class="nav nav-sidebar" style="padding-top: 50px">
+                    <li id="team-new" class="menu-item active-container active"><a>Team News</a></li>
+                    <li id="team-manage" class="menu-item"><a>Team Management</a></li>
+                    <li id="meeting-schedule" class="menu-item"><a>Meeting Schedule </a></li>
+                    <li id="deadline-schedule" class="menu-item"><a>Deadline Schedule </a></li>
+                    <li id="team-chatroom" class="menu-item"><a>Team ChatRoom</a></li>
+                    <li id="personal-wiki" class="menu-item"><a>Personal Wiki</a></li>
+                </ul>
             </div>
 
             <div id="team-new-container" class='page-content-container'>
-              {% module Template("modules/team_news.html", team=team) %}
+                {% module Template("modules/team_news.html", team=team) %}
             </div>
             
             <div id="team-manage-container" class='page-content-container' style="display: None">
-              {% module Template("modules/team_manage.html", team=team) %}
+                {% module Template("modules/team_manage.html", team=team) %}
             </div>
             
             <div id="meeting-schedule-container" class='page-content-container' style="display: None">
-              {% module Template("modules/meeting_schedule.html") %}
+                {% module Template("modules/meeting_schedule.html") %}
             </div>
             
             <div id="deadline-schedule-container" class='page-content-container' style="display: None">
-              {% module Template("modules/deadline_schedule.html") %}
+                {% module Template("modules/deadline_schedule.html") %}
             </div>
             
             <div id="team-chatroom-container" class='page-content-container' style="display: None">
-              {% module Template("modules/chat_room.html") %}
+                {% module Template("modules/chat_room.html") %}
             </div>
             
             <div id="personal-wiki-container" class='page-content-container' style="display: None">
-              {% module Template("modules/personal_wiki.html") %}
+                {% module Template("modules/personal_wiki.html") %}
             </div>
-
-          </div>
         </div>
-    </section>
+    </div>
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
