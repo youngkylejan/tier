@@ -21,7 +21,7 @@
 
 <body>
 
-    {% if userAgent == "iPhone" %}
+    {% if user_agent == "iPhone" %}
         {% module Template("navIOS.html", username=username) %}
     {% else %}
         {% module Template("nav.html", username=username) %}
