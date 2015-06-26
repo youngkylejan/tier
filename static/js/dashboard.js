@@ -30,54 +30,6 @@ function post_msg() {
 
 };
 
-function load_team_news(team_name) {
-    var info = new Object();
-    info.type = "load_news";
-    info.team = team_name;
-
-    $.ajax({
-            url: '/team/news',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                _xsrf: getCookie("_xsrf"),
-                _body: JSON.stringify(info)
-            },
-        })
-        .done(function(resp) {
-            console.log("success");
-            msgs = resp['msgs'];
-
-            $.each(msgs, function(index, msg) {
-
-                var msg_row = $('<div></div>', {
-                    class: 'row'
-                });
-                var inter_div = $('<div></div>', {
-                    class: 'col-md-12'
-                });
-                var author_div = $('<small></small>', {
-                    class: 'text-muted',
-                    text: msg['user'] + " | " + msg['time']
-                });
-                var content_text = $('<p></p>', {
-                    text: msg['content']
-                });
-
-                inter_div.append(author_div, content_text, "<br/>");
-                msg_row.append(inter_div);
-                $('#news-board').append(msg_row);
-
-            });
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
-}
-
 function meeting_create() {
     var info = new Object();
     info.type = "create";
@@ -380,13 +332,6 @@ $(document).ready(function() {
 
     $('#msg-post-confirm-btn').click(function(event) {
         post_msg();
-    });
-
-    // news team load
-    $('.load-team-choice').click(function(event) {
-        $('#load-target-team').text($(this).text());
-        $('#news-board').empty();
-        load_team_news($(this).text());
     });
 
     // meeting create

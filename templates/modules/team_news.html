@@ -1,25 +1,37 @@
 <div style="padding-top: 50px;">
     <div>
         <h3 class="sub-header h-bold">Team News Board</h3>
-
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Target Team</span>
-            <div class="btn-group">
-                <button id="load-target-team" type="button" class="btn btn-info">NONE</button>
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li class='load-team-choice'><a hrer="">{{ team['name'] }}</a></li>
-                </ul>
-            </div>
-        </div>
-
         <br/>
 
-        <div id="news-board" class="well">
-        </div>      
+        <div id="team-news-list" class="list-group">
+            {% set i = 0 %}
+            {% if team_news != None %}
+                {% for new in team_news %}
+                    <li href="" class="list-group-item list-group-item-default row">
+                        <span class="col-md-2">{{ i + 1 }}</span>
+                        <span class="col-md-3">{{ new['content'] }}</span>
+                        <span class="col-md-7">{{ new['post_time'] }}</span>
+                    </li>
+                    {% set i = i + 1 %}
+                {% end %}
+            {% end if %}
+            {% if i % 6 != 0 or i == 0 %}
+                {% set j = (i / 6 + 1) * 6 - i %}
+                {% for x in xrange(j) %}
+                    <li href="" class="list-group-item list-group-item-default row">
+                        <span class="col-md-2">{{ i + 1 }}</span>
+                        <span class="col-md-3"></span>
+                    </li>
+                    {% set i = i + 1 %}
+                {% end%}
+            {% end if %}
+        </div>
+        <div>
+            <ul class="pager">
+                <li><a id="news-previous">Previous</a></li>
+                <li><a id="news-next">Next</a></li>
+            </ul>
+        </div>
     </div>
 
     <br/>
@@ -27,19 +39,6 @@
 
     <div id="msg-post">
         <h3 class="sub-header h-bold">Team News Post</h3>
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Target Team</span>
-            <div class="btn-group">
-                <button id="post-target-team" type="button" class="btn btn-info">NONE</button>
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li class='post-team-choice'><a hrer="">{{ team['name'] }}</a></li>
-                </ul>
-            </div>
-        </div>
 
         <br/>
 

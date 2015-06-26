@@ -22,10 +22,6 @@
     <link href="{{ static_url("css/tier.css") }}" rel="stylesheet">
     <link href="{{ static_url("css/style.css") }}" rel="stylesheet">
 
-    <script src="{{ static_url("third-party/js/jquery.min.js") }}"></script>
-    <script src="{{ static_url("js/dashboard.js") }}" type="text/javascript"></script>
-    <script src="{{ static_url("js/chat.js") }}" type="text/javascript"></script>
-
   </head>
 
   <body>
@@ -38,11 +34,13 @@
             <div class="container" style="padding-top: 50px">
                 <div class="row">
 
-                    <div class="section-heading text-center">
-                        <h2 class="h-bold">{{ team.name }}</h2>
-                        <div class="divider-header"></div>
-                        <p>{{ team.introduction }}</p>
-                        <hr/>
+                    <div class="section-heading">
+                        <div class="text-center">
+                            <h2 class="h-bold">{{ team.name }}</h2>
+                            <div class="divider-header"></div>
+                            <p>{{ team.introduction }}</p>
+                            <hr/>
+                        </div>
 
                         <ul class="nav nav-tabs" id="team-tab">
                             <li class="active"><a href="#team-news" data-toggle="tab">Team News</a></li>
@@ -54,7 +52,7 @@
 
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="team-news">
-                                {% module Template("modules/team_news.html", team=team) %}
+                                {% module Template("modules/team_news.html", team_news = team_news) %}
                             </div>
                             <div class="tab-pane fade" id="team-business">
                                 {% module Template("modules/meeting_schedule.html") %}
@@ -80,9 +78,13 @@
     {% module Template("footer.html") %}
 
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ static_url("third-party/js/jquery.min.js") }}"></script>
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="{{ static_url("third-party/js/bootstrap-datetimepicker.min.js") }}"></script>
 
+    <script src="{{ static_url("js/team.news.js") }}" type="text/javascript"></script>
+    <script src="{{ static_url("js/dashboard.js") }}" type="text/javascript"></script>
+    <script src="{{ static_url("js/chat.js") }}" type="text/javascript"></script>
   </body>
 </html>

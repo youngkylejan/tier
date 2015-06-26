@@ -233,7 +233,15 @@ class BaseHandler(tornado.web.RequestHandler):
         return None if not record else record
 
     def insert_userTeam_record_with_ids(self, uid, tid):
-        self.db.insert("INSERT INTO user_team(user_id, team_id) VALUES(%s, %s)", uid, tid)  
+        self.db.insert("INSERT INTO user_team(user_id, team_id) VALUES(%s, %s)", uid, tid)
+
+    def get_news_by_teamid(self, id):
+        news = self.db.query("SELECT * FROM news WHERE team_id = %s", id)
+        return None if not news else news
+
+    def get_news_by_teamname(self, name):
+        team = self.get_team_by_name(name)
+        return self.get_news_by_teamid(team.id)
 
 
 class IndexHandler(BaseHandler):
@@ -351,7 +359,9 @@ class DashboardHandler(BaseHandler):
             return
 
         team = self.get_team_by_name(self.get_argument('name'))
-        self.render("dashboard.html", username=self.current_user.name, team=team)
+        team_news = self.get_news_by_teamid(team.id)
+
+        self.render("dashboard.html", username=self.current_user.name, team=team, team_news = team_news)
 
 
 class TeamHomeHandler(BaseHandler):
