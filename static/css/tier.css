@@ -32,3 +32,10 @@ div.list-group li.list-group-item span {
 div.menu-item {
     background: url("../img/team_func1.jpg");
 }
+
+div.team-funcs p {
+    padding: 15px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
