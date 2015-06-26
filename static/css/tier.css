@@ -51,3 +51,7 @@ html, body {
 .footer, .push {
     height: 155px; /* .push must be the same height as .footer */
 }
+
+h3.sub-header {
+    color: #5898B8;
+}
