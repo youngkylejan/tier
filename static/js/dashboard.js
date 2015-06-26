@@ -3,10 +3,11 @@ function getCookie(name) {
     return r ? r[1] : undefined;
 }
 
+var team_name = $('#team-name').text()
+
 function post_msg() {
     var info = new Object();
-    info.type = "post_msg";
-    info.team = $('#post-target-team').text();
+    info.team = team_name;
     info.content = $('#msg-content').val();
 
     $.ajax({

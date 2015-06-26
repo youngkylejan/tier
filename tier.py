@@ -413,35 +413,18 @@ class TeamNewsHandler(BaseHandler):
 
         resp = {}
 
-        if msg_body['type'] == "post_msg":
-            user = self.current_user
-            team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
-            new_content = msg_body['content']
+        user = self.current_user
+        team = self.get_team_by_name(msg_body['team'])
+        new_content = msg_body['content']
 
-            row = self.db.insert("INSERT INTO news(user_id, team_id, content) VALUES(%s, %s, %s)", user.id, team.id, new_content)
+        row = self.db.insert("INSERT INTO news(user_id, team_id, content) VALUES(%s, %s, %s)", user.id, team.id, new_content)
 
-            if row is not None:
-                resp = { 'status' : 'success'}
-            else:
-                resp = { 'status' : 'failed'}
-
-            self.write(json_encode(resp))
-
+        if row is not None:
+            resp = { 'status' : 'success'}
         else:
-            team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
-            msgs = self.db.query("SELECT * FROM news WHERE team_id = %s", team.id)
+            resp = { 'status' : 'failed'}
 
-            resp['msgs'] = []
-            for msg in msgs:
-                user_id = msg['user_id']
-                user = self.db.get("SELECT * FROM user WHERE id = %s", user_id)
-                resp['msgs'].append({
-                    'user' : user.name,
-                    'time' : msg['post_time'].strftime('%Y-%m-%d %H:%M:%S'),
-                    'content' : msg['content']
-                })
-
-            self.write(json_encode(resp))
+        self.write(json_encode(resp))
 
 
 class TeamMeetingHandler(BaseHandler):
