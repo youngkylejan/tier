@@ -28,3 +28,7 @@ div.list-group li.list-group-item span {
     white-space: nowrap;
     display: block;
 }
+
+div.menu-item {
+    background: url("../img/team_func1.jpg");
+}
