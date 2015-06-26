@@ -77,6 +77,8 @@ class Application(tornado.web.Application):
 
             (r"/user/deadlines", UserDeadlineHandler),
             (r"/user/lobby", UserLobbyHandler),
+
+            (r"/test", TestHandler),
         ]
         settings = dict(
             app_title=u"Tier",
@@ -580,6 +582,16 @@ class MessageUpdatesHandler(BaseHandler):
 
     def on_connection_close(self):
         global_message_buffer.cancel_wait(self.future)
+
+
+class TestHandler(BaseHandler):
+    def get(self):
+        if not self.current_user:
+            self.render("fault.html", error="Please Login Firstly")
+            return
+
+        team = self.get_team_by_name(self.get_argument('name'))
+        self.render("temp.html", username=self.current_user.name, team=team)
 
 
 def main():
