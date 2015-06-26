@@ -362,7 +362,7 @@ class DashboardHandler(BaseHandler):
         members = self.get_members_by_teamid(team.id)
         team_news = self.get_news_by_teamid(team.id)
 
-        if not team_news:
+        if team_news != None:
             for new in team_news:
                 user = self.get_user_by_id(new.user_id)
                 new['user_name'] = user.name
