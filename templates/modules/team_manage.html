@@ -2,22 +2,6 @@
     <div id="task-assign">
         <h3 class="sub-header h-bold">Assign Task</h3>
         <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Target Team</span>
-            <div class="btn-group">
-                <button id="assign-target-team" type="button" class="btn btn-info">NONE</button>
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li class='assign-team-choice'><a hrer="">{{ team['name'] }}</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <br/>
-
-        <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Assignee</span>
             <div class="btn-group">
                 <button id="assign-target-member" type="button" class="btn btn-info">NONE</button>
@@ -26,6 +10,9 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul id="assign-member-dropdown" class="dropdown-menu" role="menu">
+                    {% for member in team_members %}
+                        <li class="assign-member-choice"><a>{{ member['name'] }}</a></li>
+                    {% end for %}
                 </ul>
             </div>
         </div>
@@ -64,23 +51,6 @@
 
     <div id="meeting-create">
         <h3 class="sub-header h-bold">Create Meeting</h3>
-
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Target Team</span>
-            <div class="btn-group">
-                <button id="meeting-target-team" type="button" class="btn btn-info">NONE</button>
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li class='meeting-team-choice'><a hrer="">{{ team['name'] }}</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <br/>
-
         <span class="input-group-addon" id="basic-addon1">Meeting Content</span>
         <textarea id="meeting-content" type="text" rows="4" class="form-control" placeholder="meeting content" aria-describedby="basic-addon1"></textarea>
 

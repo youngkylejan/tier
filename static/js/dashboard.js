@@ -34,7 +34,7 @@ function post_msg() {
 function meeting_create() {
     var info = new Object();
     info.type = "create";
-    info.team = $('#meeting-target-team').text();
+    info.team = team_name;
     info.content = $('#meeting-content').val();
     info.time = $('#meeting-time').val();
 
@@ -56,41 +56,6 @@ function meeting_create() {
         .always(function() {
             console.log("complete");
         });
-};
-
-function load_team_members(team_name) {
-    var info = new Object();
-    info.team = team_name;
-
-    $.ajax({
-            url: '/team/members',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                _xsrf: getCookie("_xsrf"),
-                _body: JSON.stringify(info)
-            },
-        })
-        .done(function(resp) {
-            console.log("success");
-            $.each(resp['members'], function(index, member) {
-                var li_layout = $('<li></li>', {
-                    class: 'assign-member-choice'
-                });
-                var a_layout = $('<a></a>', {
-                    text: member
-                });
-                li_layout.append(a_layout);
-                $('#assign-member-dropdown').append(li_layout);
-            });
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
-
 };
 
 function create_assignment() {

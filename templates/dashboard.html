@@ -65,7 +65,7 @@
                                 {% module Template("modules/team_documents.html") %}
                             </div>
                             <div class="tab-pane fade" id="team-manage">
-                                {% module Template("modules/team_manage.html", team=team) %}
+                                {% module Template("modules/team_manage.html", team = team, team_members = team_members) %}
                             </div>
                         </div>
                     </div>
