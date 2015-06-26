@@ -60,7 +60,7 @@ function meeting_create() {
 
 function create_assignment() {
     var info = new Object();
-    info.team = $('#assign-target-team').text();
+    info.team = team_name;
     info.assignee = $('#assign-target-member').text();
     info.content = $('#assign-content').val();
     info.deadline = $('#assign-deadline').val();
@@ -261,26 +261,8 @@ function load_deadline_timeline() {
 
 $(document).ready(function() {
 
-    $('.menu-item').click(function(event) {
-        var pre_content_id = $('.active-container').attr('id');
-        $('#' + pre_content_id + '-container').attr('style', 'display: none');
-
-        $('.active-container').removeClass('active-container');
-        $('.active').removeClass('active');
-        $(this).addClass('active-container');
-        $(this).addClass('active');
-
-        var new_content_id = $(this).attr('id');
-        $('#' + new_content_id + '-container').attr('style', 'display: auto');
-
-        if (new_content_id == "meeting-schedule") {
-            $('#meeting-timeline-board').empty();
-            load_meeting_timeline();
-        } else if (new_content_id == "deadline-schedule") {
-            $('#deadline-timeline-board').empty();
-            load_deadline_timeline();
-        }
-    });
+    load_meeting_timeline();
+    load_deadline_timeline();
 
     $('.datetimepicker').datetimepicker({
         format: 'YYYY-MM-DD HH:mm:ss'
