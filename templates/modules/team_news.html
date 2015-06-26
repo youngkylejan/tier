@@ -1,7 +1,6 @@
 <div style="padding-top: 50px;">
     <div>
         <h3 class="sub-header h-bold">Team News Board</h3>
-        <br/>
 
         <div id="team-news-list" class="list-group">
             {% set i = 0 %}
@@ -41,17 +40,14 @@
     <div id="msg-post">
         <h3 class="sub-header h-bold">Team News Post</h3>
 
-        <br/>
-
         <span class="input-group-addon" id="basic-addon1">Message Content</span>
         <textarea id="msg-content" type="text" rows="5" class="form-control" placeholder="CONTENT" aria-describedby="basic-addon1"></textarea>
 
         <br/>
 
-        <button id="msg-post-clear-btn" type="submit" class="btn btn-primary">Clear</button>
-        <button id="msg-post-confirm-btn" type="submit" class="btn btn-primary">Post</button>
-
-        <hr/>       
+        <div class="text-center">
+            <button id="msg-post-clear-btn" type="submit" class="btn btn-primary">Clear</button>
+            <button id="msg-post-confirm-btn" type="submit" class="btn btn-primary">Post</button>
+        </div>
     </div>
-
 </div>
