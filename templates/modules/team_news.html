@@ -1,4 +1,30 @@
 <div style="padding-top: 50px;">
+    <div>
+        <h3 class="sub-header h-bold">Team News Board</h3>
+
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Target Team</span>
+            <div class="btn-group">
+                <button id="load-target-team" type="button" class="btn btn-info">NONE</button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li class='load-team-choice'><a hrer="">{{ team['name'] }}</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <br/>
+
+        <div id="news-board" class="well">
+        </div>      
+    </div>
+
+    <br/>
+    <br/>
+
     <div id="msg-post">
         <h3 class="sub-header h-bold">Team News Post</h3>
         <div class="input-group">
@@ -28,29 +54,4 @@
         <hr/>       
     </div>
 
-    <br/>
-    <br/>
-
-    <div>
-        <h3 class="sub-header h-bold">Team News Board</h3>
-
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Target Team</span>
-            <div class="btn-group">
-                <button id="load-target-team" type="button" class="btn btn-info">NONE</button>
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li class='load-team-choice'><a hrer="">{{ team['name'] }}</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <br/>
-
-        <div id="news-board" class="well">
-        </div>      
-    </div>
 </div>

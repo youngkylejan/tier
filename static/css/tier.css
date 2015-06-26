@@ -29,8 +29,8 @@ div.list-group li.list-group-item span {
     display: block;
 }
 
-div.menu-item {
-    background: url("../img/team_func1.jpg");
+ul#team-tab li {
+    background-color: #dff0d8;
 }
 
 div.team-funcs p {
