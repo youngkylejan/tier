@@ -360,6 +360,9 @@ class DashboardHandler(BaseHandler):
 
         team = self.get_team_by_name(self.get_argument('name'))
         team_news = self.get_news_by_teamid(team.id)
+        for new in team_news:
+            user = self.get_user_by_id(new.user_id)
+            new['user_name'] = user.name
 
         self.render("dashboard.html", username=self.current_user.name, team=team, team_news = team_news)
 
