@@ -20,28 +20,30 @@
 </head>
 
 <body>
-  {% if user_agent == "iPhone" %}
-    {% module Template("navIOS.html", username="") %}
-  {% else %}
-    {% module Template("nav.html", username="") %}
-  {% end if %}
+
+  <div class="wrapper">
+    {% if user_agent == "iPhone" %}
+      {% module Template("navIOS.html", username="") %}
+    {% else %}
+      {% module Template("nav.html", username="") %}
+    {% end if %}
 
   <div class="container tier-container">
-      <form class="form-signin tier-form-signin" action="/auth/signin" method="POST">
-        <span><h4 class="form-signin-heading">Sign In</h4></span>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <br/>
+    <form class="form-signin tier-form-signin" action="/auth/signin" method="POST">
+      <span><h4 class="form-signin-heading">Sign In</h4></span>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <br/>
 
-        <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
-        <br/>
+      <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+      <br/>
 
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
-        {% module xsrf_form_html() %}
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Password" required>
+      {% module xsrf_form_html() %}
 
-        <br/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+      <br/>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
   </div>
 
   <div class="text-center">
@@ -53,6 +55,11 @@
     </p>
     {% end %}
   </div>
+        
+    <div class="push"></div>
+  </div>
+
+  {% module Template("footer.html") %}
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <script src="{{ static_url("bootstrap/js/ie10-viewport-bug-workaround.js") }}"></script>

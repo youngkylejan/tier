@@ -20,115 +20,124 @@
 </head>
 
 <body>
+    <div class="wrapper">
+        {% if user_agent == "iPhone" %}
+            {% module Template("navIOS.html", username=username) %}
+        {% else %}
+            {% module Template("nav.html", username=username) %}
+        {% end if %}
 
-    {% if user_agent == "iPhone" %}
-        {% module Template("navIOS.html", username=username) %}
-    {% else %}
-        {% module Template("nav.html", username=username) %}
-    {% end if %}
+        <div class="row">
+            <section id="guide" class="home-section color-dark bg-white">
+                <div class="container marginbot-50 col-md-offset-2 col-md-8">
+                    <div class="row">
+                        <div class="wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="section-heading text-center">
+                                <h2 class="h-bold" style="text-transform: none;">Hi, {{ username }}</h2>
+                                <div class="divider-header"></div>
+                                <p>Does not have any interested team?</p>
+                                <p>Create it by yourself with filling information of team below!</p>
+                                <div id="team-create">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon1">Team Name</span>
+                                        <input id="team-name-create" type="text" class="form-control" placeholder="team name" aria-describedby="basic-addon1">
+                                    </div>
+                                    <br/>
 
-    <section id="guide" class="home-section color-dark bg-white">
-        <div class="container marginbot-50 col-md-offset-2 col-md-8">
-            <div class="row">
-                <div class="wow fadeInUp" data-wow-delay="0.4s">
-                    <div class="section-heading text-center">
-                        <h2 class="h-bold" style="text-transform: none;">Hi, {{ username }}</h2>
-                        <div class="divider-header"></div>
-                        <p>Does not have any interested team?</p>
-                        <p>Create it by yourself with filling information of team below!</p>
-                        <div id="team-create">
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">Team Name</span>
-                                <input id="team-name-create" type="text" class="form-control" placeholder="team name" aria-describedby="basic-addon1">
+                                    <span class="input-group-addon" id="basic-addon1">Team Introduction</span>
+                                    <textarea id="team-intro-create" type="text" rows="5" class="form-control" placeholder="introduction" aria-describedby="basic-addon1"></textarea>
+                                    <br/>
+
+                                    <button id="team-create-clear-btn" type="submit" class="btn btn-primary">Clear</button>
+                                    <button id="team-create-confirm-btn" type="submit" class="btn btn-primary">Create</button>
+                                    <br/>
+                                    <br/>
+
+                                    <p id="success-create-btn" style="display: none; color: green;">Success!</p>
+                                    <p id="failed-create-btn"  style="display: none; color: #FF4545;">Team Name Exists</p>
+                                    <hr/>
+                                </div>
                             </div>
-                            <br/>
-
-                            <span class="input-group-addon" id="basic-addon1">Team Introduction</span>
-                            <textarea id="team-intro-create" type="text" rows="5" class="form-control" placeholder="introduction" aria-describedby="basic-addon1"></textarea>
-                            <br/>
-
-                            <button id="team-create-clear-btn" type="submit" class="btn btn-primary">Clear</button>
-                            <button id="team-create-confirm-btn" type="submit" class="btn btn-primary">Create</button>
-                            <br/>
-                            <br/>
-
-                            <p id="success-create-btn" style="display: none; color: green;">Success!</p>
-                            <p id="failed-create-btn"  style="display: none; color: #FF4545;">Team Name Exists</p>
-                            <hr/>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="color-dark bg-white">
-        <div class="container tier-container col-md-offset-2 col-md-8 wow fadeInLeft" data-wow-delay="0.4s">
-            <h3 class="header text-center site-logo">Teams Joined</h3>
-            <div id="joined-team-list" class="list-group">
-                {% set i = 0 %}
-                {% if joined_teams != None %}
-                    {% for joined_team in joined_teams %}
-                        <li href="" class="list-group-item list-group-item-default row">
-                            <span class="col-md-2">{{ i + 1 }}</span>
-                            <a href="/team/dashboard?name={{ joined_team['name'] }}"><span class="col-md-3">{{ joined_team['name'] }}</span></a>
-                            <span class="col-md-7">{{ joined_team['introduction'] }}</span>
-                        </li>
-                        {% set i = i + 1 %}
-                    {% end %}
-                {% end if %}
-                {% if i % 6 != 0 or i == 0 %}
-                    {% set j = (i / 6 + 1) * 6 - i %}
-                    {% for x in xrange(j) %}
-                        <li href="" class="list-group-item list-group-item-default row">
-                            <span class="col-md-2">{{ i + 1 }}</span>
-                            <span class="col-md-3"></span>
-                        </li>
-                        {% set i = i + 1 %}
-                    {% end%}
-                {% end if %}
-            </div>
-            <div>
-                <ul class="pager">
-                    <li><a id="joined-previous">Previous</a></li>
-                    <li><a id="joined-next">Next</a></li>
-                </ul>
-            </div>
+            </section>
         </div>
 
-        <div class="container tier-container col-md-offset-2 col-md-8 wow fadeInRight" data-wow-delay="0.4s">
-            <h3 class="header text-center site-logo">Teams Unjoined</h3>
-            <div id="remained-team-list" class="list-group">
-                {% set i = 0 %}
-                {% if excepted_teams != None %}
-                    {% for excepted_team in excepted_teams %}
-                        <li href="" class="list-group-item list-group-item-default row">
-                            <span class="col-md-2">{{ i + 1 }}</span>
-                            <a href="/team/home?name={{ excepted_team['name'] }}"><span class="col-md-3">{{ excepted_team['name'] }}</span></a>
-                            <span class="col-md-7">{{ excepted_team['introduction'] }}</span>
-                        </li>
-                    {% set i = i + 1 %}
-                    {% end %}
-                {% end if %}
-                {% if i % 6 != 0 or i == 0 %}
-                    {% set j = (i / 6 + 1) * 6 - i %}
-                    {% for x in xrange(j) %}
-                        <li href="" class="list-group-item list-group-item-default row">
-                            <span class="col-md-1">{{ i + 1 }}</span>
-                            <span class="col-md-3"></span>
-                        </li>
-                        {% set i = i + 1 %}
-                    {% end%}
-                {% end if %}
-            </div>
-            <div>
-                <ul class="pager">
-                    <li><a id="remained-previous">Previous</a></li>
-                    <li><a id="remained-next">Next</a></li>
-                </ul>
-            </div>
+        <div class="row" style="padding-bottom: 50px;">
+            <section class="color-dark bg-white">
+                <div class="container tier-container col-md-offset-2 col-md-8 wow fadeInLeft" data-wow-delay="0.4s">
+                    <h3 class="header text-center site-logo">Teams Joined</h3>
+                    <div id="joined-team-list" class="list-group">
+                        {% set i = 0 %}
+                        {% if joined_teams != None %}
+                            {% for joined_team in joined_teams %}
+                                <li href="" class="list-group-item list-group-item-default row">
+                                    <span class="col-md-2">{{ i + 1 }}</span>
+                                    <a href="/team/dashboard?name={{ joined_team['name'] }}"><span class="col-md-3">{{ joined_team['name'] }}</span></a>
+                                    <span class="col-md-7">{{ joined_team['introduction'] }}</span>
+                                </li>
+                                {% set i = i + 1 %}
+                            {% end %}
+                        {% end if %}
+                        {% if i % 6 != 0 or i == 0 %}
+                            {% set j = (i / 6 + 1) * 6 - i %}
+                            {% for x in xrange(j) %}
+                                <li href="" class="list-group-item list-group-item-default row">
+                                    <span class="col-md-2">{{ i + 1 }}</span>
+                                    <span class="col-md-3"></span>
+                                </li>
+                                {% set i = i + 1 %}
+                            {% end%}
+                        {% end if %}
+                    </div>
+                    <div>
+                        <ul class="pager">
+                            <li><a id="joined-previous">Previous</a></li>
+                            <li><a id="joined-next">Next</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="container tier-container col-md-offset-2 col-md-8 wow fadeInRight" data-wow-delay="0.4s">
+                    <h3 class="header text-center site-logo">Teams Unjoined</h3>
+                    <div id="remained-team-list" class="list-group">
+                        {% set i = 0 %}
+                        {% if excepted_teams != None %}
+                            {% for excepted_team in excepted_teams %}
+                                <li href="" class="list-group-item list-group-item-default row">
+                                    <span class="col-md-2">{{ i + 1 }}</span>
+                                    <a href="/team/home?name={{ excepted_team['name'] }}"><span class="col-md-3">{{ excepted_team['name'] }}</span></a>
+                                    <span class="col-md-7">{{ excepted_team['introduction'] }}</span>
+                                </li>
+                            {% set i = i + 1 %}
+                            {% end %}
+                        {% end if %}
+                        {% if i % 6 != 0 or i == 0 %}
+                            {% set j = (i / 6 + 1) * 6 - i %}
+                            {% for x in xrange(j) %}
+                                <li href="" class="list-group-item list-group-item-default row">
+                                    <span class="col-md-1">{{ i + 1 }}</span>
+                                    <span class="col-md-3"></span>
+                                </li>
+                                {% set i = i + 1 %}
+                            {% end%}
+                        {% end if %}
+                    </div>
+                    <div>
+                        <ul class="pager">
+                            <li><a id="remained-previous">Previous</a></li>
+                            <li><a id="remained-next">Next</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
+
+        <div class="push"></div>
+    </div>
+
+    {% module Template("footer.html") %}
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

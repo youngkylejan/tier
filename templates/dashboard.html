@@ -30,48 +30,54 @@
 
   <body>
 
-    {% module Template("nav.html", username=username) %}
+    <div class="wrapper">
 
-    <section class="home-section color-dark bg-white" style="padding-top: 50px; padding-bottom: 50px;">
-        <div class="container" style="padding-top: 50px">
-            <div class="row">
+        {% module Template("nav.html", username=username) %}
 
-                <div class="section-heading text-center">
-                    <h2 class="h-bold">{{ team.name }}</h2>
-                    <div class="divider-header"></div>
-                    <p>{{ team.introduction }}</p>
-                    <hr/>
+        <section class="home-section color-dark bg-white" style="padding-top: 50px; padding-bottom: 50px;">
+            <div class="container" style="padding-top: 50px">
+                <div class="row">
 
-                    <ul class="nav nav-tabs" id="team-tab">
-                        <li class="active"><a href="#team-news" data-toggle="tab">Team News</a></li>
-                        <li><a href="#team-business" data-toggle="tab">Transaction</a></li>
-                        <li><a href="#team-chatroom" data-toggle="tab">Chatroom</a></li>
-                        <li><a href="#team-documents" data-toggle="tab">Documents</a></li>
-                        <li><a href="#team-manage" data-toggle="tab">Team Manage</a></li>
-                    </ul>
+                    <div class="section-heading text-center">
+                        <h2 class="h-bold">{{ team.name }}</h2>
+                        <div class="divider-header"></div>
+                        <p>{{ team.introduction }}</p>
+                        <hr/>
 
-                    <div class="tab-content">
-                        <div class="tab-pane fade in active" id="team-news">
-                            {% module Template("modules/team_news.html", team=team) %}
-                        </div>
-                        <div class="tab-pane fade" id="team-business">
-                            {% module Template("modules/meeting_schedule.html") %}
-                            {% module Template("modules/deadline_schedule.html") %}
-                        </div>
-                        <div class="tab-pane fade" id="team-chatroom">
-                            {% module Template("modules/chat_room.html") %}
-                        </div>
-                        <div class="tab-pane fade" id="team-documents">
-                            {% module Template("modules/team_documents.html") %}
-                        </div>
-                        <div class="tab-pane fade" id="team-manage">
-                            {% module Template("modules/team_manage.html", team=team) %}
+                        <ul class="nav nav-tabs" id="team-tab">
+                            <li class="active"><a href="#team-news" data-toggle="tab">Team News</a></li>
+                            <li><a href="#team-business" data-toggle="tab">Transaction</a></li>
+                            <li><a href="#team-chatroom" data-toggle="tab">Chatroom</a></li>
+                            <li><a href="#team-documents" data-toggle="tab">Documents</a></li>
+                            <li><a href="#team-manage" data-toggle="tab">Team Manage</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="team-news">
+                                {% module Template("modules/team_news.html", team=team) %}
+                            </div>
+                            <div class="tab-pane fade" id="team-business">
+                                {% module Template("modules/meeting_schedule.html") %}
+                                {% module Template("modules/deadline_schedule.html") %}
+                            </div>
+                            <div class="tab-pane fade" id="team-chatroom">
+                                {% module Template("modules/chat_room.html") %}
+                            </div>
+                            <div class="tab-pane fade" id="team-documents">
+                                {% module Template("modules/team_documents.html") %}
+                            </div>
+                            <div class="tab-pane fade" id="team-manage">
+                                {% module Template("modules/team_manage.html", team=team) %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        <div class="push"></div>
+    </div>
+
+    {% module Template("footer.html") %}
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{ static_url("bootstrap/js/bootstrap.min.js") }}"></script>
