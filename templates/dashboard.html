@@ -32,48 +32,42 @@
 
     {% module Template("nav.html", username=username) %}
 
-    <section class="home-section color-dark bg-white" style="padding-top: 50px">
-        <div class="container">
+    <section class="home-section color-dark bg-white" style="padding-top: 50px; padding-bottom: 50px;">
+        <div class="container" style="padding-top: 50px">
             <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <div class="nav team-funcs" style="padding-top: 50px">
-                        <p style="padding: 15px;" id="team-new" class="menu-item active-container active bg-info"><a>Team News</a></p>
-                        <p id="team-manage" class="menu-item bg-info"><a>Team Management</a></p>
-                        <p id="meeting-schedule" class="menu-item bg-info"><a>Meeting Schedule </a></p>
-                        <p id="deadline-schedule" class="menu-item bg-info"><a>Deadline Schedule </a></p>
-                        <p id="team-chatroom" class="menu-item bg-info"><a>Team ChatRoom</a></p>
-                        <p id="personal-wiki" class="menu-item bg-info"><a>Team Documents</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="home-section color-dark bg-white" style="padding-top: 50px">
-        <div class="container">
-            <div class="row">
-                <div id="team-new-container" class='page-content-container' style="display: None">
-                    {% module Template("modules/team_news.html", team=team) %}
-                </div>
-                
-                <div id="team-manage-container" class='page-content-container' style="display: None">
-                    {% module Template("modules/team_manage.html", team=team) %}
-                </div>
-                
-                <div id="meeting-schedule-container" class='page-content-container' style="display: None">
-                    {% module Template("modules/meeting_schedule.html") %}
-                </div>
-                
-                <div id="deadline-schedule-container" class='page-content-container' style="display: None">
-                    {% module Template("modules/deadline_schedule.html") %}
-                </div>
-                
-                <div id="team-chatroom-container" class='page-content-container' style="display: None">
-                    {% module Template("modules/chat_room.html") %}
-                </div>
-                
-                <div id="personal-wiki-container" class='page-content-container' style="display: None">
-                    {% module Template("modules/personal_wiki.html") %}
+                <div class="section-heading text-center">
+                    <h2 class="h-bold">{{ team.name }}</h2>
+                    <div class="divider-header"></div>
+                    <p>{{ team.introduction }}</p>
+                    <hr/>
+
+                    <ul class="nav nav-tabs" id="team-tab">
+                        <li class="active"><a href="#team-news" data-toggle="tab">Team News</a></li>
+                        <li><a href="#team-business" data-toggle="tab">Transaction</a></li>
+                        <li><a href="#team-chatroom" data-toggle="tab">Chatroom</a></li>
+                        <li><a href="#team-documents" data-toggle="tab">Documents</a></li>
+                        <li><a href="#team-manage" data-toggle="tab">Team Manage</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="team-news">
+                            {% module Template("modules/team_news.html", team=team) %}
+                        </div>
+                        <div class="tab-pane fade" id="team-business">
+                            {% module Template("modules/meeting_schedule.html") %}
+                            {% module Template("modules/deadline_schedule.html") %}
+                        </div>
+                        <div class="tab-pane fade" id="team-chatroom">
+                            {% module Template("modules/chat_room.html") %}
+                        </div>
+                        <div class="tab-pane fade" id="team-documents">
+                            {% module Template("modules/team_documents.html") %}
+                        </div>
+                        <div class="tab-pane fade" id="team-manage">
+                            {% module Template("modules/team_manage.html", team=team) %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

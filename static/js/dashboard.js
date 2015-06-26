@@ -428,4 +428,5 @@ $(document).ready(function() {
         create_assignment();
     });
 
+    $('#team-tab li:eq(0) a').tab('show');
 });
