@@ -31,9 +31,9 @@ function post_msg() {
 
 };
 
-function join_team_accept(username) {
+function join_team_accept(btn) {
      var info = new Object();
-     info.user_name = username;
+     info.user_name = btn.prev().prev().text();
      info.team_name = team_name;
      info.action = 'accept';
 
@@ -46,14 +46,17 @@ function join_team_accept(username) {
                 _body: JSON.stringify(info)
             },
          })
-         .done(function() {
-             console.log("success");
+         .done(function(resp) {
+            console.log("success");
+            if (resp['status'] == 'inserts') {
+                btn.text('COMPLETE');
+            }
          })
          .fail(function() {
-             console.log("error");
+            console.log("error");
          })
          .always(function() {
-             console.log("complete");
+            console.log("complete");
          });
 }
 
@@ -345,6 +348,10 @@ $(document).ready(function() {
 
     $('#assign-create-confirm-btn').click(function(event) {
         create_assignment();
+    });
+
+    $('.join-accept-btn').click(function(event) {
+        join_team_accept($(this));
     });
 
     $('#team-tab li:eq(0) a').tab('show');

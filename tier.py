@@ -274,6 +274,9 @@ class BaseHandler(tornado.web.RequestHandler):
     def insert_applys_with_info(self, uid, tid):
         self.db.insert("INSERT INTO joinApplys(user_id, team_id) VALUES(%s, %s)", uid, tid)
 
+    def remove_applys_with_info(self, uid, tid):
+        self.db.execute("DELETE FROM joinApplys WHERE user_id = %s AND team_id = %s", uid, tid)
+
     def is_user_team_leader(self, uid, tid):
         record = self.db.get("SELECT * FROM user_team WHERE user_id = %s AND team_id = %s", uid, tid)
         return False if not record else True
@@ -459,6 +462,7 @@ class TeamJoinHandler(BaseHandler):
 
             elif action == 'accept':
                 self.insert_userTeam_record_with_ids(user.id, team.id)
+                self.remove_applys_with_info(user.id, team.id)
                 resp['status'] = 'inserts'
         else:
             resp['status'] = 'exists'
