@@ -1,0 +1,35 @@
+<div id="join-apply">
+<h3 class="sub-header h-bold">Join Applys</h3> 
+</div>
+<div id="team-apply-list" class="list-group">
+    {% set i = 0 %}
+    {% if applys != None %}
+        {% for apply in applys %}
+            <li href="" class="list-group-item list-group-item-default row">
+                <span class="col-md-1">{{ i + 1 }}</span>
+                <span class="col-md-9">{{ apply['user_name'] }}</span>
+                <span class="col-md-2">{{ apply['post_time'] }}</span>
+            </li>
+            {% set i = i + 1 %}
+        {% end %}
+    {% end if %}
+    {% if i % 6 != 0 or i == 0 %}
+        {% set j = (i / 6 + 1) * 6 - i %}
+        {% for x in xrange(j) %}
+            <li href="" class="list-group-item list-group-item-default row">
+                <span class="col-md-2">{{ i + 1 }}</span>
+                <span class="col-md-3"></span>
+            </li>
+            {% set i = i + 1 %}
+        {% end%}
+    {% end if %}
+</div>
+<div>
+    <ul class="pager">
+        <li><a id="applys-previous">Previous</a></li>
+        <li><a id="applys-next">Next</a></li>
+    </ul>
+</div>
+
+<br/>
+<br/>

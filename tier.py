@@ -66,19 +66,20 @@ class Application(tornado.web.Application):
 
             (r"/team/home", TeamHomeHandler),
             (r"/team/join", TeamJoinHandler),
+
             (r"/team/create", TeamCreateHandler),
             (r"/team/news", TeamNewsHandler),
             (r"/team/meetings", TeamMeetingHandler),
             (r"/team/members", TeamMemberHandler),
             (r"/team/assignments", TeamAssignmentHandler),
+            (r"/team/applys", TeamApplyHandler),
+
             (r"/team/dashboard", DashboardHandler),
             (r"/team/chat/new", MessageNewHandler),
             (r"/team/chat/updates", MessageUpdatesHandler),
 
             (r"/user/deadlines", UserDeadlineHandler),
             (r"/user/lobby", UserLobbyHandler),
-
-            (r"/test", TestHandler),
         ]
         settings = dict(
             app_title=u"Tier",
@@ -149,12 +150,20 @@ class Application(tornado.web.Application):
                 post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
             );"
 
+        create_join_applys_sql = "CREATE TABLE IF NOT EXISTS joinApplys( \
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+                user_id INT NOT NULL, \
+                team_id INT NOT NULL, \
+                post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
+            );"
+
         self.db.execute(create_user_sql)
         self.db.execute(create_team_sql)
         self.db.execute(create_userTeam_sql)
         self.db.execute(create_news_sql)
         self.db.execute(create_meetings_sql)
         self.db.execute(create_assignments_sql)
+        self.db.execute(create_join_applys_sql)
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -242,6 +251,33 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_news_by_teamname(self, name):
         team = self.get_team_by_name(name)
         return self.get_news_by_teamid(team.id)
+
+    def insert_news_with_info(self, uid, tid, content):
+        self.db.insert("INSERT INFO news(user_id, team_id, content) VALUES(%s, %s, %s)", uid, tid, content)
+
+    def get_applys_by_teamid(self, tid):
+        records = self.db.query("SELECT * FROM joinApplys WHERE team_id = %s", tid)
+        return None if not records else records
+
+    def get_applys_by_ids(self, uid, tid):
+        records = self.db.query("SELECT * FROM joinApplys WHERE user_id = %s AND team_id = %s", uid, tid)
+        return None if not records else records
+
+    def get_applys_by_teamname(self, tname):
+        team = self.get_team_by_name(tname)
+        return self.get_applys_by_teamid(team.id)
+
+    def get_applys_by_names(self, uname, tname):
+        user = self.get_user_by_name(uname)
+        team = self.get_team_by_name(tname)
+        return self.get_applys_by_ids(user.id, team.id)
+
+    def insert_applys_with_info(self, uid, tid):
+        self.db.insert("INSERT INTO joinApplys(user_id, team_id) VALUES(%s, %s)", uid, tid)
+
+    def is_user_team_leader(self, uid, tid):
+        record = self.db.get("SELECT * FROM user_team WHERE user_id = %s AND team_id = %s", uid, tid)
+        return False if not record else True
 
 
 class IndexHandler(BaseHandler):
@@ -362,12 +398,22 @@ class DashboardHandler(BaseHandler):
         members = self.get_members_by_teamid(team.id)
         team_news = self.get_news_by_teamid(team.id)
 
+        applys = None
+        if self.is_user_team_leader(self.current_user.id, team.id) == True:
+            applys = self.get_applys_by_teamid(team.id)
+
         if team_news != None:
             for new in team_news:
                 user = self.get_user_by_id(new.user_id)
                 new['user_name'] = user.name
 
-        self.render("dashboard.html", username = self.current_user.name, team = team, team_news = team_news, team_members = members)
+        if applys != None:
+            for apply in applys:
+                user = self.get_user_by_id(apply.user_id)
+                apply['user_name'] = user.name
+
+        self.render("dashboard.html", username = self.current_user.name, \
+            team = team, team_news = team_news, team_members = members, applys = applys)
 
 
 class TeamHomeHandler(BaseHandler):
@@ -401,7 +447,7 @@ class TeamJoinHandler(BaseHandler):
             if action == 'check':
                 resp['status'] = 'none'
             else:
-                self.insert_userTeam_record_with_ids(user.id, team.id)
+                self.insert_applys_with_info(user.id, team.id)
                 resp['status'] = 'inserts'
         else:
             resp['status'] = 'exists'
@@ -550,6 +596,11 @@ class UserLobbyHandler(BaseHandler):
         self.render("user_lobby.html", **args)
 
 
+class TeamApplyHandler(BaseHandler):
+    def post(self):
+        return
+        
+
 class MessageNewHandler(BaseHandler):
     def post(self):
         message = {
@@ -581,16 +632,6 @@ class MessageUpdatesHandler(BaseHandler):
 
     def on_connection_close(self):
         global_message_buffer.cancel_wait(self.future)
-
-
-class TestHandler(BaseHandler):
-    def get(self):
-        if not self.current_user:
-            self.render("fault.html", error="Please Login Firstly")
-            return
-
-        team = self.get_team_by_name(self.get_argument('name'))
-        self.render("temp.html", username=self.current_user.name, team=team)
 
 
 def main():

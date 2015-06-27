@@ -26,20 +26,23 @@
 </head>
 
 <body>
-    {% module Template("nav.html", username=username) %}
+    <div class="wrapper">
+        {% module Template("nav.html", username=username) %}
 
-    <section class="home-section color-dark bg-white" style="padding-top: 50px">
-        <div class="container tier-container">
-            <div class="section-heading text-center">
-                <div class="page-header">
-                    <h1 id="team_name" class="site-logo">{{ team_name }}</h1>
-                    <h5>Leader: {{ leader_name }}</h5>
-                    <p class="lead">{{ intro }}</p>
-                    <p><a id="join_button" class="btn btn-default" role="button" style="color: #666">Join It &raquo;</a></p>
+        <section class="home-section color-dark bg-white" style="padding-top: 50px">
+            <div class="container tier-container">
+                <div class="section-heading text-center">
+                    <div class="page-header">
+                        <h1 id="team_name" class="site-logo">{{ team_name }}</h1>
+                        <h5>Leader: {{ leader_name }}</h5>
+                        <p class="lead">{{ intro }}</p>
+                        <p><a id="join_button" class="btn btn-default" role="button" style="color: #666">Join It &raquo;</a></p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        <div class="push"></div>
+    </div>
 
     {% module Template("footer.html") %}
 
