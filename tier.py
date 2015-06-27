@@ -436,18 +436,27 @@ class TeamHomeHandler(BaseHandler):
 
 class TeamJoinHandler(BaseHandler):
     def post(self):
-        user = self.current_user
-        action = self.request.arguments['_action'][0]
-        team = self.get_team_by_name(self.request.arguments['_name'])
+        json_msg = self.request.arguments['_body'][0]
+        msg_body = json.loads(json_msg)
+
+        action = msg_body['action']
+        user = self.get_user_by_name(msg_body['user_name'])
+        team = self.get_team_by_name(msg_body['team_name'])
         record = self.get_userTeam_record_by_ids(user.id, team.id)
+        pre_apply = self.get_applys_by_ids(user.id, team.id)
 
         resp = {}
         if not record:
-            if action == 'check':
+            if action == 'check' and pre_apply == None:
                 resp['status'] = 'none'
+
+            elif action == 'check' and pre_apply != None:
+                resp['status'] = 'applys'
+
             elif action == 'apply':
                 self.insert_applys_with_info(user.id, team.id)
                 resp['status'] = 'applys'
+
             elif action == 'accept':
                 self.insert_userTeam_record_with_ids(user.id, team.id)
                 resp['status'] = 'inserts'

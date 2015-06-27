@@ -31,6 +31,32 @@ function post_msg() {
 
 };
 
+function join_team_accept(username) {
+     var info = new Object();
+     info.user_name = username;
+     info.team_name = team_name;
+     info.action = 'accept';
+
+     $.ajax({
+             url: '/team/join',
+             type: 'POST',
+             dataType: 'json',
+             data: {
+                _xsrf: getCookie("_xsrf"),
+                _body: JSON.stringify(info)
+            },
+         })
+         .done(function() {
+             console.log("success");
+         })
+         .fail(function() {
+             console.log("error");
+         })
+         .always(function() {
+             console.log("complete");
+         });
+}
+
 function meeting_create() {
     var info = new Object();
     info.type = "create";
