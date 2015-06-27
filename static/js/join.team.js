@@ -3,7 +3,7 @@ function getCookie(name) {
     return r ? r[1] : undefined;
 }
 
-function join_team(action) {
+function join_team_apply(action) {
     $.ajax({
             url: '/team/join',
             type: 'POST',
@@ -16,8 +16,8 @@ function join_team(action) {
         })
         .done(function(response) {
             console.log("success");
-            if (response['status'] == 'exists' || response['status'] == 'inserts') {
-                $('#join_button').text('Joined');
+            if (response['status'] == 'exists' || response['status'] == 'applys') {
+                $('#join_button').text('Applys Submitted, wating for processing!');
                 $('#join_button').attr('disabled', 'disabled');
             }
         })
@@ -30,10 +30,10 @@ function join_team(action) {
 };
 
 $(document).ready(function() {
-    join_team('check');
+    join_team_apply('check');
 
-    $('#join_button').click(function() {
-        join_team('insert');
+    $('#join-team-btn').click(function() {
+        join_team_apply('apply');
     });
 
 });

@@ -7,8 +7,9 @@
         {% for apply in applys %}
             <li href="" class="list-group-item list-group-item-default row">
                 <span class="col-md-1">{{ i + 1 }}</span>
-                <span class="col-md-9">{{ apply['user_name'] }}</span>
+                <span class="col-md-8">{{ apply['user_name'] }}</span>
                 <span class="col-md-2">{{ apply['post_time'] }}</span>
+                <button id="join-accept-btn" class="col-md-1 btn btn-info" style="padding: 0px;">ACCEPT</button>
             </li>
             {% set i = i + 1 %}
         {% end %}

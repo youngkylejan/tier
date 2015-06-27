@@ -72,7 +72,6 @@ class Application(tornado.web.Application):
             (r"/team/meetings", TeamMeetingHandler),
             (r"/team/members", TeamMemberHandler),
             (r"/team/assignments", TeamAssignmentHandler),
-            (r"/team/applys", TeamApplyHandler),
 
             (r"/team/dashboard", DashboardHandler),
             (r"/team/chat/new", MessageNewHandler),
@@ -446,8 +445,11 @@ class TeamJoinHandler(BaseHandler):
         if not record:
             if action == 'check':
                 resp['status'] = 'none'
-            else:
+            elif action == 'apply':
                 self.insert_applys_with_info(user.id, team.id)
+                resp['status'] = 'applys'
+            elif action == 'accept':
+                self.insert_userTeam_record_with_ids(user.id, team.id)
                 resp['status'] = 'inserts'
         else:
             resp['status'] = 'exists'
@@ -595,11 +597,6 @@ class UserLobbyHandler(BaseHandler):
 
         self.render("user_lobby.html", **args)
 
-
-class TeamApplyHandler(BaseHandler):
-    def post(self):
-        return
-        
 
 class MessageNewHandler(BaseHandler):
     def post(self):
