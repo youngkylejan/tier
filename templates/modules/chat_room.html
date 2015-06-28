@@ -17,6 +17,7 @@
                         <input id="message" name="body" type="text" class="form-control" placeholder="Enter Message" />
                         {% module xsrf_form_html() %}
                         <input type="hidden" name="next" value="{{ request.path }}"/>
+                        <input type="hidden" name="name" value="{{ team.name }}"/>
                         <span class="input-group-btn">
                             <button id="msg-post-btn" class="btn btn-info" value="{{ _("Post") }}">SEND</button>
                         </span>

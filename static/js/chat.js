@@ -84,7 +84,7 @@ var updater = {
     cursor: null,
 
     poll: function() {
-        var args = {"_xsrf": getCookie("_xsrf")};
+        var args = {"_xsrf": getCookie("_xsrf"), "name": $('#team-name').text()};
         if (updater.cursor) args.cursor = updater.cursor;
         $.ajax({url: "/team/chat/updates", type: "POST", dataType: "text",
                 data: $.param(args), success: updater.onSuccess,

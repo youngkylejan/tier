@@ -51,12 +51,10 @@ define("mysql_password", default="jian", help="database password")
 # A thread pool to be used for password hashing with bcrypt.
 executor = concurrent.futures.ThreadPoolExecutor(2)
 
-# Making this a non-singleton is left as an exercise for the reader.
-global_message_buffer = MessageBuffer()
-
-
 class Application(tornado.web.Application):
     def __init__(self):
+        self.teams_message_poll = {}
+
         handlers = [
             (r"/", IndexHandler),
 
@@ -169,6 +167,11 @@ class BaseHandler(tornado.web.RequestHandler):
     @property
     def db(self):
         return self.application.db
+
+    @property
+    def teams_message_poll(self):
+        return self.application.teams_message_poll
+    
 
     def get_current_user(self):
         user_id = self.get_secure_cookie("tier_user")
@@ -400,6 +403,9 @@ class DashboardHandler(BaseHandler):
         members = self.get_members_by_teamid(team.id)
         team_news = self.get_news_by_teamid(team.id)
 
+        if team.name not in self.teams_message_poll:
+            self.teams_message_poll[team.name] = MessageBuffer()
+
         applys = None
         if self.is_user_team_leader(self.current_user.id, team.id) == True:
             applys = self.get_applys_by_teamid(team.id)
@@ -415,7 +421,7 @@ class DashboardHandler(BaseHandler):
                 apply['user_name'] = user.name
 
         self.render("dashboard.html", username = self.current_user.name, \
-            team = team, team_news = team_news, team_members = members, applys = applys, messages = global_message_buffer.cache)
+            team = team, team_news = team_news, team_members = members, applys = applys, messages = self.teams_message_poll[team.name].cache)
 
 
 class TeamHomeHandler(BaseHandler):
@@ -613,6 +619,10 @@ class UserLobbyHandler(BaseHandler):
 
 class MessageNewHandler(BaseHandler):
     def post(self):
+        team_name = self.get_argument("name")
+        if team_name not in self.teams_message_poll:
+            self.teams_message_poll[team_name] = MessageBuffer()
+
         message = {
             "id": str(uuid.uuid4()),
             "user_name": self.current_user.name,
@@ -627,23 +637,27 @@ class MessageNewHandler(BaseHandler):
             self.redirect("/team/chat/new", self.get_argument("next"))
         else:
             self.write(message)
-        global_message_buffer.new_messages([message])
+        self.teams_message_poll[team_name].new_messages([message])
 
 
 class MessageUpdatesHandler(BaseHandler):
     @gen.coroutine
     def post(self):
+        team_name = self.get_argument('name')
+        if team_name not in self.teams_message_poll:
+            self.teams_message_poll[team_name] = MessageBuffer()
+
         cursor = self.get_argument("cursor", None)
         # Save the future returned by wait_for_messages so we can cancel
         # it in wait_for_messages
-        self.future = global_message_buffer.wait_for_messages(cursor=cursor)
+        self.future = self.teams_message_poll[team_name].wait_for_messages(cursor=cursor)
         messages = yield self.future
         if self.request.connection.stream.closed():
             return
         self.write(dict(messages=messages))
 
     def on_connection_close(self):
-        global_message_buffer.cancel_wait(self.future)
+        self.teams_message_poll[team_name].cancel_wait(self.future)
 
 
 def main():
