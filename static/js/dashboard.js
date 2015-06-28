@@ -21,6 +21,9 @@ function post_msg() {
         })
         .done(function(resp) {
             console.log("success");
+            $('#new-success-btn').fadeIn('400', function() {
+                $('#new-success-btn').delay(1000).fadeOut('400');
+            });
         })
         .fail(function() {
             console.log("error");
@@ -78,6 +81,9 @@ function meeting_create() {
         })
         .done(function() {
             console.log("success");
+            $('#meeting-success-btn').fadeIn('400', function() {
+                $('#meeting-success-btn').delay(1000).fadeOut('400');
+            });
         })
         .fail(function() {
             console.log("error");
@@ -105,6 +111,9 @@ function create_assignment() {
         })
         .done(function() {
             console.log("success");
+            $('#assign-success-btn').fadeIn('400', function() {
+                $('#assign-success-btn').delay(1000).fadeOut('400');
+            });
         })
         .fail(function() {
             console.log("error");
