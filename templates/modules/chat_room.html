@@ -6,24 +6,6 @@
             </div>
             <div class="panel-body">
                 <ul class="media-list pre-scrollable" id="inbox" style="min-height: 400px; height:">
-                    <li class="media">
-                        <div class="media-body">
-
-                            <div class="media">
-                                <div class="media-body" >
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.
-
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit amet ligula enim. 
-                                    Duis vel condimentum massa.
-                                    Donec sit amet ligula enim. Duis vel condimentum massa.
-                                    <br />
-                                    <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
-                                    <hr />
-                                </div>
-                            </div>
-
-                        </div>
-                    </li>
                     {% for message in messages %}
                         {% module Template("modules/message.html", message=message) %}
                     {% end %}
