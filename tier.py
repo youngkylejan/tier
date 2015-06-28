@@ -657,6 +657,7 @@ class MessageUpdatesHandler(BaseHandler):
         self.write(dict(messages=messages))
 
     def on_connection_close(self):
+        team_name = self.get_argument("name")
         self.teams_message_poll[team_name].cancel_wait(self.future)
 
 
