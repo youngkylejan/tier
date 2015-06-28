@@ -24,6 +24,9 @@
 
                         </div>
                     </li>
+                    {% for message in messages %}
+                        {% module Template("message.html", message=message) %}
+                    {% end %}
                 </ul>
             </div>
             <div id="input" class="panel-footer">

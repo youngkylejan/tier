@@ -1,0 +1,14 @@
+<li class="media message" id="m{{ message["id"] }}">
+    <div class="media-body">
+
+        <div class="media">
+            <div class="media-body" >
+                {% module linkify(message['body']) %}
+                <br />
+                <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
+                <hr />
+            </div>
+        </div>
+
+    </div>
+</li>

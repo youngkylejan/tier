@@ -415,7 +415,7 @@ class DashboardHandler(BaseHandler):
                 apply['user_name'] = user.name
 
         self.render("dashboard.html", username = self.current_user.name, \
-            team = team, team_news = team_news, team_members = members, applys = applys)
+            team = team, team_news = team_news, team_members = members, applys = applys, messages = global_message_buffer.cache)
 
 
 class TeamHomeHandler(BaseHandler):

@@ -62,7 +62,7 @@
                                 {% module Template("modules/deadline_schedule.html") %}
                             </div>
                             <div class="tab-pane fade" id="team-chatroom">
-                                {% module Template("modules/chat_room.html") %}
+                                {% module Template("modules/chat_room.html", messages = messages) %}
                             </div>
                             <div class="tab-pane fade" id="team-documents">
                                 {% module Template("modules/team_documents.html") %}

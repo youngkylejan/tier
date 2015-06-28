@@ -1,3 +1,8 @@
+import tornado.escape
+
+from tornado.concurrent import Future
+from tornado import gen
+
 class MessageBuffer(object):
     def __init__(self):
         self.waiters = set()
