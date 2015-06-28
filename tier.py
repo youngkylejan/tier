@@ -25,7 +25,6 @@ import re
 import subprocess
 import torndb
 import uuid
-import logging
 
 import tornado.escape
 import tornado.httpserver
@@ -613,6 +612,7 @@ class UserLobbyHandler(BaseHandler):
 
 class MessageNewHandler(BaseHandler):
     def post(self):
+        print self.request.body
         message = {
             "id": str(uuid.uuid4()),
             "body": self.get_argument("body"),
@@ -620,9 +620,9 @@ class MessageNewHandler(BaseHandler):
         # to_basestring is necessary for Python 3's json encoder,
         # which doesn't accept byte strings.
         message["html"] = tornado.escape.to_basestring(
-            self.render_string("message.html", message=message))
+            self.render_string("modules/message.html", message=message))
         if self.get_argument("next", None):
-            self.redirect(self.get_argument("next"))
+            self.redirect("/team/chat/new", self.get_argument("next"))
         else:
             self.write(message)
         global_message_buffer.new_messages([message])

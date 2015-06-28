@@ -16,16 +16,11 @@ $(document).ready(function() {
     if (!window.console) window.console = {};
     if (!window.console.log) window.console.log = function() {};
 
-    $("#messageform").live("submit", function() {
-        newMessage($(this));
+    $('#msg-post-btn').click(function(event) {
+        newMessage($(this).parent().parent().parent());
         return false;
     });
-    $("#messageform").live("keypress", function(e) {
-        if (e.keyCode == 13) {
-            newMessage($(this));
-            return false;
-        }
-    });
+
     $("#message").select();
     updater.poll();
 });
@@ -34,7 +29,7 @@ function newMessage(form) {
     var message = form.formToDict();
     var disabled = form.find("input[type=submit]");
     disabled.disable();
-    $.postJSON("/team/message/new", message, function(response) {
+    $.postJSON("/team/chat/new", message, function(response) {
         updater.showMessage(response);
         if (message.id) {
             form.parent().remove();

@@ -1,4 +1,5 @@
 import tornado.escape
+import logging
 
 from tornado.concurrent import Future
 from tornado import gen

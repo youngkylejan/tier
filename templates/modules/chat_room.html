@@ -25,18 +25,18 @@
                         </div>
                     </li>
                     {% for message in messages %}
-                        {% module Template("message.html", message=message) %}
+                        {% module Template("modules/message.html", message=message) %}
                     {% end %}
                 </ul>
             </div>
             <div id="input" class="panel-footer">
-                <form action="/a/message/new" method="post" id="messageform">
+                <form action="/team/chat/new" method="post" id="messageform">
                     <div class="input-group">
                         <input id="message" name="body" type="text" class="form-control" placeholder="Enter Message" />
                         {% module xsrf_form_html() %}
                         <input type="hidden" name="next" value="{{ request.path }}"/>
                         <span class="input-group-btn">
-                            <button class="btn btn-info" type="button">SEND</button>
+                            <button id="msg-post-btn" class="btn btn-info" value="{{ _("Post") }}">SEND</button>
                         </span>
                     </div>
                 </form>
