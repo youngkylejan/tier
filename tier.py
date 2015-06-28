@@ -25,6 +25,7 @@ import re
 import subprocess
 import torndb
 import uuid
+from time import gmtime, strftime
 
 import tornado.escape
 import tornado.httpserver
@@ -614,7 +615,9 @@ class MessageNewHandler(BaseHandler):
     def post(self):
         message = {
             "id": str(uuid.uuid4()),
+            "user_name": self.current_user.name,
             "body": self.get_argument("body"),
+            "post_time": strftime("%Y-%m-%d %H:%M:%S", gmtime())
         }
         # to_basestring is necessary for Python 3's json encoder,
         # which doesn't accept byte strings.
