@@ -612,7 +612,6 @@ class UserLobbyHandler(BaseHandler):
 
 class MessageNewHandler(BaseHandler):
     def post(self):
-        print self.request.body
         message = {
             "id": str(uuid.uuid4()),
             "body": self.get_argument("body"),

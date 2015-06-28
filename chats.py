@@ -8,7 +8,7 @@ class MessageBuffer(object):
     def __init__(self):
         self.waiters = set()
         self.cache = []
-        self.cache_size = 200
+        self.cache_size = 500
 
     def wait_for_messages(self, cursor=None):
         # Construct a Future to return to our caller.  This allows
