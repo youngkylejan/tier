@@ -126,5 +126,6 @@ var updater = {
         node.hide();
         $("#inbox").append(node);
         node.slideDown();
+        $('#inbox').animate({scrollTop: $('#inbox').prop("scrollHeight")}, 400);
     }
 };
