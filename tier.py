@@ -75,6 +75,8 @@ class Application(tornado.web.Application):
             (r"/team/chat/new", MessageNewHandler),
             (r"/team/chat/updates", MessageUpdatesHandler),
 
+            (r"/team/document", DocumentHandler),
+
             (r"/user/deadlines", UserDeadlineHandler),
             (r"/user/lobby", UserLobbyHandler),
         ]
@@ -154,6 +156,15 @@ class Application(tornado.web.Application):
                 post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
             );"
 
+        create_team_documents_sql = "CREATE TABLE IF NOT EXISTS documents( \
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+                team_id INT NOT NULL, \
+                user_id INT NOT NULL, \
+                document_name VARCHAR(200) NOT NULL UNIQUE, \
+                document_id VARCHAR(200) NOT NULL UNIQUE, \
+                post_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP \
+            );"
+
         self.db.execute(create_user_sql)
         self.db.execute(create_team_sql)
         self.db.execute(create_userTeam_sql)
@@ -161,6 +172,7 @@ class Application(tornado.web.Application):
         self.db.execute(create_meetings_sql)
         self.db.execute(create_assignments_sql)
         self.db.execute(create_join_applys_sql)
+        self.db.execute(create_team_documents_sql)
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -253,6 +265,14 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_news_by_teamname(self, name):
         team = self.get_team_by_name(name)
         return self.get_news_by_teamid(team.id)
+
+    def get_documents_by_teamid(self, id):
+        documents = self.db.query("SELECT * FROM documents WHERE team_id = %s", id)
+        return None if not documents else documents
+
+    def get_documents_by_teamname(self, name):
+        team = self.get_team_by_name(name)
+        return self.get_documents_by_teamid(team.id)
 
     def insert_news_with_info(self, uid, tid, content):
         self.db.insert("INSERT INFO news(user_id, team_id, content) VALUES(%s, %s, %s)", uid, tid, content)
@@ -402,6 +422,7 @@ class DashboardHandler(BaseHandler):
         team = self.get_team_by_name(self.get_argument('name'))
         members = self.get_members_by_teamid(team.id)
         team_news = self.get_news_by_teamid(team.id)
+        team_documents = self.get_documents_by_teamid(team.id)
 
         if team.name not in self.teams_message_poll:
             self.teams_message_poll[team.name] = MessageBuffer()
@@ -415,13 +436,19 @@ class DashboardHandler(BaseHandler):
                 user = self.get_user_by_id(new.user_id)
                 new['user_name'] = user.name
 
+        if team_documents != None:
+            for doc in team_documents:
+                user = self.get_user_by_id(doc.user_id)
+                doc['user_name'] = user.name
+
         if applys != None:
             for apply in applys:
                 user = self.get_user_by_id(apply.user_id)
                 apply['user_name'] = user.name
 
         self.render("dashboard.html", username = self.current_user.name, \
-            team = team, team_news = team_news, team_members = members, applys = applys, messages = self.teams_message_poll[team.name].cache)
+            team = team, team_news = team_news, team_members = members, applys = applys, \
+            documents = team_documents, messages = self.teams_message_poll[team.name].cache)
 
 
 class TeamHomeHandler(BaseHandler):
@@ -660,6 +687,27 @@ class MessageUpdatesHandler(BaseHandler):
         team_name = self.get_argument("name")
         self.teams_message_poll[team_name].cancel_wait(self.future)
 
+class DocumentHandler(BaseHandler):
+    def post(self):
+        json_msg = self.request.arguments['_body'][0]
+        msg_body = json.loads(json_msg)
+
+        resp = {}
+
+        user = self.current_user
+        team = self.get_team_by_name(msg_body['team'])
+        doc_name = msg_body['document_name']
+        doc_id = msg_body['document_id']
+
+        row = self.db.insert("INSERT INTO documents(user_id, team_id, document_name, document_id) VALUES(%s, %s, %s, %s)", \
+            user.id, team.id, doc_name, doc_id)
+
+        if row is not None:
+            resp = { 'status' : 'success'}
+        else:
+            resp = { 'status' : 'failed'}
+
+        self.write(json_encode(resp))
 
 def main():
     tornado.options.parse_command_line()

@@ -316,6 +316,14 @@ $(document).ready(function() {
         $('#msg-content').val('');
     });
 
+    $('#doc-post-clear-btn').click(function(event) {
+        $('#doc-name-create').val('');
+    });
+
+    $('#doc-post-confirm-btn').click(function(event) {
+        create_doc();
+    });
+
     $('#msg-post-confirm-btn').click(function(event) {
         post_msg();
     });
