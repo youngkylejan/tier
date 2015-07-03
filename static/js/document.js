@@ -55,6 +55,7 @@ function createDocument() {
 
     realtimeUtils.createRealtimeFile(doc, function(createResponse) {
         info.document_id = createResponse.id.toString();
+        insertPermission(info.document_id, 'default', 'anyone', 'writer');
         console.log(info);
         $.ajax({
             url: '/team/document',
@@ -78,6 +79,29 @@ function createDocument() {
             console.log("complete");
         });
     });
+}
+
+
+/**
+ * Insert a new permission.
+ *
+ * @param {String} fileId ID of the file to insert permission for.
+ * @param {String} value User or group e-mail address, domain name or
+ *                       {@code null} "default" type.
+ * @param {String} type The value "user", "group", "domain" or "default".
+ * @param {String} role The value "owner", "writer" or "reader".
+ */
+function insertPermission(fileId, value, type, role) {
+  var body = {
+    'value': value,
+    'type': type,
+    'role': role
+  };
+  var request = gapi.client.drive.permissions.insert({
+    'fileId': fileId,
+    'resource': body
+  });
+  request.execute(function(resp) { console.log(resp);});
 }
 
 function load_doc(id) {
