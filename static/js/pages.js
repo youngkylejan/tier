@@ -25,6 +25,7 @@ function previous(type) {
         goToPage = parseInt(applys_curPage) - 1;
     } else if (type == 'docs') {
         goToPage = parseInt(docs_curPage) - 1;
+        console.log("docpage:" + goToPage);
     }
 
     if (goToPage >= 0) {
@@ -45,6 +46,7 @@ function next(type) {
             goTo(goToPage, type);
         }
     } else if (type == 'docs') {
+        goToPage = parseInt(docs_curPage) + 1;
         if(goToPage < num_docsPages) {
             goTo(goToPage, type);
         }
@@ -66,6 +68,7 @@ function goTo(page, type){
     } else if (type == 'docs') {
         teamDocs.slice(docs_curPage * perPage, docs_curPage * perPage + perPage).css('display', 'none');
         teamDocs.slice(startAt, endOn).css('display', 'block');
+        docs_curPage = page;
     }
 }
 
@@ -96,6 +99,7 @@ $(document).ready(function() {
     });
 
     $('#docs-previous').click(function(event) {
+        console.log("doc:"+num_teamDocs);
         previous('docs');
     });
 
