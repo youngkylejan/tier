@@ -1,3 +1,73 @@
-<div style="padding-top: 50px;">
+<div id = "edit-doc" style="display: none; padding-top: 50px;">
     <h3 class="sub-header h-bold">Team Documents</h3>
+
+    <div>
+    	<textarea id="text" type="text" rows="40" class="form-control" aria-describedby="basic-addon1"></textarea>
+    </div>
+    <div>
+        <ul class="pager">
+            <li><a id="doc-back" href="#" onclick="back_doc();return false;">Back</a></li>
+            <li><a id="doc-save" href="#" onclick="save_doc();return false;">Save</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id = "doc-management" style="display: block; padding-top: 50px;">
+    <div>
+        <h3 class="sub-header h-bold">Team Documents Board</h3>
+
+        <div id="team-documents-list" class="list-group">
+            {% set i = 0 %}
+            {% if documents != None %}
+                {% for doc in documents %}
+                    <li href="" class="list-group-item list-group-item-default row">
+                        <span class="col-md-1">{{ i + 1 }}</span>
+                        <a href="#" onclick="load_doc('{{ doc['document_id'] }}');return false;"><span class="col-md-2">{{ doc['document_name'] }}</span></a>
+                        <span class="col-md-7"><b>Publisher:</b>&nbsp;&nbsp;{{ doc['user_name'] }}</span>
+                        <span class="col-md-2">{{ doc['post_time'] }}</span>
+                    </li>
+                    {% set i = i + 1 %}
+                {% end %}
+            {% end if %}
+            {% if i % 6 != 0 or i == 0 %}
+                {% set j = (i / 6 + 1) * 6 - i %}
+                {% for x in xrange(j) %}
+                    <li href="" class="list-group-item list-group-item-default row">
+                        <span class="col-md-2">{{ i + 1 }}</span>
+                        <span class="col-md-3"></span>
+                    </li>
+                    {% set i = i + 1 %}
+                {% end%}
+            {% end if %}
+        </div>
+        <div>
+            <ul class="pager">
+                <li><a id="docs-previous">Previous</a></li>
+                <li><a id="docs-next">Next</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div id="msg-post">
+        <h3 class="sub-header h-bold">Create Documents</h3>
+
+        <div class="input-group">
+        	<span class="input-group-addon" id="basic-addon1">Document</span>
+        	<input id="doc-name-create" type="text" class="form-control" placeholder="document name" aria-describedby="basic-addon1">
+        </div>
+
+        <br/>
+
+        <div class="text-center">
+            <button id="doc-post-clear-btn" type="submit" class="btn btn-primary">Clear</button>
+            <button id="doc-post-confirm-btn" type="submit" class="btn btn-primary">Post</button>
+            <br/>
+            <br/>
+            <p id="doc-success-btn" style="display: none; color: #5898B8;">Success!</p>
+            <hr/>
+        </div>
+    </div>
 </div>
