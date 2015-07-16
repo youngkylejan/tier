@@ -552,6 +552,7 @@ class TeamMeetingHandler(BaseHandler):
                 team_name = self.db.get("SELECT name FROM team WHERE id = %s", team['team_id'])['name']
                 queryed_meetings = self.db.query("SELECT * FROM meetings WHERE team_id = %s ORDER BY meeting_time", team['team_id'])
                 
+                print queryed_meetings
                 for meeting in queryed_meetings:
                     if meeting:
                         meetings.append(
@@ -609,7 +610,7 @@ class UserDeadlineHandler(BaseHandler):
         deadlines = []
         for team in teams:
             team_name = self.db.get("SELECT name FROM team WHERE id = %s", team['team_id'])['name']
-            queryed_assignments = self.db.query("SELECT * FROM assignments WHERE team_id = %s and target_uid = %s", team['team_id'], uid)
+            queryed_assignments = self.db.query("SELECT * FROM assignments WHERE team_id = %s and target_uid = %s ORDER BY deadline", team['team_id'], uid)
             for assignment in queryed_assignments:
                 if assignment:
                     deadlines.append(
