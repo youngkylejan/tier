@@ -542,7 +542,7 @@ class TeamMeetingHandler(BaseHandler):
         resp = {}
 
         if msg_body['type'] == "create":
-            team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
+            team = self.get_team_by_name(msg_body['team'])
             content = msg_body['content']
             meeting_time = msg_body['time']
 
