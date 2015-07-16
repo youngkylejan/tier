@@ -415,6 +415,11 @@ class TeamCreateHandler(BaseHandler):
 
 class DashboardHandler(BaseHandler):
     def get(self):
+        if self.request.headers['User-Agent'].find('iPhone') == -1:
+            user_agent = None
+        else:
+            user_agent = "iPhone"
+
         if not self.current_user:
             self.render("fault.html", error="Please Login Firstly")
             return
@@ -446,13 +451,18 @@ class DashboardHandler(BaseHandler):
                 user = self.get_user_by_id(apply.user_id)
                 apply['user_name'] = user.name
 
-        self.render("dashboard.html", username = self.current_user.name, \
+        self.render("dashboard.html", user_agent = user_agent, username = self.current_user.name, \
             team = team, team_news = team_news, team_members = members, applys = applys, \
             documents = team_documents, messages = self.teams_message_poll[team.name].cache)
 
 
 class TeamHomeHandler(BaseHandler):
     def get(self):
+        if self.request.headers['User-Agent'].find('iPhone') == -1:
+            user_agent = None
+        else:
+            user_agent = "iPhone"
+
         if not self.current_user:
             self.redirect_fault_page("Please Login Firstly!")
             return
@@ -466,7 +476,7 @@ class TeamHomeHandler(BaseHandler):
 
         leader = self.db.get("SELECT * FROM user WHERE id = %s", team.leader_id)
 
-        self.render("team_home.html", username=self.current_user.name, \
+        self.render("team_home.html", user_agent = user_agent, username=self.current_user.name, \
             team_name=team.name, leader_name=leader.name, intro=team.introduction)
 
 

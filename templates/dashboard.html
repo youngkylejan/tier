@@ -28,7 +28,11 @@
 
     <div class="wrapper">
 
-        {% module Template("nav.html", username=username) %}
+        {% if user_agent == "iPhone" %}
+            {% module Template("navIOS.html", username=username) %}
+        {% else %}
+            {% module Template("nav.html", username=username) %}
+        {% end if %}
 
         <section class="home-section color-dark bg-white" style="padding-top: 50px; padding-bottom: 50px;">
             <div class="container" style="padding-top: 50px">
@@ -45,9 +49,17 @@
                         <ul class="nav nav-tabs" id="team-tab">
                             <li class="active"><a href="#team-news" data-toggle="tab">Team News</a></li>
                             <li><a href="#team-meeting" data-toggle="tab">Meeting Business</a></li>
+
+                            {% if user_agent != "iPhone" %}
                             <li><a href="#team-deadline" data-toggle="tab">Deadline Business</a></li>
                             <li><a href="#team-chatroom" data-toggle="tab">Chatroom</a></li>
                             <li><a href="#team-documents" data-toggle="tab">Documents</a></li>
+
+                            {% else %}
+                            <li><a href="#team-chatroom" data-toggle="tab">Chatroom</a></li>
+                            <li><a href="#team-deadline" data-toggle="tab">Deadline Business</a></li>
+                            {% end if %}
+
                             <li><a href="#team-manage" data-toggle="tab">Team Manage</a></li>
                         </ul>
 
@@ -64,9 +76,11 @@
                             <div class="tab-pane fade" id="team-chatroom">
                                 {% module Template("modules/chat_room.html", team = team, messages = messages) %}
                             </div>
+                            {% if user_agent != "iPhone" %}
                             <div class="tab-pane fade" id="team-documents">
                                 {% module Template("modules/team_documents.html", documents = documents) %}
                             </div>
+                            {% end if %}
                             <div class="tab-pane fade" id="team-manage">
                                 {% module Template("modules/team_manage.html", team = team, team_members = team_members, applys = applys) %}
                             </div>

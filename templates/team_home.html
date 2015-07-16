@@ -27,7 +27,11 @@
 
 <body>
     <div class="wrapper">
-        {% module Template("nav.html", username=username) %}
+        {% if user_agent == "iPhone" %}
+            {% module Template("navIOS.html", username=username) %}
+        {% else %}
+            {% module Template("nav.html", username=username) %}
+        {% end if %}
 
         <section class="home-section color-dark bg-white" style="padding-top: 50px">
             <div class="container tier-container">
