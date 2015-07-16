@@ -550,7 +550,7 @@ class TeamMeetingHandler(BaseHandler):
             meetings = []
             for team in teams:
                 team_name = self.db.get("SELECT name FROM team WHERE id = %s", team['team_id'])['name']
-                queryed_meetings = self.db.query("SELECT * FROM meetings WHERE team_id = %s", team['team_id'])
+                queryed_meetings = self.db.query("SELECT * FROM meetings WHERE team_id = %s ORDER BY meeting_time", team['team_id'])
                 
                 for meeting in queryed_meetings:
                     if meeting:
