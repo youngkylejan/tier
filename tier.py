@@ -338,7 +338,7 @@ class AuthSignUpHandler(BaseHandler):
         else:
             user_agent = "iPhone"
 
-        if self.whether_author_exists(name):
+        if self.get_user_by_name(name) is not None:
             self.render("signup.html", user_agent=user_agent, error="User Exists")
         
         hashed_password = yield executor.submit(
@@ -543,7 +543,7 @@ class TeamMeetingHandler(BaseHandler):
         resp = {}
 
         if msg_body['type'] == "create":
-            team = self.db.get("SELECT * FROM team WHERE name = %s", msg_body['team'])
+            team = self.get_team_by_name(msg_body['team'])
             content = msg_body['content']
             meeting_time = msg_body['time']
 
