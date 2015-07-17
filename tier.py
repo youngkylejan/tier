@@ -337,7 +337,7 @@ class AuthSignUpHandler(BaseHandler):
         else:
             user_agent = "iPhone"
 
-        if self.whether_author_exists(name):
+        if self.get_user_by_name(name) is not None:
             self.render("signup.html", user_agent=user_agent, error="User Exists")
         
         hashed_password = yield executor.submit(
