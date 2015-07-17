@@ -320,6 +320,7 @@ class IndexHandler(BaseHandler):
 
 class AuthSignUpHandler(BaseHandler):
     def get(self):
+        print self.request.headers['User-Agent']
         if self.request.headers['User-Agent'].find('iPhone') == -1:
             user_agent = None
         else:
