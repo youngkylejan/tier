@@ -340,6 +340,7 @@ class AuthSignUpHandler(BaseHandler):
 
         if self.get_user_by_name(name) is not None:
             self.render("signup.html", user_agent=user_agent, error="User Exists")
+            return
         
         hashed_password = yield executor.submit(
             bcrypt.hashpw, tornado.escape.utf8(pwd),
