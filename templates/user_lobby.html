@@ -27,7 +27,11 @@
             {% module Template("nav.html", username=username) %}
         {% end if %}
 
+        {% if user_agent == "iPhone" %}
+        <div class="panel panel-info">
+        {% else %}
         <div class="row">
+        {% end if %}
             <section id="guide" class="home-section color-dark bg-white">
                 <div class="container marginbot-50 col-md-offset-2 col-md-8">
                     <div class="row">
